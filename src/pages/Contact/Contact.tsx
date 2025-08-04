@@ -210,7 +210,7 @@ const Contact: React.FC = () => {
 
           <section className={styles.faqSection}>
             <h2>Frequently Asked Questions</h2>
-            <div className={styles.faqGrid}>
+            <div className={styles.faqContainer}>
               <div className={styles.faqItem}>
                 <h3>How does the FIPE query work?</h3>
                 <p>

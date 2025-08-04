@@ -27,7 +27,7 @@
 }
 
 .spinner > div {
-  background-color: var(--color-primary);
+  background-color: var(--primary-blue);
   border-radius: 50%;
   animation: sk-bouncedelay 1.4s infinite ease-in-out both;
 }
@@ -57,7 +57,7 @@
 
 .text {
   margin: 0;
-  color: var(--color-text-secondary);
+  color: var(--text-secondary);
   font-size: 0.9rem;
   text-align: center;
 }
