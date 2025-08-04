@@ -14,7 +14,7 @@ const About: React.FC = () => {
           </section>
 
           <section className={styles.content}>
-            <div className={styles.contentGrid}>
+            <div className={styles.contentLayout}>
               <div className={styles.textSection}>
                 <h2>What is the FIPE Table?</h2>
                 <p>

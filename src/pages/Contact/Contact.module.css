@@ -285,13 +285,13 @@
   font-weight: 600;
 }
 
-.faqGrid {
+.faqContainer {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xl);
 }
 
-.faqGrid .faqItem {
+.faqContainer .faqItem {
   flex: 1 1 18.75rem;
 }
 
@@ -356,11 +356,11 @@
     align-self: center;
   }
   
-  .faqGrid {
+  .faqContainer {
     flex-direction: column;
   }
   
-  .faqGrid .faqItem {
+  .faqContainer .faqItem {
     flex: none;
   }
 }

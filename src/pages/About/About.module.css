@@ -51,17 +51,17 @@
   }
 }
 
-.contentGrid {
+.contentLayout {
   display: flex;
   gap: var(--spacing-2xl);
   margin-bottom: var(--spacing-2xl);
 }
 
-.contentGrid .textSection {
+.contentLayout .textSection {
   flex: 2;
 }
 
-.contentGrid .statsSection {
+.contentLayout .statsSection {
   flex: 1;
 }
 
@@ -194,7 +194,7 @@
     padding: 0 var(--spacing-md);
   }
   
-  .contentGrid {
+  .contentLayout {
     flex-direction: column;
     gap: var(--spacing-lg);
   }

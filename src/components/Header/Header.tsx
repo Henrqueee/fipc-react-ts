@@ -9,7 +9,7 @@ const Header: React.FC = () => {
         <div className={styles.headerContent}>
           <div className={styles.logo}>
             <Link to="/" className={styles.logoLink}>
-              <h1>FIPE Consulta</h1>
+              <h1>FIPE Query</h1>
             </Link>
           </div>
           <nav className={styles.nav}>

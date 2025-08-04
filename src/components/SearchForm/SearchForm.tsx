@@ -5,7 +5,7 @@ import styles from './SearchForm.module.css';
 
 const SearchForm: React.FC = () => {
   const navigate = useNavigate();
-  const { searchVehicle } = useVehicleStore();
+  const { searchVehicle, updateCurrentSearch } = useVehicleStore();
   
   const [formData, setFormData] = useState({
     vehicleType: '',
@@ -23,9 +23,10 @@ const SearchForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const { vehicleType, brand, model, year } = formData;
+    const { vehicleType, brand, model, year, fuel } = formData;
     if (vehicleType && brand && model && year) {
-      await searchVehicle(`${brand}-${model}-${year}`);
+      updateCurrentSearch({ vehicleType, brand, model, year, fuel });
+      await searchVehicle();
       navigate('/query');
     }
   };

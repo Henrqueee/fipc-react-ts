@@ -51,6 +51,7 @@
   color: var(--text-primary);
   font-weight: 600;
   font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-xs);
 }
 
 .select {
@@ -59,19 +60,50 @@
   border-radius: var(--border-radius-md);
   font-size: var(--font-size-base);
   background: var(--white);
+  color: var(--text-primary);
   transition: all 0.2s ease;
+  min-height: 3rem;
 }
 
 .select:focus {
   outline: none;
   border-color: var(--primary-blue);
-  box-shadow: 0 0 0 0.1875rem rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 0.1875rem rgba(30, 58, 138, 0.1);
+  background: var(--white);
+}
+
+.select:hover:not(:disabled) {
+  border-color: var(--primary-blue-light);
 }
 
 .select:disabled {
   background: var(--secondary-gray-light);
-  color: var(--text-secondary);
+  color: var(--text-light);
   cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.select option {
+  background: var(--white);
+  color: var(--text-primary);
+  padding: var(--spacing-sm);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+}
+
+.select option:hover {
+  background: var(--secondary-gray-light);
+}
+
+.select option:checked,
+.select option:focus {
+  background: var(--primary-blue-light);
+  color: var(--white);
+}
+
+.select option[value=""] {
+  color: var(--text-light);
+  font-style: italic;
 }
 
 .formActions {
