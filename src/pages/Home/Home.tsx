@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import Carousel from '../../components/Carousel/Carousel';
 import Card from '../../components/Card/Card';
@@ -6,35 +6,11 @@ import { CTAButton } from '../../components/UI/Buttons/Buttons';
 import styles from './Home.module.css';
 
 const Home: React.FC = () => {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrollY(currentScrollY);
-    };
-
-    // Throttle scroll events for better performance
-    let ticking = false;
-    const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', throttledScroll, { passive: true });
-    return () => window.removeEventListener('scroll', throttledScroll);
-  }, []);
-
   const scrollToSearch = () => {
     const searchSection = document.querySelector(`.${styles.searchSection}`);
     
     if (searchSection) {
-      searchSection.scrollIntoView();
+      searchSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -51,10 +27,7 @@ const Home: React.FC = () => {
   return (
     <div className={styles.home}>
       <section className={styles.heroParallax}>
-        <div 
-          className={styles.parallaxBg}
-          style={{ transform: `translateY(${scrollY * 0.5}px)` }}
-        />
+        <div className={styles.parallaxBg} />
         <div className={styles.heroContent}>
           <div className="container">
             <div className={styles.heroText}>
@@ -80,9 +53,6 @@ const Home: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className={styles.scrollIndicator} onClick={scrollToSearch}>
-          <div className={styles.scrollArrow}></div>
         </div>
       </section>
 
@@ -132,10 +102,7 @@ const Home: React.FC = () => {
 
           {/* Parallax Section */}
           <section className={styles.parallaxSection}>
-            <div 
-              className={styles.parallaxImage}
-              style={{ transform: `translateY(${scrollY * 0.3}px)` }}
-            />
+            <div className={styles.parallaxImage} />
             <div className={styles.parallaxContent}>
               <h2>Technology and Reliability</h2>
               <p>
