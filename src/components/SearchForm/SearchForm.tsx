@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useVehicleStore } from '../../store/useVehicleStore';
+import { SearchButton, FavoriteButton } from '../UI/Buttons/Buttons';
+import { SelectInput } from '../UI/Inputs/Inputs';
 import styles from './SearchForm.module.css';
 
 const SearchForm: React.FC = () => {
@@ -31,14 +33,17 @@ const SearchForm: React.FC = () => {
     }
   };
 
-  const handleQuickSearch = () => {
-    setFormData({
-      vehicleType: 'Cars',
-      brand: 'Volkswagen',
-      model: 'Gol',
-      year: '2023',
-      fuel: 'Flex'
-    });
+  const handleAddToFavorites = () => {
+    const { vehicleType, brand, model, year, fuel } = formData;
+    if (vehicleType && brand && model && year) {
+      // TODO: Implementar funcionalidade de favoritos
+      // Exemplo: salvar no localStorage ou enviar para uma API
+      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+      const newFavorite = { vehicleType, brand, model, year, fuel, id: Date.now() };
+      favorites.push(newFavorite);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      alert('Veículo adicionado aos favoritos!');
+    }
   };
 
   const isFormValid = formData.vehicleType && formData.brand && 
@@ -55,87 +60,61 @@ const SearchForm: React.FC = () => {
           
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.formRow}>
-              <div className={styles.formGroup}>
-                <label htmlFor="vehicleType">Vehicle Type</label>
-                <select
-                  id="vehicleType"
-                  value={formData.vehicleType}
-                  onChange={(e) => setFormData({ ...formData, vehicleType: e.target.value })}
-                  className={styles.select}
-                >
-                  <option value="">Select type</option>
-                  <option value="cars">Cars</option>
-                  <option value="motorcycles">Motorcycles</option>
-                  <option value="trucks">Trucks</option>
-                </select>
-              </div>
+              <SelectInput
+                id="vehicleType"
+                label="Vehicle Type"
+                value={formData.vehicleType}
+                onChange={(e) => setFormData({ ...formData, vehicleType: e.target.value })}
+                placeholder="Select type"
+                options={[
+                  { value: "cars", label: "Cars" },
+                  { value: "motorcycles", label: "Motorcycles" },
+                  { value: "trucks", label: "Trucks" }
+                ]}
+              />
 
-              <div className={styles.formGroup}>
-                <label htmlFor="brand">Brand</label>
-                <select
-                  id="brand"
-                  value={formData.brand}
-                  onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-                  className={styles.select}
-                  disabled={!formData.vehicleType}
-                >
-                  <option value="">Select brand</option>
-                  {brands.map(brand => (
-                    <option key={brand} value={brand}>{brand}</option>
-                  ))}
-                </select>
-              </div>
+              <SelectInput
+                id="brand"
+                label="Brand"
+                value={formData.brand}
+                onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
+                placeholder="Select brand"
+                disabled={!formData.vehicleType}
+                options={brands.map(brand => ({ value: brand, label: brand }))}
+              />
             </div>
 
             <div className={styles.formRow}>
-              <div className={styles.formGroup}>
-                <label htmlFor="model">Model</label>
-                <select
-                  id="model"
-                  value={formData.model}
-                  onChange={(e) => setFormData({ ...formData, model: e.target.value })}
-                  className={styles.select}
-                  disabled={!formData.brand}
-                >
-                  <option value="">Select model</option>
-                  {models.map(model => (
-                    <option key={model} value={model}>{model}</option>
-                  ))}
-                </select>
-              </div>
+              <SelectInput
+                id="model"
+                label="Model"
+                value={formData.model}
+                onChange={(e) => setFormData({ ...formData, model: e.target.value })}
+                placeholder="Select model"
+                disabled={!formData.brand}
+                options={models.map(model => ({ value: model, label: model }))}
+              />
 
-              <div className={styles.formGroup}>
-                <label htmlFor="year">Year</label>
-                <select
-                  id="year"
-                  value={formData.year}
-                  onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-                  className={styles.select}
-                  disabled={!formData.model}
-                >
-                  <option value="">Select year</option>
-                  {years.map(year => (
-                    <option key={year} value={year}>{year}</option>
-                  ))}
-                </select>
-              </div>
+              <SelectInput
+                id="year"
+                label="Year"
+                value={formData.year}
+                onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                placeholder="Select year"
+                disabled={!formData.model}
+                options={years.map(year => ({ value: year, label: year }))}
+              />
             </div>
 
             <div className={styles.formActions}>
-              <button
+              <SearchButton
                 type="submit"
-                className={styles.submitButton}
                 disabled={!isFormValid}
-              >
-                🔍 Check Price
-              </button>
-              <button
-                type="button"
-                onClick={handleQuickSearch}
-                className={styles.quickButton}
-              >
-                ⚡ Quick Search
-              </button>
+              />
+              <FavoriteButton
+                onClick={handleAddToFavorites}
+                disabled={!isFormValid}
+              />
             </div>
           </form>
         </div>

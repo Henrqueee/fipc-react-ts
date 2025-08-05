@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { TextInput, SelectInput } from '../../components/UI/Inputs/Inputs';
+import { SubmitButton } from '../../components/UI/Buttons/Buttons';
 import styles from './Contact.module.css';
 
 const Contact: React.FC = () => {
@@ -132,50 +134,42 @@ const Contact: React.FC = () => {
 
                 <form onSubmit={handleSubmit} className={styles.form}>
                   <div className={styles.formRow}>
-                    <div className={styles.formGroup}>
-                      <label htmlFor="name">Full Name *</label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className={styles.input}
-                        placeholder="Your full name"
-                      />
-                    </div>
-
-                    <div className={styles.formGroup}>
-                      <label htmlFor="email">Email *</label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className={styles.input}
-                        placeholder="your@email.com"
-                      />
-                    </div>
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label htmlFor="subject">Subject *</label>
-                    <select
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
+                    <TextInput
+                      id="name"
+                      label="Full Name"
+                      type="text"
+                      value={formData.name}
                       onChange={handleInputChange}
-                      className={styles.select}
-                    >
-                      <option value="">Select subject</option>
-                      <option value="query-question">Query question</option>
-                      <option value="technical-issue">Technical issue</option>
-                      <option value="suggestion">Suggestion</option>
-                      <option value="partnership">Partnership</option>
-                      <option value="other">Other</option>
-                    </select>
+                      placeholder="Your full name"
+                      required
+                    />
+
+                    <TextInput
+                      id="email"
+                      label="Email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="your@email.com"
+                      required
+                    />
                   </div>
+
+                  <SelectInput
+                    id="subject"
+                    label="Subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    placeholder="Select subject"
+                    required
+                    options={[
+                      { value: "query-question", label: "Query question" },
+                      { value: "technical-issue", label: "Technical issue" },
+                      { value: "suggestion", label: "Suggestion" },
+                      { value: "partnership", label: "Partnership" },
+                      { value: "other", label: "Other" }
+                    ]}
+                  />
 
                   <div className={styles.formGroup}>
                     <label htmlFor="message">Message *</label>
@@ -196,13 +190,13 @@ const Contact: React.FC = () => {
                     </div>
                   )}
 
-                  <button
+                  <SubmitButton
                     type="submit"
-                    className={styles.submitButton}
-                    disabled={loading}
+                    loading={loading}
+                    onClick={() => {}}
                   >
-                    {loading ? 'Sending...' : 'Send Message'}
-                  </button>
+                    {loading ? 'Enviando...' : 'Enviar Mensagem'}
+                  </SubmitButton>
                 </form>
               </div>
             </div>

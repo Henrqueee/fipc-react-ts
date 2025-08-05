@@ -12,11 +12,10 @@
 .hero {
   text-align: center;
   margin-bottom: var(--spacing-2xl);
-  padding: var(--spacing-2xl) 0;
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+  padding: var(--spacing-2xl) var(--spacing-lg);
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
   color: var(--white);
   border-radius: var(--border-radius-lg);
-  margin-bottom: var(--spacing-2xl);
 }
 
 .title {
@@ -79,11 +78,12 @@
   font-weight: 600;
 }
 
-.textSection h3 {
+.textSection h2 {
   color: var(--primary-blue);
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-2xl);
   margin: var(--spacing-xl) 0 var(--spacing-md) 0;
   font-weight: 600;
+  text-align: center;
 }
 
 .textSection p {
@@ -99,32 +99,14 @@
   gap: var(--spacing-lg);
 }
 
-.statCard {
-  background: var(--white);
-  padding: var(--spacing-xl);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
-  text-align: center;
-  border-left: 4px solid var(--accent-orange);
-}
-
-.statCard h3 {
-  font-size: var(--font-size-3xl);
-  color: var(--primary-blue);
-  font-weight: 700;
-  margin-bottom: var(--spacing-sm);
-}
-
-.statCard p {
-  color: var(--text-secondary);
-  font-weight: 500;
-}
+/* Estilos de statCard removidos - agora usando componente Card */
 
 .featuresSection {
   background: var(--white);
   padding: var(--spacing-2xl);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-md);
+  margin-top: var(--spacing-2xl);
 }
 
 .featuresSection h2 {
@@ -145,44 +127,7 @@
   flex: 1 1 18.75rem;
 }
 
-.feature {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-md);
-  padding: var(--spacing-lg);
-  border-radius: var(--border-radius-md);
-  transition: background-color 0.2s ease;
-}
-
-.feature:hover {
-  background: var(--secondary-gray-light);
-}
-
-.featureIcon {
-  background: var(--success);
-  color: var(--white);
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: var(--font-size-sm);
-  flex-shrink: 0;
-}
-
-.feature h4 {
-  color: var(--primary-blue);
-  font-size: var(--font-size-lg);
-  margin-bottom: var(--spacing-sm);
-  font-weight: 600;
-}
-
-.feature p {
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
+/* Estilos de feature removidos - agora usando componente Card */
 
 @media (max-width: 48rem) {
   .title {

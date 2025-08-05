@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import SearchForm from '../../components/SearchForm/SearchForm';
+import Carousel from '../../components/Carousel/Carousel';
+import Card from '../../components/Card/Card';
+import { CTAButton } from '../../components/UI/Buttons/Buttons';
 import styles from './Home.module.css';
 
 const Home: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
-  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,28 +47,6 @@ const Home: React.FC = () => {
     { icon: '🚛', title: 'Utilities', description: 'Work and leisure', count: '+12,000 models' },
     { icon: '🏎️', title: 'Sports Cars', description: 'High performance', count: '+3,000 models' }
   ];
-
-  // Controles do carrossel
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % Math.ceil(vehicleTypes.length / 3));
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + Math.ceil(vehicleTypes.length / 3)) % Math.ceil(vehicleTypes.length / 3));
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
-
-  // Auto-play do carrossel
-  useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000); // Muda a cada 5 segundos
-
-    return () => clearInterval(interval);
-  }, [currentSlide]);
 
   return (
     <div className={styles.home}>
@@ -126,27 +106,27 @@ const Home: React.FC = () => {
             </div>
             
             <div className={styles.infoContainer}>
-              <div className={`${styles.infoCard} ${styles.cardAnimate}`}>
-                <div className={styles.iconWrapper}>
-                  <span className={styles.icon}>📊</span>
-                </div>
-                <h3>Updated Data</h3>
-                <p>Information always updated from the official FIPE table</p>
-              </div>
-              <div className={`${styles.infoCard} ${styles.cardAnimate}`}>
-                <div className={styles.iconWrapper}>
-                  <span className={styles.icon}>💰</span>
-                </div>
-                <h3>Free Query</h3>
-                <p>Perform as many queries as you need at no cost</p>
-              </div>
-              <div className={`${styles.infoCard} ${styles.cardAnimate}`}>
-                <div className={styles.iconWrapper}>
-                  <span className={styles.icon}>⚡</span>
-                </div>
-                <h3>Easy to Use</h3>
-                <p>Simple and intuitive interface for your queries</p>
-              </div>
+              <Card
+              icon="📊"
+              title="Detailed Analysis"
+              description="Complete vehicle history and detailed technical information for informed decisions."
+              animated={true}
+              animationDelay={0}
+            />
+            <Card
+              icon="💰"
+              title="Best Prices"
+              description="Competitive prices and exclusive offers from the best dealers in the country."
+              animated={true}
+              animationDelay={0.2}
+            />
+            <Card
+              icon="⚡"
+              title="Fast Process"
+              description="Simplified search and quick contact with sellers. Find your ideal vehicle in minutes."
+              animated={true}
+              animationDelay={0.4}
+            />
             </div>
           </section>
 
@@ -188,60 +168,12 @@ const Home: React.FC = () => {
               </p>
             </div>
             
-            <div className={styles.carouselContainer}>
-              {/* Botão Anterior */}
-              <button 
-                className={`${styles.carouselButton} ${styles.carouselButtonPrev}`}
-                onClick={prevSlide}
-                aria-label="Slide anterior"
-              >
-                &#8249;
-              </button>
-
-              {/* Container do Carrossel */}
-              <div className={styles.carouselWrapper}>
-                <div 
-                  className={styles.carouselTrack}
-                  style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-                >
-                  {Array.from({ length: Math.ceil(vehicleTypes.length / 3) }).map((_, slideIndex) => (
-                    <div key={slideIndex} className={styles.carouselSlide}>
-                      {vehicleTypes.slice(slideIndex * 3, slideIndex * 3 + 3).map((vehicle, cardIndex) => (
-                        <div key={cardIndex} className={styles.vehicleCard}>
-                          <div className={styles.vehicleIcon}>{vehicle.icon}</div>
-                          <h3>{vehicle.title}</h3>
-                          <p>{vehicle.description}</p>
-                          <span className={styles.vehicleCount}>{vehicle.count}</span>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Botão Próximo */}
-              <button 
-                className={`${styles.carouselButton} ${styles.carouselButtonNext}`}
-                onClick={nextSlide}
-                aria-label="Próximo slide"
-              >
-                &#8250;
-              </button>
-            </div>
-
-            {/* Indicadores */}
-            <div className={styles.carouselIndicators}>
-              {Array.from({ length: Math.ceil(vehicleTypes.length / 3) }).map((_, index) => (
-                <button
-                  key={index}
-                  className={`${styles.carouselIndicator} ${
-                    index === currentSlide ? styles.carouselIndicatorActive : ''
-                  }`}
-                  onClick={() => goToSlide(index)}
-                  aria-label={`Ir para slide ${index + 1}`}
-                />
-              ))}
-            </div>
+            <Carousel 
+              items={vehicleTypes}
+              itemsPerSlide={3}
+              autoPlay={true}
+              autoPlayInterval={5000}
+            />
           </section>
 
         </div>
@@ -253,12 +185,9 @@ const Home: React.FC = () => {
           <div className={styles.ctaContent}>
             <h2>Ready to discover your vehicle's value?</h2>
             <p>Make your query now and get access to official FIPE data</p>
-            <button 
-              className={styles.ctaButton}
-              onClick={scrollToSearch}
-            >
+            <CTAButton onClick={scrollToSearch}>
               Check Now
-            </button>
+            </CTAButton>
           </div>
         </div>
       </section>
