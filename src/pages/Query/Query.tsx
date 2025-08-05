@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useVehicleStore } from '../../store/useVehicleStore';
+import { SelectInput } from '../../components/UI/Inputs/Inputs';
+import { QueryButton } from '../../components/UI/Buttons/Buttons';
 import styles from './Query.module.css';
 
 const Query: React.FC = () => {
@@ -59,98 +61,90 @@ const Query: React.FC = () => {
           <div className={styles.content}>
             <div className={styles.formSection}>
               <form onSubmit={handleSubmit} className={styles.form}>
-                <h2>Vehicle Data</h2>
-                
-                <div className={styles.formGroup}>
-                  <label htmlFor="vehicleType">Vehicle Type *</label>
-                  <select
-                    id="vehicleType"
-                    value={currentSearch.vehicleType}
-                    onChange={(e) => updateCurrentSearch({ vehicleType: e.target.value })}
-                    className={styles.select}
-                  >
-                    <option value="">Select type</option>
-                    <option value="cars">Cars</option>
-                    <option value="motorcycles">Motorcycles</option>
-                    <option value="trucks">Trucks</option>
-                  </select>
-                </div>
+                <SelectInput
+                  id="vehicleType"
+                  label="Vehicle Type"
+                  value={currentSearch.vehicleType}
+                  onChange={(e) => updateCurrentSearch({ vehicleType: e.target.value })}
+                  placeholder="Select type"
+                  required
+                  options={[
+                    { value: "cars", label: "Cars" },
+                    { value: "motorcycles", label: "Motorcycles" },
+                    { value: "trucks", label: "Trucks" }
+                  ]}
+                />
 
-                <div className={styles.formGroup}>
-                  <label htmlFor="brand">Brand *</label>
-                  <select
-                    id="brand"
-                    value={currentSearch.brand}
-                    onChange={(e) => updateCurrentSearch({ brand: e.target.value })}
-                    className={styles.select}
-                    disabled={!currentSearch.vehicleType}
-                  >
-                    <option value="">Select brand</option>
-                    <option value="Volkswagen">Volkswagen</option>
-                    <option value="Chevrolet">Chevrolet</option>
-                    <option value="Ford">Ford</option>
-                    <option value="Fiat">Fiat</option>
-                    <option value="Toyota">Toyota</option>
-                    <option value="Honda">Honda</option>
-                    <option value="Hyundai">Hyundai</option>
-                  </select>
-                </div>
+                <SelectInput
+                  id="brand"
+                  label="Brand"
+                  value={currentSearch.brand}
+                  onChange={(e) => updateCurrentSearch({ brand: e.target.value })}
+                  placeholder="Select brand"
+                  required
+                  disabled={!currentSearch.vehicleType}
+                  options={[
+                    { value: "Volkswagen", label: "Volkswagen" },
+                    { value: "Chevrolet", label: "Chevrolet" },
+                    { value: "Ford", label: "Ford" },
+                    { value: "Fiat", label: "Fiat" },
+                    { value: "Toyota", label: "Toyota" },
+                    { value: "Honda", label: "Honda" },
+                    { value: "Hyundai", label: "Hyundai" }
+                  ]}
+                />
 
-                <div className={styles.formGroup}>
-                  <label htmlFor="model">Model *</label>
-                  <select
-                    id="model"
-                    value={currentSearch.model}
-                    onChange={(e) => updateCurrentSearch({ model: e.target.value })}
-                    className={styles.select}
-                    disabled={!currentSearch.brand}
-                  >
-                    <option value="">Select model</option>
-                    <option value="Gol">Gol</option>
-                    <option value="Polo">Polo</option>
-                    <option value="T-Cross">T-Cross</option>
-                    <option value="Virtus">Virtus</option>
-                    <option value="Nivus">Nivus</option>
-                  </select>
-                </div>
+                <SelectInput
+                  id="model"
+                  label="Model"
+                  value={currentSearch.model}
+                  onChange={(e) => updateCurrentSearch({ model: e.target.value })}
+                  placeholder="Select model"
+                  required
+                  disabled={!currentSearch.brand}
+                  options={[
+                    { value: "Gol", label: "Gol" },
+                    { value: "Polo", label: "Polo" },
+                    { value: "T-Cross", label: "T-Cross" },
+                    { value: "Virtus", label: "Virtus" },
+                    { value: "Nivus", label: "Nivus" }
+                  ]}
+                />
 
                 <div className={styles.formRow}>
-                  <div className={styles.formGroup}>
-                    <label htmlFor="year">Year *</label>
-                    <select
-                      id="year"
-                      value={currentSearch.year}
-                      onChange={(e) => updateCurrentSearch({ year: e.target.value })}
-                      className={styles.select}
-                      disabled={!currentSearch.model}
-                    >
-                      <option value="">Select year</option>
-                      <option value="2024">2024</option>
-                      <option value="2023">2023</option>
-                      <option value="2022">2022</option>
-                      <option value="2021">2021</option>
-                      <option value="2020">2020</option>
-                      <option value="2019">2019</option>
-                    </select>
-                  </div>
+                  <SelectInput
+                    id="year"
+                    label="Year"
+                    value={currentSearch.year}
+                    onChange={(e) => updateCurrentSearch({ year: e.target.value })}
+                    placeholder="Select year"
+                    required
+                    disabled={!currentSearch.model}
+                    options={[
+                      { value: "2024", label: "2024" },
+                      { value: "2023", label: "2023" },
+                      { value: "2022", label: "2022" },
+                      { value: "2021", label: "2021" },
+                      { value: "2020", label: "2020" },
+                      { value: "2019", label: "2019" }
+                    ]}
+                  />
 
-                  <div className={styles.formGroup}>
-                    <label htmlFor="fuel">Fuel</label>
-                    <select
-                      id="fuel"
-                      value={currentSearch.fuel}
-                      onChange={(e) => updateCurrentSearch({ fuel: e.target.value })}
-                      className={styles.select}
-                      disabled={!currentSearch.year}
-                    >
-                      <option value="">Select fuel</option>
-                      <option value="Gasoline">Gasoline</option>
-                      <option value="Ethanol">Ethanol</option>
-                      <option value="Flex">Flex</option>
-                      <option value="Diesel">Diesel</option>
-                      <option value="CNG">CNG</option>
-                    </select>
-                  </div>
+                  <SelectInput
+                    id="fuel"
+                    label="Fuel"
+                    value={currentSearch.fuel}
+                    onChange={(e) => updateCurrentSearch({ fuel: e.target.value })}
+                    placeholder="Select fuel"
+                    disabled={!currentSearch.year}
+                    options={[
+                      { value: "Gasoline", label: "Gasoline" },
+                      { value: "Ethanol", label: "Ethanol" },
+                      { value: "Flex", label: "Flex" },
+                      { value: "Diesel", label: "Diesel" },
+                      { value: "CNG", label: "CNG" }
+                    ]}
+                  />
                 </div>
 
                 {error && (
@@ -160,13 +154,13 @@ const Query: React.FC = () => {
                 )}
 
                 <div className={styles.formActions}>
-                  <button
+                  <QueryButton
                     type="submit"
-                    className={styles.submitButton}
-                    disabled={loading}
+                    loading={loading}
+                    onClick={() => {}}
                   >
-                    {loading ? 'Querying...' : 'Query Price'}
-                  </button>
+                    {loading ? 'Consultando...' : 'Consultar Preço'}
+                  </QueryButton>
                   <button
                     type="button"
                     onClick={resetForm}

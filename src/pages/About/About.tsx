@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './About.module.css';
+import Card from '../../components/Card/Card';
 
 const About: React.FC = () => {
   return (
@@ -38,52 +39,61 @@ const About: React.FC = () => {
               </div>
 
               <div className={styles.statsSection}>
-                <div className={styles.statCard}>
-                  <h3>50+</h3>
-                  <p>Years of tradition</p>
-                </div>
-                <div className={styles.statCard}>
-                  <h3>100%</h3>
-                  <p>Free</p>
-                </div>
-                <div className={styles.statCard}>
-                  <h3>1000+</h3>
-                  <p>Registered models</p>
-                </div>
+                <Card
+                  icon="📅"
+                  title="50+"
+                  description="Years of tradition"
+                  animated={true}
+                  animationDelay={0}
+                />
+                <Card
+                  icon="💯"
+                  title="100%"
+                  description="Free"
+                  animated={true}
+                  animationDelay={0.2}
+                />
+                <Card
+                  icon="🚗"
+                  title="1000+"
+                  description="Registered models"
+                  animated={true}
+                  animationDelay={0.4}
+                />
               </div>
             </div>
 
             <div className={styles.featuresSection}>
               <h2>Why use the FIPE Table?</h2>
               <div className={styles.featuresList}>
-                <div className={styles.feature}>
-                  <span className={styles.featureIcon}>✓</span>
-                  <div>
-                    <h4>National Reference</h4>
-                    <p>Accepted by banks, insurance companies, and dealerships throughout the country</p>
-                  </div>
-                </div>
-                <div className={styles.feature}>
-                  <span className={styles.featureIcon}>✓</span>
-                  <div>
-                    <h4>Reliable Data</h4>
-                    <p>Rigorous methodology based on market research</p>
-                  </div>
-                </div>
-                <div className={styles.feature}>
-                  <span className={styles.featureIcon}>✓</span>
-                  <div>
-                    <h4>Constant Updates</h4>
-                    <p>Values updated monthly to reflect the current market</p>
-                  </div>
-                </div>
-                <div className={styles.feature}>
-                  <span className={styles.featureIcon}>✓</span>
-                  <div>
-                    <h4>Free Access</h4>
-                    <p>Unlimited queries at no cost</p>
-                  </div>
-                </div>
+                <Card
+                  icon="🏛️"
+                  title="National Reference"
+                  description="Accepted by banks, insurance companies, and dealerships throughout the country"
+                  animated={true}
+                  animationDelay={0}
+                />
+                <Card
+                  icon="📊"
+                  title="Reliable Data"
+                  description="Rigorous methodology based on market research"
+                  animated={true}
+                  animationDelay={0.2}
+                />
+                <Card
+                  icon="🔄"
+                  title="Constant Updates"
+                  description="Values updated monthly to reflect the current market"
+                  animated={true}
+                  animationDelay={0.4}
+                />
+                <Card
+                  icon="🆓"
+                  title="Free Access"
+                  description="Unlimited queries at no cost"
+                  animated={true}
+                  animationDelay={0.6}
+                />
               </div>
             </div>
           </section>

@@ -194,83 +194,7 @@
   justify-content: center;
 }
 
-.infoCard {
-  flex: 1 1 20rem;
-  max-width: 25rem;
-  background: var(--white);
-  padding: var(--spacing-2xl);
-  border-radius: var(--border-radius-xl);
-  box-shadow: var(--shadow-lg);
-  text-align: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid var(--secondary-gray-dark);
-  position: relative;
-  overflow: hidden;
-}
 
-.infoCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  transition: left 0.6s;
-}
-
-.infoCard:hover::before {
-  left: 100%;
-}
-
-.infoCard:hover {
-  transform: translateY(-0.5rem) scale(1.02);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--accent-orange-light);
-}
-
-.cardAnimate {
-  opacity: 0;
-  transform: translateY(2rem);
-  animation: fadeInUp 0.8s ease-out forwards;
-}
-
-.cardAnimate:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.cardAnimate:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-.iconWrapper {
-  margin-bottom: var(--spacing-lg);
-  position: relative;
-}
-
-.icon {
-  font-size: 4rem;
-  display: block;
-  filter: drop-shadow(0 0.25rem 0.5rem rgba(0, 0, 0, 0.1));
-  transition: transform 0.3s ease;
-}
-
-.infoCard:hover .icon {
-  transform: scale(1.1) rotate(5deg);
-}
-
-.infoCard h3 {
-  font-size: var(--font-size-xl);
-  color: var(--primary-blue);
-  margin-bottom: var(--spacing-md);
-  font-weight: 600;
-}
-
-.infoCard p {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  font-size: var(--font-size-base);
-}
 
 /* ===== PARALLAX SECTION ===== */
 .parallaxSection {
@@ -349,177 +273,6 @@
   margin-bottom: var(--spacing-2xl);
 }
 
-/* Carrossel Container */
-.carouselContainer {
-  position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 4rem;
-}
-
-.carouselWrapper {
-  overflow: hidden;
-  border-radius: 1rem;
-}
-
-.carouselTrack {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  will-change: transform;
-}
-
-.carouselSlide {
-  min-width: 100%;
-  display: flex;
-  gap: 1.5rem;
-  padding: 1rem;
-  justify-content: center;
-}
-
-/* Botões de Navegação */
-.carouselButton {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  border: none;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: var(--primary-blue);
-   cursor: pointer;
-   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-   transition: all 0.3s ease;
-   z-index: 10;
- }
- 
- .carouselButton:hover {
-   background: var(--primary-blue);
-  color: white;
-  transform: translateY(-50%) scale(1.1);
-}
-
-.carouselButtonPrev {
-  left: 0;
-}
-
-.carouselButtonNext {
-  right: 0;
-}
-
-/* Indicadores */
-.carouselIndicators {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 2rem;
-}
-
-.carouselIndicator {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  border: none;
-  background: rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.carouselIndicatorActive {
-   background: var(--primary-blue);
-   transform: scale(1.2);
- }
-
-.vehicleCards {
-  display: flex;
-  gap: var(--spacing-xl);
-  padding: 0 var(--spacing-md);
-  min-width: max-content;
-  animation: slideInFromRight 1s ease-out;
-}
-
-.vehicleCard {
-  flex: 0 0 18rem;
-  background: linear-gradient(135deg, var(--secondary-gray-light), var(--white));
-  padding: var(--spacing-2xl);
-  border-radius: var(--border-radius-xl);
-  text-align: center;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid transparent;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.vehicleCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, var(--primary-blue), var(--accent-orange));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 1;
-}
-
-.vehicleCard:hover::before {
-  opacity: 0.05;
-}
-
-.vehicleCard:hover {
-  transform: translateY(-0.5rem) scale(1.02);
-  border-color: var(--primary-blue);
-  box-shadow: 0 1rem 2rem rgba(30, 58, 138, 0.15);
-}
-
-.vehicleCard > * {
-  position: relative;
-  z-index: 2;
-}
-
-.vehicleIcon {
-  font-size: 4rem;
-  margin-bottom: var(--spacing-lg);
-  transition: transform 0.3s ease;
-  filter: drop-shadow(0 0.25rem 0.5rem rgba(0, 0, 0, 0.1));
-}
-
-.vehicleCard:hover .vehicleIcon {
-  transform: scale(1.1) rotate(-5deg);
-}
-
-.vehicleCard h3 {
-  font-size: var(--font-size-xl);
-  color: var(--primary-blue);
-  margin-bottom: var(--spacing-sm);
-  font-weight: 600;
-}
-
-.vehicleCard p {
-  color: var(--text-secondary);
-  margin-bottom: var(--spacing-lg);
-  font-size: var(--font-size-sm);
-}
-
-.vehicleCount {
-  display: inline-block;
-  background: linear-gradient(45deg, var(--accent-orange), var(--accent-orange-light));
-  color: var(--white);
-  padding: var(--spacing-xs) var(--spacing-md);
-  border-radius: var(--border-radius-md);
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  box-shadow: 0 0.25rem 0.5rem rgba(249, 115, 22, 0.3);
-}
-
 /* ===== CTA SECTION ===== */
 .ctaSection {
   padding: var(--spacing-2xl) 0 var(--spacing-2xl);
@@ -550,6 +303,9 @@
 .ctaContent {
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ctaContent h2 {
@@ -567,30 +323,7 @@
   margin-right: auto;
 }
 
-.ctaButton {
-  background: linear-gradient(45deg, var(--accent-orange), var(--accent-orange-light));
-  color: var(--white);
-  border: none;
-  padding: var(--spacing-lg) var(--spacing-2xl);
-  font-size: var(--font-size-lg);
-  font-weight: 600;
-  border-radius: var(--border-radius-lg);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0.5rem 1rem rgba(249, 115, 22, 0.3);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.ctaButton:hover {
-  transform: translateY(-0.125rem);
-  box-shadow: 0 0.75rem 1.5rem rgba(249, 115, 22, 0.4);
-  background: linear-gradient(45deg, var(--accent-orange-light), var(--accent-orange));
-}
-
-.ctaButton:active {
-  transform: translateY(0);
-}
+/* CTA button styles removed - now using SearchButton UI component */
 
 /* ===== ANIMATIONS ===== */
 @keyframes fadeInUp {
@@ -627,16 +360,7 @@
   }
 }
 
-@keyframes slideInFromRight {
-  from {
-    opacity: 0;
-    transform: translateX(3rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
+
 
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 48rem) {
@@ -658,11 +382,6 @@
     gap: var(--spacing-lg);
   }
   
-  .infoCard {
-    flex: none;
-    max-width: none;
-  }
-  
   .parallaxSection {
     height: 50vh;
   }
@@ -676,49 +395,7 @@
     border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
   }
 
-  .ctaButton {
-    padding: var(--spacing-md) var(--spacing-xl);
-    font-size: var(--font-size-base);
-  }
-  
-  .vehicleCard {
-    flex: 0 0 16rem;
-    padding: var(--spacing-xl);
-  }
-  
-  .vehicleIcon {
-    font-size: 3rem;
-  }
-
-  /* Carrossel Responsivo */
-  .carouselContainer {
-    padding: 0 2rem;
-  }
-
-  .carouselSlide {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .vehicleCard {
-    max-width: 100%;
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-
-  .carouselButton {
-    width: 2.5rem;
-    height: 2.5rem;
-    font-size: 1.2rem;
-  }
-
-  .carouselButtonPrev {
-    left: -0.5rem;
-  }
-
-  .carouselButtonNext {
-    right: -0.5rem;
-  }
+  /* CTA button responsive styles removed - now using SearchButton UI component */
 }
 
 @media (max-width: 30rem) {
@@ -731,35 +408,10 @@
     flex-direction: column;
     gap: var(--spacing-md);
   }
-  
-  .vehicleCard {
-    flex: 0 0 14rem;
-    padding: var(--spacing-lg);
-  }
-  
-  .vehicleIcon {
-    font-size: 2.5rem;
-  }
-  
-  .vehicleCard h3 {
-    font-size: var(--font-size-lg);
-  }
 }
 
 /* ===== SCROLL ANIMATIONS ===== */
-@media (prefers-reduced-motion: no-preference) {
-  .cardAnimate {
-    animation-play-state: running;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .cardAnimate {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-  
   .scrollIndicator {
     animation: none;
   }
