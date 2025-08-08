@@ -32,6 +32,11 @@ interface SubmitButtonProps extends BaseButtonProps {
   loading?: boolean;
 }
 
+interface LoginButtonProps extends BaseButtonProps {
+  type?: 'button';
+  children?: React.ReactNode;
+}
+
 export const SearchButton: React.FC<SearchButtonProps> = ({
   disabled = false,
   onClick,
@@ -151,12 +156,34 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
   );
 };
 
+export const LoginButton: React.FC<LoginButtonProps> = ({
+  disabled = false,
+  onClick,
+  className = '',
+  type = 'button',
+  children = 'Entrar',
+  ...props
+}) => {
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={`${styles.loginButton} ${className}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+
 const Buttons = {
   Search: SearchButton,
   Favorite: FavoriteButton,
   CTA: CTAButton,
   Query: QueryButton,
   Submit: SubmitButton,
+  Login: LoginButton,
 };
 
 export default Buttons;

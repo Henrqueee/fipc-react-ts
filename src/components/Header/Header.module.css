@@ -12,6 +12,11 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--spacing-lg) 0;
+  gap: var(--spacing-lg);
+}
+
+.logo {
+  flex-shrink: 0;
 }
 
 .logo h1 {
@@ -34,6 +39,8 @@
   display: flex;
   gap: var(--spacing-xl);
   align-items: center;
+  flex: 1;
+  justify-content: center;
 }
 
 .navLink {
@@ -69,6 +76,10 @@
   border-radius: 1px;
 }
 
+.authSection {
+  flex-shrink: 0;
+}
+
 @media (max-width: 48rem) {
   .headerContent {
     flex-direction: column;
@@ -84,10 +95,15 @@
     gap: var(--spacing-md);
     flex-wrap: wrap;
     justify-content: center;
+    flex: none;
   }
   
   .navLink {
     font-size: var(--font-size-sm);
     padding: var(--spacing-xs) var(--spacing-sm);
+  }
+  
+  .authSection {
+    order: -1;
   }
 }
