@@ -98,7 +98,7 @@ class AuthService {
       // localStorage.setItem('authToken', response.data.token);
       // localStorage.setItem('userData', JSON.stringify(response.data.user));
       // return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw this.handleError(error);
     }
   }
@@ -141,13 +141,17 @@ class AuthService {
   }
 
   // Tratamento de erros
-  private handleError(error: any): IApiError {
-    if (error.response?.data) {
-      return error.response.data;
+  private handleError(error: unknown): IApiError {
+    if (error && typeof error === 'object' && 'response' in error) {
+      const axiosError = error as { response?: { data?: IApiError } };
+      if (axiosError.response?.data) {
+        return axiosError.response.data;
+      }
     }
     
-    if (error.message) {
-      return { message: error.message };
+    if (error && typeof error === 'object' && 'message' in error) {
+      const errorWithMessage = error as { message: string };
+      return { message: errorWithMessage.message };
     }
     
     return { message: 'Erro interno do servidor' };

@@ -4,6 +4,18 @@ import { SelectInput } from '../../components/UI/Inputs/Inputs';
 import { QueryButton } from '../../components/UI/Buttons/Buttons';
 import styles from './Query.module.css';
 
+interface IQueryResult {
+  vehicleType: string;
+  brand: string;
+  model: string;
+  year: string;
+  fuel: string;
+  price: string;
+  month: string;
+  date: string;
+  id: string;
+}
+
 const Query: React.FC = () => {
   const { 
     currentSearch, 
@@ -11,7 +23,7 @@ const Query: React.FC = () => {
     resetCurrentSearch 
   } = useVehicleStore();
   
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<IQueryResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

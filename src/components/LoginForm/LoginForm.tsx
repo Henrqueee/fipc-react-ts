@@ -25,7 +25,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
       await login({ email, password });
       onSuccess?.();
       onClose();
-    } catch (error) {
+    } catch {
       // Erro já tratado no contexto
     }
   };

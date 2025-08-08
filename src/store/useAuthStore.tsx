@@ -41,8 +41,11 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
       
       const response = await authService.login(credentials);
       setUser(response.user);
-    } catch (error: any) {
-      setError(error.message || 'Erro ao fazer login');
+    } catch (error: unknown) {
+      const errorMessage = error && typeof error === 'object' && 'message' in error 
+        ? (error as { message: string }).message 
+        : 'Erro ao fazer login';
+      setError(errorMessage);
       throw error;
     } finally {
       setIsLoading(false);
@@ -54,7 +57,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
       setIsLoading(true);
       await authService.logout();
       setUser(null);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Erro ao fazer logout:', error);
     } finally {
       setIsLoading(false);
