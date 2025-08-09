@@ -26,19 +26,19 @@ const Carousel: React.FC<CarouselProps> = ({
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalSlides = Math.ceil(items.length / itemsPerSlide);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % totalSlides);
-  };
-
   useEffect(() => {
     if (!autoPlay) return;
+
+    const nextSlide = () => {
+      setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    };
 
     const interval = setInterval(() => {
       nextSlide();
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [currentSlide, autoPlay, autoPlayInterval]);
+  }, [autoPlay, autoPlayInterval, totalSlides]);
 
   return (
     <div className={`${styles.carouselContainer} ${className}`}>

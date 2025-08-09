@@ -12,6 +12,11 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--spacing-lg) 0;
+  gap: var(--spacing-lg);
+}
+
+.logo {
+  flex-shrink: 0;
 }
 
 .logo h1 {
@@ -34,6 +39,8 @@
   display: flex;
   gap: var(--spacing-xl);
   align-items: center;
+  flex: 1;
+  justify-content: center;
 }
 
 .navLink {
@@ -69,9 +76,16 @@
   border-radius: 1px;
 }
 
-@media (max-width: 48rem) {
+.authSection {
+  margin-left: var(--spacing-lg);
+}
+
+/* Media query para tablets e telas médias */
+@media (max-width: 50rem) {
   .headerContent {
     flex-direction: column;
+    justify-content: center;
+    text-align: center;
     gap: var(--spacing-lg);
     padding: var(--spacing-md) 0;
   }
@@ -81,13 +95,38 @@
   }
   
   .nav {
+    display: flex;
+    align-items: center;
     gap: var(--spacing-md);
     flex-wrap: wrap;
     justify-content: center;
+    flex: none;
+    width: 100%;
   }
   
   .navLink {
     font-size: var(--font-size-sm);
     padding: var(--spacing-xs) var(--spacing-sm);
+  }
+  
+  .authSection {
+    margin-left: 0;
+    margin-top: 0;
+  }
+}
+
+/* Media query para telas muito pequenas */
+@media (max-width: 30rem) {
+  .headerContent {
+    padding: var(--spacing-sm) 0;
+  }
+  
+  .nav {
+    gap: var(--spacing-sm);
+  }
+  
+  .navLink {
+    padding: var(--spacing-xs);
+    font-size: var(--font-size-xs);
   }
 }

@@ -12,9 +12,13 @@
   --accent-orange-light: #fb923c;
   --accent-orange-dark: #ea580c;
   
+  --accent-green: #10b981;
+  --accent-green-dark: #059669;
+  
   --text-primary: #1e293b;
   --text-secondary: #64748b;
   --text-light: #94a3b8;
+  --text-dark: #0f172a;
   
   --white: #ffffff;
   --black: #000000;
@@ -22,6 +26,7 @@
   --success: #10b981;
   --warning: #f59e0b;
   --error: #ef4444;
+  --accent-red: #ef4444;
   
   /* Sombras */
   --shadow-sm: 0 0.0625rem 0.125rem 0 rgb(0 0 0 / 0.05);

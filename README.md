@@ -1,69 +1,85 @@
-# React + TypeScript + Vite
+# FIPE Query
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React application for querying vehicle prices from Brazil's FIPE table. Built with TypeScript, Vite, and a clean, responsive design that provides instant access to official vehicle valuations.
 
-Currently, two official plugins are available:
+## Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js 18.0 or higher
+- npm 9.0 or higher
+- Modern web browser with ES2020 support
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Clone the repository and install dependencies:
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/your-username/fipc-react.git
+cd fipc-react
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Start the development server:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+The application will be available at `http://localhost:5173`
+
+## Usage
+
+### Basic Vehicle Query
+
+1. Select your vehicle type (Cars, Motorcycles, or Trucks)
+2. Choose the brand from the dropdown menu
+3. Select the specific model
+4. Pick the manufacturing year
+5. Click "Search" to get the current FIPE value
+
+### Authentication Features
+
+The application includes a complete authentication system:
+
+```typescript
+// Login example
+const { login, isAuthenticated } = useAuthStore();
+await login({ email: 'user@example.com', password: 'password' });
+```
+
+### Building for Production
+
+```bash
+npm run build
+npm run preview
+```
+
+### Running Tests
+
+```bash
+npm test
+npm run test:coverage
+```
+
+## Related Projects
+
+- [FIPE API](https://deividfortuna.github.io/fipe/) - Official FIPE table API
+- [React Query](https://tanstack.com/query) - For advanced data fetching patterns
+- [Vite](https://vitejs.dev/) - Next generation frontend tooling
+
+This project stands out by providing a modern, TypeScript-first approach with comprehensive authentication and a responsive design system.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+Please ensure your code follows the existing style conventions and includes appropriate tests.
+
+## License
+
+MIT License - see the [LICENSE](LICENSE) file for details.
+
+Built with ❤️ for the Brazilian automotive community.
