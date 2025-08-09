@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
-import { LoginButton } from '../UI/Buttons/Buttons';
+import { SubmitButton } from '../UI/Buttons/Buttons';
 import LoginForm from '../LoginForm/LoginForm';
 import UserMenu from '../UserMenu/UserMenu';
 import styles from './Header.module.css';
@@ -34,15 +34,17 @@ const Header: React.FC = () => {
               <Link to="/query" className={styles.navLink}>Query</Link>
               <Link to="/about" className={styles.navLink}>About</Link>
               <Link to="/contact" className={styles.navLink}>Contact</Link>
+              
+              <div className={styles.authSection}>
+                {isAuthenticated ? (
+                  <UserMenu />
+                ) : (
+                  <SubmitButton onClick={handleLoginClick}>
+                    Entrar
+                  </SubmitButton>
+                )}
+              </div>
             </nav>
-
-            <div className={styles.authSection}>
-              {isAuthenticated ? (
-                <UserMenu />
-              ) : (
-                <LoginButton onClick={handleLoginClick} />
-              )}
-            </div>
           </div>
         </div>
       </header>

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../../store/useAuthStore';
+import { SubmitButton } from '../UI/Buttons/Buttons';
+import { Toast } from '../UI/Toast';
 import styles from './LoginForm.module.css';
 
 interface ILoginFormProps {
@@ -11,6 +13,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
   
   const { login, isLoading, error, clearError } = useAuthStore();
 
@@ -23,8 +26,13 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
 
     try {
       await login({ email, password });
-      onSuccess?.();
-      onClose();
+      setShowSuccessToast(true);
+      
+      // Aguarda um pouco para mostrar o toast de sucesso antes de fechar
+      setTimeout(() => {
+        onSuccess?.();
+        onClose();
+      }, 1500);
     } catch {
       // Erro já tratado no contexto
     }
@@ -38,6 +46,19 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
   return (
     <div className={styles.overlay} onClick={handleClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <Toast
+          message={error || ''}
+          type="error"
+          isVisible={!!error}
+          onClose={clearError}
+        />
+        
+        <Toast
+          message="Login realizado com sucesso!"
+          type="success"
+          isVisible={showSuccessToast}
+        />
+        
         <div className={styles.header}>
           <h2>Entrar</h2>
           <button 
@@ -50,12 +71,6 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
         </div>
 
         <form onSubmit={handleSubmit} className={styles.form}>
-          {error && (
-            <div className={styles.errorMessage}>
-              {error}
-            </div>
-          )}
-
           <div className={styles.inputGroup}>
             <label htmlFor="email">E-mail</label>
             <input
@@ -87,18 +102,18 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={isLoading}
               >
-                {showPassword ? '👁️' : '👁️‍🗨️'}
+                {showPassword ? '●' : '○'}
               </button>
             </div>
           </div>
 
-          <button
+          <SubmitButton
             type="submit"
-            className={styles.submitButton}
             disabled={isLoading || !email || !password}
+            loading={isLoading}
           >
-            {isLoading ? 'Entrando...' : 'Entrar'}
-          </button>
+            Entrar
+          </SubmitButton>
         </form>
 
         <div className={styles.footer}>
