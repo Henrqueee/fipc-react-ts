@@ -20,11 +20,7 @@ interface CTAButtonProps extends BaseButtonProps {
   children: React.ReactNode;
 }
 
-interface QueryButtonProps extends BaseButtonProps {
-  type?: 'submit' | 'button';
-  children: React.ReactNode;
-  loading?: boolean;
-}
+
 
 interface SubmitButtonProps extends BaseButtonProps {
   type?: 'submit' | 'button';
@@ -98,34 +94,7 @@ export const CTAButton: React.FC<CTAButtonProps> = ({
   );
 };
 
-export const QueryButton: React.FC<QueryButtonProps> = ({
-  disabled = false,
-  onClick,
-  className = '',
-  type = 'submit',
-  children,
-  loading = false,
-  ...props
-}) => {
-  return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled || loading}
-      className={`${styles.queryButton} ${className}`}
-      {...props}
-    >
-      {loading ? (
-        <>
-          <span className={styles.spinner}></span>
-          {children}
-        </>
-      ) : (
-        children
-      )}
-    </button>
-  );
-};
+
 
 export const SubmitButton: React.FC<SubmitButtonProps> = ({
   disabled = false,
@@ -181,7 +150,6 @@ const Buttons = {
   Search: SearchButton,
   Favorite: FavoriteButton,
   CTA: CTAButton,
-  Query: QueryButton,
   Submit: SubmitButton,
   Login: LoginButton,
 };

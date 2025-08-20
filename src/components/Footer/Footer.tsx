@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
             <h4>Navigation</h4>
             <ul className={styles.footerLinks}>
               <li><Link to="/">Home</Link></li>
-              <li><Link to="/query">Query</Link></li>
+
               <li><Link to="/about">About</Link></li>
               <li><Link to="/contact">Contact</Link></li>
             </ul>

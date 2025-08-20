@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { useVehicleStore } from '../../store/useVehicleStore';
+import type { VehicleResult } from '../../store/useVehicleStore';
 import { SearchButton, FavoriteButton } from '../UI/Buttons/Buttons';
 import { SelectInput } from '../UI/Inputs/Inputs';
+import SearchResultModal from '../SearchResultModal/SearchResultModal';
 import styles from './SearchForm.module.css';
 
 const SearchForm: React.FC = () => {
-  const navigate = useNavigate();
-  const { searchVehicle, updateCurrentSearch } = useVehicleStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchResult, setSearchResult] = useState<VehicleResult | null>(null);
+
+  const { searchVehicle, updateCurrentSearch, isLoading, error } = useVehicleStore();
   
   const [formData, setFormData] = useState({
     vehicleType: '',
@@ -28,8 +32,9 @@ const SearchForm: React.FC = () => {
     const { vehicleType, brand, model, year, fuel } = formData;
     if (vehicleType && brand && model && year) {
       updateCurrentSearch({ vehicleType, brand, model, year, fuel });
-      await searchVehicle();
-      navigate('/query');
+      setIsModalOpen(true);
+      const result = await searchVehicle();
+      setSearchResult(result);
     }
   };
 
@@ -118,6 +123,14 @@ const SearchForm: React.FC = () => {
             </div>
           </form>
         </div>
+
+        <SearchResultModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          vehicleData={searchResult}
+          isLoading={isLoading}
+          error={error}
+        />
 
         <div className={styles.features}>
           <div className={styles.feature}>
