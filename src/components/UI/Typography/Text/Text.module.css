@@ -1,0 +1,70 @@
+/* Body Text - texto padrão */
+.bodyText {
+  font-size: var(--font-size-md);
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+}
+
+.bodyText.onHeroStory {
+  color: rgba(255, 255, 255, 0.9);
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+/* Keyframes for hero story animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Body Text em fundo escuro */
+.bodyText.onDark {
+  color: var(--white);
+  opacity: 0.9;
+}
+
+/* Parallax Text - texto em seções com fundo escuro */
+.parallaxText {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-2xl);
+  opacity: 0.9;
+  line-height: 1.6;
+  color: var(--white);
+  text-align: center;
+  max-width: 50rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Small Text - texto menor para labels e informações secundárias */
+.smallText {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  margin-top: var(--spacing-xs);
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .bodyText {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .parallaxText {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-xl);
+    max-width: 90%;
+  }
+  
+  .smallText {
+    font-size: 0.75rem;
+  }
+}

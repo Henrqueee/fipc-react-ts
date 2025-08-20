@@ -4,161 +4,411 @@
   flex-direction: column;
 }
 
+/* Hero Section - Storytelling */
+.heroStory {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, var(--primary-blue) 100%);
+  color: white;
+  padding: 8rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroStory::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>') repeat;
+  opacity: 0.3;
+}
+
+.storyIntro {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.storyBadge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  padding: 0.5rem 1.5rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  animation: fadeInDown 1s ease-out both;
+  transition: all 0.3s ease;
+}
+
+.storyBadge:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.badgeText {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.storyTitle {
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.storyLead {
+  margin-bottom: 4rem;
+  color: rgba(255, 255, 255, 0.95);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+.storyTimeline {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 3rem;
+  animation: fadeInUp 1s ease-out 0.9s both;
+}
+
+.timelineItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  animation: scaleIn 0.6s ease-out both;
+  transition: transform 0.3s ease;
+}
+
+.timelineItem:nth-child(1) {
+  animation-delay: 1.2s;
+}
+
+.timelineItem:nth-child(2) {
+  animation-delay: 1.4s;
+}
+
+.timelineItem:nth-child(3) {
+  animation-delay: 1.6s;
+}
+
+.timelineItem:hover {
+  transform: translateY(-5px);
+}
+
+.timelineItem:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 2rem;
+  right: -1.5rem;
+  width: 3rem;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 100%);
+}
+
+.timelineYear {
+  background: var(--primary-blue);
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.timelineYear::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.timelineItem:hover .timelineYear {
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.timelineItem:hover .timelineYear::before {
+  left: 100%;
+}
+
+.timelineContent {
+  max-width: 150px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Timeline text animation delays */
+.timelineText1 {
+  animation-delay: 1.8s !important;
+}
+
+.timelineText2 {
+  animation-delay: 2.0s !important;
+}
+
+.timelineText3 {
+  animation-delay: 2.2s !important;
+}
+
+/* Keyframes for animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Story Section */
+.storySection {
+  padding: 4rem 0;
+  background: var(--background-color);
+}
+
+.storyContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+/* Estilos removidos - usando componentes padronizados */
+
+.storyStats {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--card-background);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+}
+
+.statNumber {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  min-width: 80px;
+}
+
+.statLabel {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.missionSection {
+  padding: 4rem 0;
+  background: var(--surface-color);
+  text-align: center;
+}
+
+.missionContent {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Estilos removidos - usando componentes padronizados */
+
 .main {
   flex: 1;
   padding: var(--spacing-2xl) 0;
 }
 
-.hero {
-  text-align: center;
-  margin-bottom: var(--spacing-2xl);
-  padding: var(--spacing-2xl) var(--spacing-lg);
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
-  color: var(--white);
-  border-radius: var(--border-radius-lg);
-}
-
-.title {
-  font-size: var(--font-size-4xl);
-  font-weight: 700;
-  margin-bottom: var(--spacing-md);
-}
-
-.subtitle {
-  font-size: var(--font-size-xl);
-  color: var(--text-secondary);
-  max-width: 37.5rem;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
+/* Container */
 .content {
   max-width: 75rem;
   margin: 0 auto;
-  width: 100%;
+  padding: 0 var(--spacing-lg);
 }
 
-@media (min-width: 120rem) {
-  .content {
-    max-width: 87.5rem;
+
+
+
+
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .heroStory {
+    padding: 4rem 0;
   }
-}
 
-@media (min-width: 160rem) {
-  .content {
-    max-width: 100rem;
+  .storyTimeline {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
   }
+
+  .timelineItem:not(:last-child)::after {
+    display: none;
+  }
+
+  .timelineItem {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .timelineContent {
+    max-width: 200px;
+  }
+
+  .storyContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  /* Estilos responsivos removidos - usando componentes padronizados */
+
+  .storyStats {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .statCard {
+    flex: 1;
+    min-width: 120px;
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .statNumber {
+    font-size: 1.5rem;
+    min-width: auto;
+    margin-bottom: 0.5rem;
+  }
+
+  .statLabel {
+    font-size: 0.875rem;
+  }
+
+  /* Estilos responsivos removidos - usando componentes padronizados */
+
+  .featuresGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .hero {
+    padding: 3rem 0;
+  }
+
+  /* Estilos responsivos removidos - usando componentes padronizados */
+
+  .ctaSection {
+    padding: 3rem 0;
+  }
+
+  /* Estilos responsivos removidos - usando componentes padronizados */
+
+  /* Estilos responsivos removidos - usando componentes padronizados */
 }
 
-.contentLayout {
-  display: flex;
-  gap: var(--spacing-2xl);
-  margin-bottom: var(--spacing-2xl);
-}
-
-.contentLayout .textSection {
-  flex: 2;
-}
-
-.contentLayout .statsSection {
-  flex: 1;
-}
-
-.textSection {
-  background: var(--white);
-  padding: var(--spacing-2xl);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
-}
-
-.textSection h2 {
-  color: var(--primary-blue);
-  font-size: var(--font-size-2xl);
-  margin-bottom: var(--spacing-lg);
-  font-weight: 600;
-}
-
-.textSection h2 {
-  color: var(--primary-blue);
-  font-size: var(--font-size-2xl);
-  margin: var(--spacing-xl) 0 var(--spacing-md) 0;
-  font-weight: 600;
+/* CTA Section */
+.ctaSection {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
   text-align: center;
+  color: var(--white);
 }
 
-.textSection p {
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin-bottom: var(--spacing-md);
-  font-size: var(--font-size-base);
-}
-
-.statsSection {
+.ctaContent {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--spacing-lg);
 }
+
+.ctaContent > * {
+  margin: 0;
+}
+
+/* Estilos removidos - usando componentes padronizados */
 
 /* Estilos de statCard removidos - agora usando componente Card */
 
+/* Features Section */
 .featuresSection {
-  background: var(--white);
-  padding: var(--spacing-2xl);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
-  margin-top: var(--spacing-2xl);
-}
-
-.featuresSection h2 {
-  color: var(--primary-blue);
-  font-size: var(--font-size-2xl);
-  margin-bottom: var(--spacing-xl);
+  padding: 4rem 0;
+  background: var(--background-color);
   text-align: center;
-  font-weight: 600;
 }
 
-.featuresList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-lg);
-}
+/* Estilos removidos - usando componentes padronizados */
 
-.featuresList .feature {
-  flex: 1 1 18.75rem;
-}
-
-/* Estilos de feature removidos - agora usando componente Card */
-
-@media (max-width: 48rem) {
-  .title {
-    font-size: var(--font-size-3xl);
-  }
-  
-  .subtitle {
-    font-size: var(--font-size-lg);
-    padding: 0 var(--spacing-md);
-  }
-  
-  .contentLayout {
-    flex-direction: column;
-    gap: var(--spacing-lg);
-  }
-  
-  .textSection,
-  .featuresSection {
-    padding: var(--spacing-xl);
-  }
-  
-  .featuresList {
-    flex-direction: column;
-  }
-  
-  .featuresList .feature {
-    flex: none;
-  }
-  
-  .hero {
-    margin: 0 var(--spacing-md) var(--spacing-xl) var(--spacing-md);
-    padding: var(--spacing-xl);
-  }
+.featuresGrid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
