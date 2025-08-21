@@ -34,11 +34,12 @@
   border-bottom: 1px solid var(--secondary-gray);
 }
 
-.header h2 {
-  color: var(--primary-blue);
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
-  margin: 0;
+.header h2,
+.header [class*="Title"] {
+  color: var(--primary-blue) !important;
+  font-size: var(--font-size-2xl) !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
 }
 
 .closeButton {
@@ -169,10 +170,11 @@
   text-align: center;
 }
 
-.footer p {
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-  margin: 0;
+.footer p,
+.footer [class*="Text"] {
+  color: var(--text-secondary) !important;
+  font-size: var(--font-size-sm) !important;
+  margin: 0 !important;
 }
 
 /* Animations */

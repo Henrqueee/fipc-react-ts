@@ -13,18 +13,19 @@
   text-align: center;
 }
 
-.formCard h2 {
-  color: var(--primary-blue);
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
-  margin-bottom: var(--spacing-md);
+.formCard h2,
+.formCard .title {
+  color: var(--primary-blue) !important;
+  font-size: var(--font-size-2xl) !important;
+  font-weight: 700 !important;
+  margin-bottom: var(--spacing-md) !important;
 }
 
 .formDescription {
-  color: var(--text-secondary);
-  font-size: var(--font-size-base);
-  margin-bottom: var(--spacing-2xl);
-  line-height: 1.6;
+  color: var(--text-secondary) !important;
+  font-size: var(--font-size-base) !important;
+  margin-bottom: var(--spacing-2xl) !important;
+  line-height: 1.6 !important;
 }
 
 .form {
@@ -64,10 +65,26 @@
 
 .feature {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: var(--spacing-sm);
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.feature .title {
+  color: var(--text-primary) !important;
+  font-size: var(--font-size-base) !important;
+  font-weight: 600 !important;
+  margin: var(--spacing-xs) 0 !important;
+}
+
+.feature .text {
+  color: var(--text-secondary) !important;
+  font-size: var(--font-size-sm) !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
 }
 
 .featureIcon {

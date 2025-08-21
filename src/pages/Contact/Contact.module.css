@@ -16,18 +16,18 @@
 }
 
 .title {
-  font-size: var(--font-size-4xl);
-  font-weight: 700;
-  color: var(--primary-blue);
-  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-4xl) !important;
+  font-weight: 700 !important;
+  color: var(--primary-blue) !important;
+  margin-bottom: var(--spacing-md) !important;
 }
 
 .subtitle {
-  font-size: var(--font-size-xl);
-  color: var(--text-secondary);
+  font-size: var(--font-size-xl) !important;
+  color: var(--text-secondary) !important;
   max-width: 37.5rem;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.6 !important;
 }
 
 .content {
@@ -82,11 +82,13 @@
 }
 
 .infoCard h2,
-.formCard h2 {
-  color: var(--primary-blue);
-  font-size: var(--font-size-2xl);
-  margin-bottom: var(--spacing-xl);
-  font-weight: 600;
+.formCard h2,
+.infoCard .title,
+.formCard .title {
+  color: var(--primary-blue) !important;
+  font-size: var(--font-size-2xl) !important;
+  margin-bottom: var(--spacing-xl) !important;
+  font-weight: 600 !important;
 }
 
 .contactItem {
@@ -115,63 +117,29 @@
   flex-shrink: 0;
 }
 
-.contactDetails h3 {
-  color: var(--text-primary);
-  font-size: var(--font-size-lg);
-  margin-bottom: var(--spacing-sm);
-  font-weight: 600;
+.contactDetails h3,
+.contactDetails .title {
+  color: var(--text-primary) !important;
+  font-size: var(--font-size-lg) !important;
+  margin-bottom: var(--spacing-sm) !important;
+  font-weight: 600 !important;
 }
 
-.contactDetails p {
-  color: var(--primary-blue);
-  font-size: var(--font-size-base);
-  font-weight: 600;
-  margin-bottom: var(--spacing-xs);
+.contactDetails p,
+.contactDetails .text {
+  color: var(--primary-blue) !important;
+  font-size: var(--font-size-base) !important;
+  font-weight: 600 !important;
+  margin-bottom: var(--spacing-xs) !important;
 }
 
-.contactDetails span {
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
+.contactDetails span,
+.contactDetails .text:last-child {
+  color: var(--text-secondary) !important;
+  font-size: var(--font-size-sm) !important;
 }
 
-.socialCard {
-  background: var(--white);
-  padding: var(--spacing-xl);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
-}
 
-.socialCard h3 {
-  color: var(--primary-blue);
-  font-size: var(--font-size-xl);
-  margin-bottom: var(--spacing-lg);
-  font-weight: 600;
-}
-
-.socialLinks {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.socialLink {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius-md);
-  text-decoration: none;
-  color: var(--text-primary);
-  transition: background-color 0.2s ease;
-}
-
-.socialLink:hover {
-  background: var(--secondary-gray-light);
-}
-
-.socialLink span {
-  font-size: 1.5rem;
-}
 
 .formSection {
   height: fit-content;
@@ -234,12 +202,13 @@
   box-shadow: var(--shadow-md);
 }
 
-.faqSection h2 {
-  color: var(--primary-blue);
-  font-size: var(--font-size-2xl);
-  margin-bottom: var(--spacing-xl);
-  text-align: center;
-  font-weight: 600;
+.faqSection h2,
+.faqSection .title {
+  color: var(--primary-blue) !important;
+  font-size: var(--font-size-2xl) !important;
+  margin-bottom: var(--spacing-xl) !important;
+  text-align: center !important;
+  font-weight: 600 !important;
 }
 
 .faqContainer {
@@ -264,16 +233,18 @@
   box-shadow: var(--shadow-md);
 }
 
-.faqItem h3 {
-  color: var(--primary-blue);
-  font-size: var(--font-size-lg);
-  margin-bottom: var(--spacing-md);
-  font-weight: 600;
+.faqItem h3,
+.faqItem .title {
+  color: var(--primary-blue) !important;
+  font-size: var(--font-size-lg) !important;
+  margin-bottom: var(--spacing-md) !important;
+  font-weight: 600 !important;
 }
 
-.faqItem p {
-  color: var(--text-secondary);
-  line-height: 1.6;
+.faqItem p,
+.faqItem .text {
+  color: var(--text-secondary) !important;
+  line-height: 1.6 !important;
 }
 
 @media (max-width: 64rem) {

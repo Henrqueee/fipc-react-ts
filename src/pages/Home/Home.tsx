@@ -3,6 +3,7 @@ import SearchForm from '../../components/SearchForm/SearchForm';
 import Carousel from '../../components/Carousel/Carousel';
 import Card from '../../components/Card/Card';
 import { CTAButton } from '../../components/UI/Buttons/Buttons';
+import { Title, Text, Heading } from '../../components/UI/Typography';
 import styles from './Home.module.css';
 
 const Home: React.FC = () => {
@@ -31,24 +32,24 @@ const Home: React.FC = () => {
         <div className={styles.heroContent}>
           <div className="container">
             <div className={styles.heroText}>
-              <h1 className={styles.title}>
+              <Title variant="hero" className={styles.title}>
                 FIPE Query
-              </h1>
-              <p className={styles.subtitle}>
+              </Title>
+              <Text className={styles.subtitle}>
                 Check the average price of vehicles in the national market
-              </p>
+              </Text>
               <div className={styles.heroStats}>
                 <div className={styles.statItem}>
-                  <span className={styles.statNumber}>100K+</span>
-                  <span className={styles.statLabel}>Queries completed</span>
+                  <Text className={styles.statNumber}>100K+</Text>
+                  <Text className={styles.statLabel}>Queries completed</Text>
                 </div>
                 <div className={styles.statItem}>
-                  <span className={styles.statNumber}>24/7</span>
-                  <span className={styles.statLabel}>Always available</span>
+                  <Text className={styles.statNumber}>24/7</Text>
+                  <Text className={styles.statLabel}>Always available</Text>
                 </div>
                 <div className={styles.statItem}>
-                  <span className={styles.statNumber}>100%</span>
-                  <span className={styles.statLabel}>Official data</span>
+                  <Text className={styles.statNumber}>100%</Text>
+                  <Text className={styles.statLabel}>Official data</Text>
                 </div>
               </div>
             </div>
@@ -61,7 +62,7 @@ const Home: React.FC = () => {
           {/* Search Section */}
           <section className={styles.searchSection}>
             <div className={styles.searchWrapper}>
-              <h2 className={styles.sectionTitle}>Make your query</h2>
+              <Heading variant="large" level={2} className={styles.sectionTitle}>Make your query</Heading>
               <SearchForm />
             </div>
           </section>
@@ -69,10 +70,10 @@ const Home: React.FC = () => {
           {/* Features Section with animation */}
           <section className={styles.featuresSection}>
             <div className={styles.featuresHeader}>
-              <h2 className={styles.sectionTitle}>Why choose FIPE Query?</h2>
-              <p className={styles.sectionSubtitle}>
+              <Heading variant="large" level={2} className={styles.sectionTitle}>Why choose FIPE Query?</Heading>
+              <Text className={styles.sectionSubtitle}>
                 The most reliable way to check vehicle prices
-              </p>
+              </Text>
             </div>
             
             <div className={styles.infoContainer}>
@@ -104,23 +105,23 @@ const Home: React.FC = () => {
           <section className={styles.parallaxSection}>
             <div className={styles.parallaxImage} />
             <div className={styles.parallaxContent}>
-              <h2>Technology and Reliability</h2>
-              <p>
+              <Heading variant="large" level={2}>Technology and Reliability</Heading>
+              <Text>
                 Our platform uses the most recent data from the FIPE table, 
                 ensuring accuracy and reliability in every query.
-              </p>
+              </Text>
               <div className={styles.techFeatures}>
                 <div className={styles.techItem}>
                   <span className={styles.techIcon}>🔒</span>
-                  <span>Secure</span>
+                  <Text>Secure</Text>
                 </div>
                 <div className={styles.techItem}>
                   <span className={styles.techIcon}>⚡</span>
-                  <span>Fast</span>
+                  <Text>Fast</Text>
                 </div>
                 <div className={styles.techItem}>
                   <span className={styles.techIcon}>📱</span>
-                  <span>Responsive</span>
+                  <Text>Responsive</Text>
                 </div>
               </div>
             </div>
@@ -129,10 +130,10 @@ const Home: React.FC = () => {
           {/* Vehicle Types Section with Carousel */}
           <section className={styles.vehicleTypesSection}>
             <div className={styles.container}>
-              <h2 className={styles.sectionTitle}>Vehicle Types</h2>
-              <p className={styles.sectionSubtitle}>
+              <Heading variant="large" level={2} className={styles.sectionTitle}>Vehicle Types</Heading>
+              <Text className={styles.sectionSubtitle}>
                 Check prices for all types of vehicles
-              </p>
+              </Text>
             </div>
             
             <Carousel 
@@ -150,8 +151,8 @@ const Home: React.FC = () => {
       <section className={styles.ctaSection}>
         <div className="container">
           <div className={styles.ctaContent}>
-            <h2>Ready to discover your vehicle's value?</h2>
-            <p>Make your query now and get access to official FIPE data</p>
+            <Heading variant="large" level={2}>Ready to discover your vehicle's value?</Heading>
+            <Text>Make your query now and get access to official FIPE data</Text>
             <CTAButton onClick={scrollToSearch}>
               Check Now
             </CTAButton>

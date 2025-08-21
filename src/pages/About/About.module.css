@@ -51,11 +51,11 @@
 }
 
 .badgeText {
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .storyTitle {
@@ -246,16 +246,16 @@
 }
 
 .statNumber {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--primary-blue);
-  min-width: 80px;
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: var(--primary-blue) !important;
+  min-width: 80px !important;
 }
 
 .statLabel {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  font-weight: 500;
+  font-size: 1rem !important;
+  color: var(--text-secondary) !important;
+  font-weight: 500 !important;
 }
 
 .missionSection {
@@ -338,13 +338,13 @@
   }
 
   .statNumber {
-    font-size: 1.5rem;
-    min-width: auto;
-    margin-bottom: 0.5rem;
+    font-size: 1.5rem !important;
+    min-width: auto !important;
+    margin-bottom: 0.5rem !important;
   }
 
   .statLabel {
-    font-size: 0.875rem;
+    font-size: 0.875rem !important;
   }
 
   /* Estilos responsivos removidos - usando componentes padronizados */

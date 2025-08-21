@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { SubmitButton } from '../UI/Buttons/Buttons';
+import { Title } from '../UI/Typography';
 import LoginForm from '../LoginForm/LoginForm';
 import UserMenu from '../UserMenu/UserMenu';
 import styles from './Header.module.css';
@@ -25,7 +26,7 @@ const Header: React.FC = () => {
           <div className={styles.headerContent}>
             <div className={styles.logo}>
               <Link to="/" className={styles.logoLink}>
-                <h1>FIPE Query</h1>
+                <Title variant="section">FIPE Query</Title>
               </Link>
             </div>
             

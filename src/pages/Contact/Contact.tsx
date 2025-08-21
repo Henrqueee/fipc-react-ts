@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextInput, SelectInput } from '../../components/UI/Inputs/Inputs';
 import { SubmitButton } from '../../components/UI/Buttons/Buttons';
+import { Title, Text, Heading } from '../../components/UI/Typography';
 import styles from './Contact.module.css';
 
 const Contact: React.FC = () => {
@@ -51,80 +52,60 @@ const Contact: React.FC = () => {
       <main className={styles.main}>
         <div className="container">
           <section className={styles.hero}>
-            <h1 className={styles.title}>Get in Touch</h1>
-            <p className={styles.subtitle}>
+            <Title variant="hero" className={styles.title}>Get in Touch</Title>
+            <Text className={styles.subtitle}>
               Have questions or suggestions? We're here to help!
-            </p>
+            </Text>
           </section>
 
           <div className={styles.content}>
             <div className={styles.contactInfo}>
               <div className={styles.infoCard}>
-                <h2>Contact Information</h2>
+                <Heading variant="large" level={2}>Contact Information</Heading>
                 
                 <div className={styles.contactItem}>
                   <div className={styles.contactIcon}>📧</div>
                   <div className={styles.contactDetails}>
-                    <h3>Email</h3>
-                    <p>contact@fipequery.com</p>
-                    <span>We respond within 24 hours</span>
+                    <Heading variant="medium" level={3}>Email</Heading>
+                    <Text>contact@fipequery.com</Text>
+                    <Text>We respond within 24 hours</Text>
                   </div>
                 </div>
 
                 <div className={styles.contactItem}>
                   <div className={styles.contactIcon}>📞</div>
                   <div className={styles.contactDetails}>
-                    <h3>Phone</h3>
-                    <p>(11) 3000-0000</p>
-                    <span>Monday to Friday, 9am to 6pm</span>
+                    <Heading variant="medium" level={3}>Phone</Heading>
+                    <Text>(11) 3000-0000</Text>
+                    <Text>Monday to Friday, 9am to 6pm</Text>
                   </div>
                 </div>
 
                 <div className={styles.contactItem}>
                   <div className={styles.contactIcon}>💬</div>
                   <div className={styles.contactDetails}>
-                    <h3>Live Chat</h3>
-                    <p>Real-time support</p>
-                    <span>Monday to Friday, 9am to 6pm</span>
+                    <Heading variant="medium" level={3}>Live Chat</Heading>
+                    <Text>Real-time support</Text>
+                    <Text>Monday to Friday, 9am to 6pm</Text>
                   </div>
                 </div>
 
                 <div className={styles.contactItem}>
                   <div className={styles.contactIcon}>❓</div>
                   <div className={styles.contactDetails}>
-                    <h3>FAQ</h3>
-                    <p>Frequently asked questions</p>
-                    <span>Quick answers to common questions</span>
+                    <Heading variant="medium" level={3}>FAQ</Heading>
+                    <Text>Frequently asked questions</Text>
+                    <Text>Quick answers to common questions</Text>
                   </div>
                 </div>
               </div>
 
-              <div className={styles.socialCard}>
-                <h3>Social Media</h3>
-                <div className={styles.socialLinks}>
-                  <a href="#" className={styles.socialLink}>
-                    <span>📘</span>
-                    Facebook
-                  </a>
-                  <a href="#" className={styles.socialLink}>
-                    <span>📷</span>
-                    Instagram
-                  </a>
-                  <a href="#" className={styles.socialLink}>
-                    <span>🐦</span>
-                    Twitter
-                  </a>
-                  <a href="#" className={styles.socialLink}>
-                    <span>💼</span>
-                    LinkedIn
-                  </a>
-                </div>
-              </div>
+
             </div>
 
             <div className={styles.formSection}>
               <div className={styles.formCard}>
-                <h2>Send Your Message</h2>
+                <Heading variant="large" level={2}>Send Your Message</Heading>
                 
                 {success && (
                   <div className={styles.successMessage}>
@@ -172,7 +153,7 @@ const Contact: React.FC = () => {
                   />
 
                   <div className={styles.formGroup}>
-                    <label htmlFor="message">Message *</label>
+                    <Text as="label" htmlFor="message">Message *</Text>
                     <textarea
                       id="message"
                       name="message"
@@ -203,38 +184,38 @@ const Contact: React.FC = () => {
           </div>
 
           <section className={styles.faqSection}>
-            <h2>Frequently Asked Questions</h2>
+            <Heading variant="large" level={2}>Frequently Asked Questions</Heading>
             <div className={styles.faqContainer}>
               <div className={styles.faqItem}>
-                <h3>How does the FIPE query work?</h3>
-                <p>
+                <Heading variant="medium" level={3}>How does the FIPE query work?</Heading>
+                <Text>
                   The query is free and simple. Select the vehicle type, brand, 
                   model and year to get the updated FIPE table value.
-                </p>
+                </Text>
               </div>
               
               <div className={styles.faqItem}>
-                <h3>Are the values updated?</h3>
-                <p>
+                <Heading variant="medium" level={3}>Are the values updated?</Heading>
+                <Text>
                   Yes! Values are updated monthly according to the official 
                   FIPE table, always in the first half of the month.
-                </p>
+                </Text>
               </div>
               
               <div className={styles.faqItem}>
-                <h3>Can I save my queries?</h3>
-                <p>
+                <Heading variant="medium" level={3}>Can I save my queries?</Heading>
+                <Text>
                   Yes, all your queries are saved in the history for 
                   later consultation and value comparison.
-                </p>
+                </Text>
               </div>
               
               <div className={styles.faqItem}>
-                <h3>Is the service free?</h3>
-                <p>
+                <Heading variant="medium" level={3}>Is the service free?</Heading>
+                <Text>
                   Completely free! You can make as many queries as you want 
                   without any cost or limitation.
-                </p>
+                </Text>
               </div>
             </div>
           </section>

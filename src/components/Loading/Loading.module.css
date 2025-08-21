@@ -56,10 +56,10 @@
 }
 
 .text {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  text-align: center;
+  margin: 0 !important;
+  color: var(--text-secondary) !important;
+  font-size: 0.9rem !important;
+  text-align: center !important;
 }
 
 @keyframes sk-bouncedelay {

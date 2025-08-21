@@ -19,11 +19,12 @@
   flex-shrink: 0;
 }
 
-.logo h1 {
-  color: var(--primary-blue);
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
-  margin: 0;
+.logo h1,
+.logo [class*="Title"] {
+  color: var(--primary-blue) !important;
+  font-size: var(--font-size-2xl) !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
 }
 
 .logoLink {
@@ -90,8 +91,9 @@
     padding: var(--spacing-md) 0;
   }
   
-  .logo h1 {
-    font-size: var(--font-size-xl);
+  .logo h1,
+  .logo [class*="Title"] {
+    font-size: var(--font-size-xl) !important;
   }
   
   .nav {

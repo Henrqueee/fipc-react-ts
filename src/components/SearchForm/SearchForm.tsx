@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useVehicleStore } from '../../store/useVehicleStore';
 import type { VehicleResult } from '../../store/useVehicleStore';
 import { SearchButton, FavoriteButton } from '../UI/Buttons/Buttons';
 import { SelectInput } from '../UI/Inputs/Inputs';
+import { Text, Heading } from '../UI/Typography';
 import SearchResultModal from '../SearchResultModal/SearchResultModal';
 import styles from './SearchForm.module.css';
 
 const SearchForm: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchResult, setSearchResult] = useState<VehicleResult | null>(null);
+  const location = useLocation();
 
   const { searchVehicle, updateCurrentSearch, isLoading, error } = useVehicleStore();
   
@@ -20,6 +22,16 @@ const SearchForm: React.FC = () => {
     year: '',
     fuel: ''
   });
+
+  // Pre-fill vehicle type from navigation state
+  useEffect(() => {
+    if (location.state && location.state.vehicleType) {
+      setFormData(prev => ({
+        ...prev,
+        vehicleType: location.state.vehicleType
+      }));
+    }
+  }, [location.state]);
 
   // Static data for simplification
   const brands = ['Volkswagen', 'Chevrolet', 'Fiat', 'Ford', 'Honda', 'Toyota'];
@@ -58,10 +70,10 @@ const SearchForm: React.FC = () => {
     <div className={styles.searchForm}>
       <div className="container">
         <div className={styles.formCard}>
-          <h2>Check your vehicle's value</h2>
-          <p className={styles.formDescription}>
+          <Heading variant="large" level={2}>Check your vehicle's value</Heading>
+          <Text className={styles.formDescription}>
             Select your vehicle information to check the value in the FIPE table
-          </p>
+          </Text>
           
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.formRow}>
@@ -135,18 +147,18 @@ const SearchForm: React.FC = () => {
         <div className={styles.features}>
           <div className={styles.feature}>
             <div className={styles.featureIcon}>📊</div>
-            <h3>Updated Data</h3>
-            <p>Information always updated according to the official FIPE table</p>
+            <Heading variant="small" level={3}>Updated Data</Heading>
+            <Text>Information always updated according to the official FIPE table</Text>
           </div>
           <div className={styles.feature}>
             <div className={styles.featureIcon}>🆓</div>
-            <h3>Free Query</h3>
-            <p>Perform as many queries as you want, completely free</p>
+            <Heading variant="small" level={3}>Free Query</Heading>
+            <Text>Perform as many queries as you want, completely free</Text>
           </div>
           <div className={styles.feature}>
             <div className={styles.featureIcon}>⚡</div>
-            <h3>Fast Results</h3>
-            <p>Get your query results in seconds</p>
+            <Heading variant="small" level={3}>Fast Results</Heading>
+            <Text>Get your query results in seconds</Text>
           </div>
         </div>
       </div>

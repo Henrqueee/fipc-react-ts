@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../../store/useAuthStore';
 import { SubmitButton } from '../UI/Buttons/Buttons';
+import { Title, Text } from '../UI/Typography';
 import { Toast } from '../UI/Toast';
 import styles from './LoginForm.module.css';
 
@@ -60,7 +61,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
         />
         
         <div className={styles.header}>
-          <h2>Entrar</h2>
+          <Title variant="section">Entrar</Title>
           <button 
             className={styles.closeButton}
             onClick={handleClose}
@@ -117,7 +118,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
         </form>
 
         <div className={styles.footer}>
-          <p>Dados de teste: demo@fipe.com / 123456</p>
+          <Text>Dados de teste: demo@fipe.com / 123456</Text>
         </div>
       </div>
     </div>

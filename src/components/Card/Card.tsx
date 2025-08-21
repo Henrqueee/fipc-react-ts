@@ -1,4 +1,5 @@
 import React from 'react';
+import { Text, Heading } from '../UI/Typography';
 import styles from './Card.module.css';
 
 interface CardProps {
@@ -35,8 +36,8 @@ const Card: React.FC<CardProps> = ({
           <span className={styles.icon}>{icon}</span>
         </div>
       )}
-      <h3 className={styles.title}>{title}</h3>
-      <p className={styles.description}>{description}</p>
+      <Heading variant="medium" level={3} className={styles.title}>{title}</Heading>
+      <Text className={styles.description}>{description}</Text>
     </div>
   );
 };

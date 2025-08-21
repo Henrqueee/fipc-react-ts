@@ -1,9 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Footer.module.css';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const navigate = useNavigate();
+
+  const handleServiceClick = (vehicleType: string) => {
+    navigate('/', { state: { vehicleType } });
+    setTimeout(() => {
+      const searchSection = document.querySelector('[class*="searchSection"]');
+      if (searchSection) {
+        searchSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
 
   return (
     <footer className={styles.footer}>
@@ -15,12 +26,7 @@ const Footer: React.FC = () => {
               Your reliable source for FIPE table queries. 
               Values updated monthly for cars, motorcycles, and trucks.
             </p>
-            <div className={styles.socialLinks}>
-              <a href="#" className={styles.socialLink} aria-label="Facebook">📘</a>
-              <a href="#" className={styles.socialLink} aria-label="Instagram">📷</a>
-              <a href="#" className={styles.socialLink} aria-label="Twitter">🐦</a>
-              <a href="#" className={styles.socialLink} aria-label="LinkedIn">💼</a>
-            </div>
+
           </div>
 
           <div className={styles.footerSection}>
@@ -36,24 +42,13 @@ const Footer: React.FC = () => {
           <div className={styles.footerSection}>
             <h4>Services</h4>
             <ul className={styles.footerLinks}>
-              <li><a href="#">Car Query</a></li>
-              <li><a href="#">Motorcycle Query</a></li>
-              <li><a href="#">Truck Query</a></li>
-              <li><a href="#">Price History</a></li>
-              <li><a href="#">FIPE API</a></li>
+              <li><button onClick={() => handleServiceClick('cars')} className={styles.serviceLink}>Car Query</button></li>
+              <li><button onClick={() => handleServiceClick('motorcycles')} className={styles.serviceLink}>Motorcycle Query</button></li>
+              <li><button onClick={() => handleServiceClick('trucks')} className={styles.serviceLink}>Truck Query</button></li>
             </ul>
           </div>
 
-          <div className={styles.footerSection}>
-            <h4>Support</h4>
-            <ul className={styles.footerLinks}>
-              <li><a href="#">Help Center</a></li>
-              <li><a href="#">FAQ</a></li>
-              <li><a href="#">Terms of Use</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Contact Us</a></li>
-            </ul>
-          </div>
+
         </div>
 
         <div className={styles.footerBottom}>

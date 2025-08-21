@@ -56,18 +56,18 @@
 }
 
 .title {
-  font-size: var(--font-size-xl);
-  color: var(--primary-blue);
-  margin-bottom: var(--spacing-md);
-  font-weight: 600;
-  margin: 0 0 var(--spacing-md);
+  font-size: var(--font-size-xl) !important;
+  color: var(--primary-blue) !important;
+  margin-bottom: var(--spacing-md) !important;
+  font-weight: 600 !important;
+  margin: 0 0 var(--spacing-md) !important;
 }
 
 .description {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  font-size: var(--font-size-base);
-  margin: 0;
+  color: var(--text-secondary) !important;
+  line-height: 1.6 !important;
+  font-size: var(--font-size-base) !important;
+  margin: 0 !important;
 }
 
 /* Animation */

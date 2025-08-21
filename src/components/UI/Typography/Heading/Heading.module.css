@@ -1,0 +1,44 @@
+/* Base heading styles */
+.heading {
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  color: var(--primary-blue);
+  line-height: 1.2;
+}
+
+/* Heading variants */
+.large {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+.medium {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.small {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Dark theme variant */
+.heading.onDark {
+  color: var(--white);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .large {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .medium {
+    font-size: var(--font-size-xl);
+  }
+  
+  .small {
+    font-size: var(--font-size-lg);
+  }
+}

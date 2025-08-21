@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './About.module.css';
 import Card from '../../components/Card/Card';
 import { CTAButton } from '../../components/UI/Buttons/Buttons';
-import { Title, Text } from '../../components/UI/Typography';
+import { Title, Text, Heading } from '../../components/UI/Typography';
 
 const About: React.FC = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const About: React.FC = () => {
         <div className="container">
           <div className={styles.storyIntro}>
             <div className={styles.storyBadge}>
-              <span className={styles.badgeText}>Since 1973</span>
+              <Text className={styles.badgeText}>Since 1973</Text>
             </div>
             <Title variant="hero" className={styles.storyTitle}>
                50 Years of Trust
@@ -70,7 +70,7 @@ const About: React.FC = () => {
           <section className={styles.storySection}>
             <div className={styles.storyContent}>
               <div className={styles.storyText}>
-                <Title variant="section">The FIPE Story</Title>
+                <Heading variant="large" level={2}>The FIPE Story</Heading>
                 <Text>
                   Since 1973, the FIPE Foundation has been the cornerstone of vehicle 
                   valuation in Brazil. What started as a research initiative became 
@@ -79,16 +79,16 @@ const About: React.FC = () => {
               </div>
               <div className={styles.storyStats}>
                 <div className={styles.statCard}>
-                  <span className={styles.statNumber}>1973</span>
-                  <span className={styles.statLabel}>Founded</span>
+                  <Text className={styles.statNumber}>1973</Text>
+                  <Text className={styles.statLabel}>Founded</Text>
                 </div>
                 <div className={styles.statCard}>
-                  <span className={styles.statNumber}>50+</span>
-                  <span className={styles.statLabel}>Years</span>
+                  <Text className={styles.statNumber}>50+</Text>
+                  <Text className={styles.statLabel}>Years</Text>
                 </div>
                 <div className={styles.statCard}>
-                  <span className={styles.statNumber}>1M+</span>
-                  <span className={styles.statLabel}>Monthly Queries</span>
+                  <Text className={styles.statNumber}>1M+</Text>
+                  <Text className={styles.statLabel}>Monthly Queries</Text>
                 </div>
               </div>
             </div>
@@ -97,7 +97,7 @@ const About: React.FC = () => {
           {/* Mission Section */}
           <section className={styles.missionSection}>
             <div className={styles.missionContent}>
-              <Title variant="section">Our Mission</Title>
+              <Heading variant="large" level={2}>Our Mission</Heading>
               <Text>
                 We're building the most reliable platform to check vehicle prices, 
                 making FIPE data accessible to everyone, anywhere, anytime.
@@ -107,7 +107,7 @@ const About: React.FC = () => {
 
           {/* Features Grid */}
           <section className={styles.featuresSection}>
-            <Title variant="section">Why Choose FIPE Query?</Title>
+            <Heading variant="large" level={2}>Why Choose FIPE Query?</Heading>
             <div className={styles.featuresGrid}>
               <Card
                 icon="🏛️"
@@ -136,7 +136,7 @@ const About: React.FC = () => {
           {/* CTA Section */}
           <section className={styles.ctaSection}>
             <div className={styles.ctaContent}>
-              <Title variant="section" onDark={true}>Ready to Check Vehicle Prices?</Title>
+              <Heading variant="large" level={2} onDark={true}>Ready to Check Vehicle Prices?</Heading>
               <Text onDark={true}>
                 Get instant access to official FIPE prices for any vehicle in Brazil.
               </Text>

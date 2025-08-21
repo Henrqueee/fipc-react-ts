@@ -1,4 +1,5 @@
 import React from 'react';
+import { Text } from '../UI/Typography';
 import styles from './Loading.module.css';
 
 interface LoadingProps {
@@ -23,7 +24,7 @@ const Loading: React.FC<LoadingProps> = ({
         <div className={styles.bounce2}></div>
         <div className={styles.bounce3}></div>
       </div>
-      {text && <p className={styles.text}>{text}</p>}
+      {text && <Text className={styles.text}>{text}</Text>}
     </div>
   );
 };

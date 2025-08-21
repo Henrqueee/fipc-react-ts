@@ -1,37 +1,19 @@
-/* Hero Subtitle - usado na seção principal */
-.heroSubtitle {
-  font-size: clamp(1.125rem, 3vw, 1.5rem);
-  margin-bottom: var(--spacing-2xl);
-  max-width: 50rem;
-  margin-left: auto;
-  margin-right: auto;
-  opacity: 0.9;
-  line-height: 1.6;
-  text-align: center;
-  color: var(--white);
+.subtitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.4;
 }
 
-/* Section Subtitle - usado em seções */
-.sectionSubtitle {
-  font-size: var(--font-size-lg);
-  color: var(--text-secondary);
-  max-width: 40rem;
-  margin: var(--spacing-lg) auto 0;
-  line-height: 1.6;
-  text-align: center;
+.subtitle.small {
+  font-size: 1rem;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .heroSubtitle {
-    font-size: clamp(1rem, 4vw, 1.25rem);
-    margin-bottom: var(--spacing-xl);
-    max-width: 90%;
-  }
-  
-  .sectionSubtitle {
-    font-size: var(--font-size-md);
-    max-width: 90%;
-    margin: var(--spacing-md) auto 0;
-  }
+.subtitle.medium {
+  font-size: 1.25rem;
+}
+
+.subtitle.large {
+  font-size: 1.5rem;
 }

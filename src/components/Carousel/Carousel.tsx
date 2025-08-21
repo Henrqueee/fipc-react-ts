@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Text, Heading } from '../UI/Typography';
 import styles from './Carousel.module.css';
 
 interface CarouselItem {
@@ -53,9 +54,9 @@ const Carousel: React.FC<CarouselProps> = ({
               {items.slice(slideIndex * itemsPerSlide, slideIndex * itemsPerSlide + itemsPerSlide).map((item, cardIndex) => (
                 <div key={cardIndex} className={styles.carouselCard}>
                   <div className={styles.cardIcon}>{item.icon}</div>
-                  <h3 className={styles.cardTitle}>{item.title}</h3>
-                  <p className={styles.cardDescription}>{item.description}</p>
-                  <span className={styles.cardCount}>{item.count}</span>
+                  <Heading variant="medium" level={3} className={styles.cardTitle}>{item.title}</Heading>
+                  <Text className={styles.cardDescription}>{item.description}</Text>
+                  <Text as="span" className={styles.cardCount}>{item.count}</Text>
                 </div>
               ))}
             </div>

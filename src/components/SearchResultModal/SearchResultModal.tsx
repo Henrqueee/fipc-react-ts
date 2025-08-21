@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { VehicleResult } from '../../store/useVehicleStore';
 import { FavoriteButton } from '../UI/Buttons/Buttons';
+import { Text, Heading } from '../UI/Typography';
 import { Toast } from '../UI/Toast';
 import styles from './SearchResultModal.module.css';
 
@@ -53,7 +54,7 @@ const SearchResultModal: React.FC<ISearchResultModalProps> = ({
       
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
-          <h2>Resultado da Consulta</h2>
+          <Heading variant="large" level={2}>Resultado da Consulta</Heading>
           <button 
             className={styles.closeButton}
             onClick={onClose}
@@ -67,32 +68,32 @@ const SearchResultModal: React.FC<ISearchResultModalProps> = ({
           {isLoading ? (
             <div className={styles.loading}>
               <div className={styles.spinner}></div>
-              <p>Consultando tabela FIPE...</p>
+              <Text>Consultando tabela FIPE...</Text>
             </div>
           ) : vehicleData ? (
             <>
               <div className={styles.vehicleInfo}>
                 <div className={styles.vehicleHeader}>
-                  <h3>{vehicleData.brand} {vehicleData.model}</h3>
-                  <span className={styles.year}>{vehicleData.year}</span>
+                  <Heading variant="medium" level={3}>{vehicleData.brand} {vehicleData.model}</Heading>
+                  <Text as="span" className={styles.year}>{vehicleData.year}</Text>
                 </div>
                 
                 <div className={styles.details}>
                   <div className={styles.detailItem}>
-                    <span className={styles.label}>Tipo:</span>
-                    <span className={styles.value}>{vehicleData.vehicleType}</span>
+                    <Text as="span" className={styles.label}>Tipo:</Text>
+                    <Text as="span" className={styles.value}>{vehicleData.vehicleType}</Text>
                   </div>
                   <div className={styles.detailItem}>
-                    <span className={styles.label}>Combustível:</span>
-                    <span className={styles.value}>{vehicleData.fuel || 'Gasolina'}</span>
+                    <Text as="span" className={styles.label}>Combustível:</Text>
+                    <Text as="span" className={styles.value}>{vehicleData.fuel || 'Gasolina'}</Text>
                   </div>
                 </div>
               </div>
 
               <div className={styles.priceSection}>
-                <div className={styles.priceLabel}>Valor FIPE</div>
-                <div className={styles.price}>{vehicleData.price}</div>
-                <div className={styles.priceDate}>Referência: {vehicleData.month}</div>
+                <Text className={styles.priceLabel}>Valor FIPE</Text>
+                <Text className={styles.price}>{vehicleData.price}</Text>
+                <Text className={styles.priceDate}>Referência: {vehicleData.month}</Text>
               </div>
 
               <div className={styles.actions}>
@@ -104,7 +105,7 @@ const SearchResultModal: React.FC<ISearchResultModalProps> = ({
             </>
           ) : (
             <div className={styles.noData}>
-              <p>Nenhum resultado encontrado</p>
+              <Text>Nenhum resultado encontrado</Text>
             </div>
           )}
         </div>
