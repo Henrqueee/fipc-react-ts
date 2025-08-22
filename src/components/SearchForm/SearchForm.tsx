@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import { useVehicleStore } from '../../store/useVehicleStore';
 import type { VehicleResult } from '../../store/useVehicleStore';
 import { SearchButton, FavoriteButton } from '../UI/Buttons/Buttons';
 import { SelectInput } from '../UI/Inputs/Inputs';
 import { Text, Heading } from '../UI/Typography';
+import { Toast } from '../UI/Toast';
 import SearchResultModal from '../SearchResultModal/SearchResultModal';
+import useFavorites from '../../hooks/useFavorites';
 import styles from './SearchForm.module.css';
 
 const SearchForm: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchResult, setSearchResult] = useState<VehicleResult | null>(null);
+  const [toastState, setToastState] = useState({ isVisible: false, message: '', type: 'info' as 'success' | 'error' | 'info' });
   const location = useLocation();
+  const { addToFavorites } = useFavorites();
 
   const { searchVehicle, updateCurrentSearch, isLoading, error } = useVehicleStore();
   
@@ -53,13 +58,27 @@ const SearchForm: React.FC = () => {
   const handleAddToFavorites = () => {
     const { vehicleType, brand, model, year, fuel } = formData;
     if (vehicleType && brand && model && year) {
-      // TODO: Implementar funcionalidade de favoritos
-      // Exemplo: salvar no localStorage ou enviar para uma API
-      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-      const newFavorite = { vehicleType, brand, model, year, fuel, id: Date.now() };
-      favorites.push(newFavorite);
-      localStorage.setItem('favorites', JSON.stringify(favorites));
-      alert('Veículo adicionado aos favoritos!');
+      const result = addToFavorites({ vehicleType, brand, model, year, fuel });
+      
+      setToastState({
+        isVisible: true,
+        message: result.message,
+        type: result.success ? 'success' : 'error'
+      });
+      
+      setTimeout(() => {
+        setToastState(prev => ({ ...prev, isVisible: false }));
+      }, 3000);
+    } else {
+      setToastState({
+        isVisible: true,
+        message: 'Por favor, preencha todos os campos obrigatórios!',
+        type: 'error'
+      });
+      
+      setTimeout(() => {
+        setToastState(prev => ({ ...prev, isVisible: false }));
+      }, 3000);
     }
   };
 
@@ -67,6 +86,15 @@ const SearchForm: React.FC = () => {
 
   return (
     <div className={styles.searchForm}>
+      {toastState.isVisible && createPortal(
+        <Toast
+          isVisible={toastState.isVisible}
+          message={toastState.message}
+          type={toastState.type}
+          onClose={() => setToastState(prev => ({ ...prev, isVisible: false }))}
+        />,
+        document.body
+      )}
       <div className="container">
         <div className={styles.formCard}>
           <Heading variant="large" level={2}>Check your vehicle's value</Heading>

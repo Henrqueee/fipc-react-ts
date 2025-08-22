@@ -98,6 +98,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border: 2px solid transparent;
+  margin-bottom: 1.5rem;
 }
 
 .ctaButton:hover:not(:disabled) {

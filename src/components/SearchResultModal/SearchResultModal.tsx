@@ -5,6 +5,7 @@ import { FavoriteButton } from '../UI/Buttons/Buttons';
 import { Text, Heading } from '../UI/Typography';
 import { Toast } from '../UI/Toast';
 import Loading from '../Loading/Loading';
+import useFavorites from '../../hooks/useFavorites';
 import styles from './SearchResultModal.module.css';
 
 interface ISearchResultModalProps {
@@ -21,36 +22,45 @@ const SearchResultModal: React.FC<ISearchResultModalProps> = ({
   vehicleData,
   isLoading,
 }) => {
-  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [toastState, setToastState] = useState({ isVisible: false, message: '', type: 'info' as 'success' | 'error' | 'info' });
+  const { addToFavorites } = useFavorites();
   
   if (!isOpen) return null;
 
   const handleAddToFavorites = () => {
     if (vehicleData) {
-      const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-      const newFavorite = { 
-        ...vehicleData,
-        id: vehicleData.id || Date.now().toString()
-      };
+      const result = addToFavorites({
+        vehicleType: vehicleData.vehicleType,
+        brand: vehicleData.brand,
+        model: vehicleData.model,
+        year: vehicleData.year,
+        fuel: vehicleData.fuel,
+        price: vehicleData.price,
+        month: vehicleData.month
+      });
       
-      const existingIndex = favorites.findIndex((fav: any) => fav.id === newFavorite.id);
-      if (existingIndex === -1) {
-        favorites.push(newFavorite);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-        setShowSuccessToast(true);
-        setTimeout(() => setShowSuccessToast(false), 3000);
-      }
+      setToastState({
+        isVisible: true,
+        message: result.message,
+        type: result.success ? 'success' : 'error'
+      });
+      
+      setTimeout(() => {
+        setToastState(prev => ({ ...prev, isVisible: false }));
+      }, 3000);
     }
   };
 
   const modalContent = (
     <div className={styles.overlay} onClick={onClose}>
-      {showSuccessToast && (
-        <Toast isVisible={showSuccessToast}
-          message="Veículo adicionado aos favoritos!"
-          type="success"
-          onClose={() => setShowSuccessToast(false)}
-        />
+      {toastState.isVisible && createPortal(
+        <Toast
+          isVisible={toastState.isVisible}
+          message={toastState.message}
+          type={toastState.type}
+          onClose={() => setToastState(prev => ({ ...prev, isVisible: false }))}
+        />,
+        document.body
       )}
       
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
