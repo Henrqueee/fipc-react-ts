@@ -73,7 +73,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.inputGroup}>
-            <label htmlFor="email">E-mail</label>
+            <Text as="label" htmlFor="email">E-mail</Text>
             <input
               id="email"
               type="email"
@@ -86,7 +86,7 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
           </div>
 
           <div className={styles.inputGroup}>
-            <label htmlFor="password">Senha</label>
+            <Text as="label" htmlFor="password">Senha</Text>
             <div className={styles.passwordWrapper}>
               <input
                 id="password"
@@ -109,8 +109,6 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
           </div>
 
           <SubmitButton
-            type="submit"
-            disabled={isLoading || !email || !password}
             loading={isLoading}
           >
             Entrar

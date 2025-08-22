@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { TextInput, SelectInput } from '../../components/UI/Inputs/Inputs';
 import { SubmitButton } from '../../components/UI/Buttons/Buttons';
-import { Title, Text, Heading } from '../../components/UI/Typography';
+import { Title, Text, Heading, Subtitle } from '../../components/UI/Typography';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import Toast from '../../components/UI/Toast/Toast';
 import styles from './Contact.module.css';
 
 const Contact: React.FC = () => {
@@ -53,9 +55,9 @@ const Contact: React.FC = () => {
         <div className="container">
           <section className={styles.hero}>
             <Title variant="hero" className={styles.title}>Get in Touch</Title>
-            <Text className={styles.subtitle}>
+            <Subtitle variant="hero">
               Have questions or suggestions? We're here to help!
-            </Text>
+            </Subtitle>
           </section>
 
           <div className={styles.content}>
@@ -107,11 +109,14 @@ const Contact: React.FC = () => {
               <div className={styles.formCard}>
                 <Heading variant="large" level={2}>Send Your Message</Heading>
                 
-                {success && (
-                  <div className={styles.successMessage}>
-                    ✅ Message sent successfully! We'll get back to you soon.
-                  </div>
-                )}
+                <Toast
+                  message="Mensagem enviada com sucesso! Entraremos em contato em breve."
+                  type="success"
+                  isVisible={success}
+                  onClose={() => setSuccess(false)}
+                  autoClose={true}
+                  duration={5000}
+                />
 
                 <form onSubmit={handleSubmit} className={styles.form}>
                   <div className={styles.formRow}>
@@ -153,7 +158,7 @@ const Contact: React.FC = () => {
                   />
 
                   <div className={styles.formGroup}>
-                    <Text as="label" htmlFor="message">Message *</Text>
+                    <Text as="span">Message *</Text>
                     <textarea
                       id="message"
                       name="message"
@@ -166,13 +171,13 @@ const Contact: React.FC = () => {
                   </div>
 
                   {error && (
-                    <div className={styles.errorMessage}>
-                      {error}
-                    </div>
+                    <ErrorMessage 
+                      message={error}
+                      type="error"
+                    />
                   )}
 
                   <SubmitButton
-                    type="submit"
                     loading={loading}
                     onClick={() => {}}
                   >

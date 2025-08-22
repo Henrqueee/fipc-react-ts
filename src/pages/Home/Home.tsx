@@ -3,7 +3,7 @@ import SearchForm from '../../components/SearchForm/SearchForm';
 import Carousel from '../../components/Carousel/Carousel';
 import Card from '../../components/Card/Card';
 import { CTAButton } from '../../components/UI/Buttons/Buttons';
-import { Title, Text, Heading } from '../../components/UI/Typography';
+import { Title, Text, Heading, Subtitle } from '../../components/UI/Typography';
 import styles from './Home.module.css';
 
 const Home: React.FC = () => {
@@ -35,21 +35,21 @@ const Home: React.FC = () => {
               <Title variant="hero" className={styles.title}>
                 FIPE Query
               </Title>
-              <Text className={styles.subtitle}>
+              <Subtitle variant="hero">
                 Check the average price of vehicles in the national market
-              </Text>
+              </Subtitle>
               <div className={styles.heroStats}>
                 <div className={styles.statItem}>
                   <Text className={styles.statNumber}>100K+</Text>
-                  <Text className={styles.statLabel}>Queries completed</Text>
+                  <Text variant="stat-label" className={styles.statLabel}>Queries completed</Text>
                 </div>
                 <div className={styles.statItem}>
                   <Text className={styles.statNumber}>24/7</Text>
-                  <Text className={styles.statLabel}>Always available</Text>
+                  <Text variant="stat-label" className={styles.statLabel}>Always available</Text>
                 </div>
                 <div className={styles.statItem}>
                   <Text className={styles.statNumber}>100%</Text>
-                  <Text className={styles.statLabel}>Official data</Text>
+                  <Text variant="stat-label" className={styles.statLabel}>Official data</Text>
                 </div>
               </div>
             </div>
@@ -71,9 +71,9 @@ const Home: React.FC = () => {
           <section className={styles.featuresSection}>
             <div className={styles.featuresHeader}>
               <Heading variant="large" level={2} className={styles.sectionTitle}>Why choose FIPE Query?</Heading>
-              <Text className={styles.sectionSubtitle}>
+              <Subtitle variant="section">
                 The most reliable way to check vehicle prices
-              </Text>
+              </Subtitle>
             </div>
             
             <div className={styles.infoContainer}>
@@ -106,22 +106,22 @@ const Home: React.FC = () => {
             <div className={styles.parallaxImage} />
             <div className={styles.parallaxContent}>
               <Heading variant="large" level={2}>Technology and Reliability</Heading>
-              <Text>
+              <Text variant="parallax">
                 Our platform uses the most recent data from the FIPE table, 
                 ensuring accuracy and reliability in every query.
               </Text>
               <div className={styles.techFeatures}>
                 <div className={styles.techItem}>
                   <span className={styles.techIcon}>🔒</span>
-                  <Text>Secure</Text>
+                  <Text variant="tech-feature">Secure</Text>
                 </div>
                 <div className={styles.techItem}>
                   <span className={styles.techIcon}>⚡</span>
-                  <Text>Fast</Text>
+                  <Text variant="tech-feature">Fast</Text>
                 </div>
                 <div className={styles.techItem}>
                   <span className={styles.techIcon}>📱</span>
-                  <Text>Responsive</Text>
+                  <Text variant="tech-feature">Responsive</Text>
                 </div>
               </div>
             </div>
@@ -131,9 +131,9 @@ const Home: React.FC = () => {
           <section className={styles.vehicleTypesSection}>
             <div className={styles.container}>
               <Heading variant="large" level={2} className={styles.sectionTitle}>Vehicle Types</Heading>
-              <Text className={styles.sectionSubtitle}>
+              <Subtitle variant="section">
                 Check prices for all types of vehicles
-              </Text>
+              </Subtitle>
             </div>
             
             <Carousel 
@@ -152,7 +152,7 @@ const Home: React.FC = () => {
         <div className="container">
           <div className={styles.ctaContent}>
             <Heading variant="large" level={2}>Ready to discover your vehicle's value?</Heading>
-            <Text>Make your query now and get access to official FIPE data</Text>
+            <Text variant="parallax">Make your query now and get access to official FIPE data</Text>
             <CTAButton onClick={scrollToSearch}>
               Check Now
             </CTAButton>

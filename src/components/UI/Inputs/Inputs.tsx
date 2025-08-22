@@ -1,14 +1,10 @@
 import React from 'react';
+import { Text } from '../Typography';
 import styles from './Inputs.module.css';
 
-interface BaseInputProps {
+interface SelectInputProps {
   id: string;
   label: string;
-  disabled?: boolean;
-  className?: string;
-}
-
-interface SelectInputProps extends BaseInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   options: Array<{ value: string; label: string }>;
@@ -16,7 +12,9 @@ interface SelectInputProps extends BaseInputProps {
   required?: boolean;
 }
 
-interface TextInputProps extends BaseInputProps {
+interface TextInputProps {
+  id: string;
+  label: string;
   type?: 'text' | 'email' | 'password';
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -31,25 +29,20 @@ export const SelectInput: React.FC<SelectInputProps> = ({
   onChange,
   options,
   placeholder = "Selecione uma opção",
-  disabled = false,
-  required = false,
-  className = '',
-  ...props
+  required = false
 }) => {
   return (
-    <div className={`${styles.formGroup} ${className}`}>
-      <label htmlFor={id} className={styles.label}>
+    <div className={styles.formGroup}>
+      <Text as="label" htmlFor={id} className={styles.label}>
         {label}
         {required && <span className={styles.required}>*</span>}
-      </label>
+      </Text>
       <select
         id={id}
         value={value}
         onChange={onChange}
-        disabled={disabled}
         required={required}
         className={styles.select}
-        {...props}
       >
         <option value="">{placeholder}</option>
         {options.map((option) => (
@@ -69,27 +62,22 @@ export const TextInput: React.FC<TextInputProps> = ({
   value,
   onChange,
   placeholder,
-  disabled = false,
-  required = false,
-  className = '',
-  ...props
+  required = false
 }) => {
   return (
-    <div className={`${styles.formGroup} ${className}`}>
-      <label htmlFor={id} className={styles.label}>
+    <div className={styles.formGroup}>
+      <Text as="label" htmlFor={id} className={styles.label}>
         {label}
         {required && <span className={styles.required}>*</span>}
-      </label>
+      </Text>
       <input
         id={id}
         type={type}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        disabled={disabled}
         required={required}
         className={styles.input}
-        {...props}
       />
     </div>
   );

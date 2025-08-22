@@ -63,8 +63,7 @@ const SearchForm: React.FC = () => {
     }
   };
 
-  const isFormValid = formData.vehicleType && formData.brand && 
-                     formData.model && formData.year;
+
 
   return (
     <div className={styles.searchForm}>
@@ -96,7 +95,6 @@ const SearchForm: React.FC = () => {
                 value={formData.brand}
                 onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
                 placeholder="Select brand"
-                disabled={!formData.vehicleType}
                 options={brands.map(brand => ({ value: brand, label: brand }))}
               />
             </div>
@@ -108,7 +106,6 @@ const SearchForm: React.FC = () => {
                 value={formData.model}
                 onChange={(e) => setFormData({ ...formData, model: e.target.value })}
                 placeholder="Select model"
-                disabled={!formData.brand}
                 options={models.map(model => ({ value: model, label: model }))}
               />
 
@@ -118,19 +115,14 @@ const SearchForm: React.FC = () => {
                 value={formData.year}
                 onChange={(e) => setFormData({ ...formData, year: e.target.value })}
                 placeholder="Select year"
-                disabled={!formData.model}
                 options={years.map(year => ({ value: year, label: year }))}
               />
             </div>
 
             <div className={styles.formActions}>
-              <SearchButton
-                type="submit"
-                disabled={!isFormValid}
-              />
+              <SearchButton />
               <FavoriteButton
                 onClick={handleAddToFavorites}
-                disabled={!isFormValid}
               />
             </div>
           </form>

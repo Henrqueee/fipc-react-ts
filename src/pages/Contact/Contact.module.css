@@ -22,14 +22,6 @@
   margin-bottom: var(--spacing-md) !important;
 }
 
-.subtitle {
-  font-size: var(--font-size-xl) !important;
-  color: var(--text-secondary) !important;
-  max-width: 37.5rem;
-  margin: 0 auto;
-  line-height: 1.6 !important;
-}
-
 .content {
   display: flex;
   gap: var(--spacing-2xl);
@@ -257,11 +249,6 @@
 @media (max-width: 48rem) {
   .title {
     font-size: var(--font-size-3xl);
-  }
-  
-  .subtitle {
-    font-size: var(--font-size-lg);
-    padding: 0 var(--spacing-md);
   }
   
   .infoCard,

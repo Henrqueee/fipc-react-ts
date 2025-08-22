@@ -1,52 +1,39 @@
 import React from 'react';
 import styles from './Buttons.module.css';
+import LinkButton from './LinkButton/LinkButton';
 
-interface BaseButtonProps {
-  disabled?: boolean;
+interface SearchButtonProps {
   onClick?: () => void;
-  className?: string;
 }
 
-interface SearchButtonProps extends BaseButtonProps {
-  type?: 'submit' | 'button';
+interface FavoriteButtonProps {
+  onClick?: () => void;
 }
 
-interface FavoriteButtonProps extends BaseButtonProps {
-  type?: 'button';
-}
-
-interface CTAButtonProps extends BaseButtonProps {
-  type?: 'button';
+interface CTAButtonProps {
+  onClick?: () => void;
   children: React.ReactNode;
 }
 
-
-
-interface SubmitButtonProps extends BaseButtonProps {
-  type?: 'submit' | 'button';
+interface SubmitButtonProps {
+  onClick?: () => void;
   children: React.ReactNode;
   loading?: boolean;
 }
 
-interface LoginButtonProps extends BaseButtonProps {
-  type?: 'button';
+interface LoginButtonProps {
+  onClick?: () => void;
   children?: React.ReactNode;
 }
 
 export const SearchButton: React.FC<SearchButtonProps> = ({
-  disabled = false,
-  onClick,
-  className = '',
-  type = 'submit',
-  ...props
+  onClick
 }) => {
   return (
     <button
-      type={type}
+      type="submit"
       onClick={onClick}
-      disabled={disabled}
-      className={`${styles.searchButton} ${className}`}
-      {...props}
+      className={styles.searchButton}
     >
       🔍 Pesquisar
     </button>
@@ -54,19 +41,13 @@ export const SearchButton: React.FC<SearchButtonProps> = ({
 };
 
 export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
-  disabled = false,
-  onClick,
-  className = '',
-  type = 'button',
-  ...props
+  onClick
 }) => {
   return (
     <button
-      type={type}
+      type="button"
       onClick={onClick}
-      disabled={disabled}
-      className={`${styles.favoriteButton} ${className}`}
-      {...props}
+      className={styles.favoriteButton}
     >
       ⭐ Adicionar aos Favoritos
     </button>
@@ -74,20 +55,14 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
 };
 
 export const CTAButton: React.FC<CTAButtonProps> = ({
-  disabled = false,
   onClick,
-  className = '',
-  type = 'button',
-  children,
-  ...props
+  children
 }) => {
   return (
     <button
-      type={type}
+      type="button"
       onClick={onClick}
-      disabled={disabled}
-      className={`${styles.ctaButton} ${className}`}
-      {...props}
+      className={styles.ctaButton}
     >
       {children}
     </button>
@@ -97,21 +72,16 @@ export const CTAButton: React.FC<CTAButtonProps> = ({
 
 
 export const SubmitButton: React.FC<SubmitButtonProps> = ({
-  disabled = false,
   onClick,
-  className = '',
-  type = 'submit',
   children,
-  loading = false,
-  ...props
+  loading = false
 }) => {
   return (
     <button
-      type={type}
+      type="submit"
       onClick={onClick}
-      disabled={disabled || loading}
-      className={`${styles.submitButton} ${className}`}
-      {...props}
+      disabled={loading}
+      className={styles.submitButton}
     >
       {loading ? (
         <>
@@ -126,20 +96,14 @@ export const SubmitButton: React.FC<SubmitButtonProps> = ({
 };
 
 export const LoginButton: React.FC<LoginButtonProps> = ({
-  disabled = false,
   onClick,
-  className = '',
-  type = 'button',
-  children = 'Entrar',
-  ...props
+  children = 'Entrar'
 }) => {
   return (
     <button
-      type={type}
+      type="button"
       onClick={onClick}
-      disabled={disabled}
-      className={`${styles.loginButton} ${className}`}
-      {...props}
+      className={styles.loginButton}
     >
       {children}
     </button>
@@ -152,6 +116,8 @@ const Buttons = {
   CTA: CTAButton,
   Submit: SubmitButton,
   Login: LoginButton,
+  Link: LinkButton,
 };
 
+export { LinkButton };
 export default Buttons;

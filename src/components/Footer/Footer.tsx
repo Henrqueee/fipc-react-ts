@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { LinkButton } from '../UI/Buttons/Buttons';
 import styles from './Footer.module.css';
 
 const Footer: React.FC = () => {
@@ -42,9 +43,9 @@ const Footer: React.FC = () => {
           <div className={styles.footerSection}>
             <h4>Services</h4>
             <ul className={styles.footerLinks}>
-              <li><button onClick={() => handleServiceClick('cars')} className={styles.serviceLink}>Car Query</button></li>
-              <li><button onClick={() => handleServiceClick('motorcycles')} className={styles.serviceLink}>Motorcycle Query</button></li>
-              <li><button onClick={() => handleServiceClick('trucks')} className={styles.serviceLink}>Truck Query</button></li>
+              <li><LinkButton onClick={() => handleServiceClick('cars')}>Car Query</LinkButton></li>
+              <li><LinkButton onClick={() => handleServiceClick('motorcycles')}>Motorcycle Query</LinkButton></li>
+              <li><LinkButton onClick={() => handleServiceClick('trucks')}>Truck Query</LinkButton></li>
             </ul>
           </div>
 

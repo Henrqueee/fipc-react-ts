@@ -52,16 +52,6 @@
   background-clip: text !important;
 }
 
-.subtitle {
-  font-size: clamp(1.125rem, 3vw, 1.5rem) !important;
-  margin-bottom: var(--spacing-2xl) !important;
-  max-width: 50rem !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  opacity: 0.9 !important;
-  line-height: 1.6 !important;
-}
-
 .heroStats {
   display: flex;
   justify-content: center;
@@ -178,14 +168,6 @@
   margin-bottom: var(--spacing-2xl);
 }
 
-.sectionSubtitle {
-  font-size: var(--font-size-lg) !important;
-  color: var(--text-secondary) !important;
-  max-width: 40rem !important;
-  margin: var(--spacing-lg) auto 0 !important;
-  line-height: 1.6 !important;
-}
-
 .infoContainer {
   display: flex;
   flex-wrap: wrap;
@@ -224,22 +206,28 @@
   color: var(--white);
   max-width: 50rem;
   margin: 0 auto;
-  padding: 0 var(--spacing-md);
+  padding: var(--spacing-xl) var(--spacing-md);
 }
 
 .parallaxContent h2,
-.parallaxContent [class*="Title"] {
+.parallaxContent [class*="Title"],
+.parallaxContent [class*="Heading"] {
   font-size: var(--font-size-3xl) !important;
   margin-bottom: var(--spacing-lg) !important;
   font-weight: 700 !important;
+  color: var(--white) !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+  text-align: center !important;
 }
 
 .parallaxContent p,
 .parallaxContent [class*="Text"] {
   font-size: var(--font-size-lg) !important;
   margin-bottom: var(--spacing-2xl) !important;
-  opacity: 0.9 !important;
+  color: var(--white) !important;
   line-height: 1.6 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+  text-align: center !important;
 }
 
 .techFeatures {
@@ -306,23 +294,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: var(--spacing-xl);
+  max-width: 50rem;
+  margin: 0 auto;
 }
 
 .ctaContent h2,
-.ctaContent [class*="Title"] {
+.ctaContent [class*="Title"],
+.ctaContent [class*="Heading"] {
   font-size: var(--font-size-3xl) !important;
   margin-bottom: var(--spacing-lg) !important;
   font-weight: 700 !important;
+  color: var(--white) !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+  text-align: center !important;
 }
 
 .ctaContent p,
 .ctaContent [class*="Text"] {
   font-size: var(--font-size-lg) !important;
   margin-bottom: var(--spacing-2xl) !important;
-  opacity: 0.9 !important;
+  color: var(--white) !important;
   max-width: 40rem !important;
   margin-left: auto !important;
   margin-right: auto !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+  text-align: center !important;
 }
 
 /* CTA button styles removed - now using SearchButton UI component */

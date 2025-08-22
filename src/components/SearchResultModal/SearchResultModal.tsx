@@ -4,6 +4,7 @@ import type { VehicleResult } from '../../store/useVehicleStore';
 import { FavoriteButton } from '../UI/Buttons/Buttons';
 import { Text, Heading } from '../UI/Typography';
 import { Toast } from '../UI/Toast';
+import Loading from '../Loading/Loading';
 import styles from './SearchResultModal.module.css';
 
 interface ISearchResultModalProps {
@@ -66,10 +67,7 @@ const SearchResultModal: React.FC<ISearchResultModalProps> = ({
         
         <div className={styles.content}>
           {isLoading ? (
-            <div className={styles.loading}>
-              <div className={styles.spinner}></div>
-              <Text>Consultando tabela FIPE...</Text>
-            </div>
+            <Loading text="Consultando tabela FIPE..." />
           ) : vehicleData ? (
             <>
               <div className={styles.vehicleInfo}>
@@ -99,7 +97,6 @@ const SearchResultModal: React.FC<ISearchResultModalProps> = ({
               <div className={styles.actions}>
                 <FavoriteButton
                   onClick={handleAddToFavorites}
-                  disabled={false}
                 />
               </div>
             </>
