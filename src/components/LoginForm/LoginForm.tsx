@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 import { SubmitButton } from '../UI/Buttons/Buttons';
 import { Title, Text } from '../UI/Typography';
@@ -117,6 +118,12 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
 
         <div className={styles.footer}>
           <Text>Dados de teste: demo@fipe.com / 123456</Text>
+          <div className={styles.registerSection}>
+            <Text>Não tem uma conta? </Text>
+            <Link to="/register" className={styles.registerLink} onClick={onClose}>
+              Criar conta
+            </Link>
+          </div>
         </div>
       </div>
     </div>

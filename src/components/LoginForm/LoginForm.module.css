@@ -168,6 +168,9 @@
   background: var(--secondary-gray-light);
   border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
 }
 
 .footer p,
@@ -175,6 +178,31 @@
   color: var(--text-secondary) !important;
   font-size: var(--font-size-sm) !important;
   margin: 0 !important;
+}
+
+.registerSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+}
+
+.registerLink {
+  color: var(--primary-blue);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-md);
+  transition: all 0.2s ease;
+  border: 1px solid var(--primary-blue);
+  background: transparent;
+}
+
+.registerLink:hover {
+  background: var(--primary-blue);
+  color: var(--white);
+  transform: translateY(-1px);
 }
 
 /* Animations */

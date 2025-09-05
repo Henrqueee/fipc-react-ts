@@ -15,7 +15,7 @@ interface SelectInputProps {
 interface TextInputProps {
   id: string;
   label: string;
-  type?: 'text' | 'email' | 'password';
+  type?: 'text' | 'email' | 'password' | 'date';
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;

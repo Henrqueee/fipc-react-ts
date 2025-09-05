@@ -58,7 +58,15 @@ const SearchForm: React.FC = () => {
   const handleAddToFavorites = () => {
     const { vehicleType, brand, model, year, fuel } = formData;
     if (vehicleType && brand && model && year) {
-      const result = addToFavorites({ vehicleType, brand, model, year, fuel });
+      const result = addToFavorites({ 
+        vehicleType, 
+        brand, 
+        model, 
+        year, 
+        fuel,
+        price: searchResult?.price || '',
+        month: searchResult?.month || ''
+      });
       
       setToastState({
         isVisible: true,

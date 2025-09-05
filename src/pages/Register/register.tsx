@@ -12,6 +12,10 @@ interface IRegisterFormData {
   lastName: string;
   email: string;
   phone: string;
+  birthDate: string;
+  gender: string;
+  city: string;
+  state: string;
   password: string;
   confirmPassword: string;
 }
@@ -29,6 +33,10 @@ const Register: React.FC = () => {
     lastName: '',
     email: '',
     phone: '',
+    birthDate: '',
+    gender: '',
+    city: '',
+    state: '',
     password: '',
     confirmPassword: ''
   });
@@ -61,24 +69,24 @@ const Register: React.FC = () => {
   };
 
   const validateForm = (): boolean => {
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password || !formData.confirmPassword) {
-      showToast('Por favor, preencha todos os campos obrigatórios', 'error');
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.birthDate || !formData.city || !formData.state || !formData.password || !formData.confirmPassword) {
+      showToast('Please fill in all required fields', 'error');
       return false;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      showToast('As senhas não coincidem', 'error');
+      showToast('Passwords do not match', 'error');
       return false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      showToast('Por favor, insira um email válido', 'error');
+      showToast('Please enter a valid email', 'error');
       return false;
     }
 
     if (formData.password.length < 6) {
-      showToast('A senha deve ter pelo menos 6 caracteres', 'error');
+      showToast('Password must be at least 6 characters', 'error');
       return false;
     }
 
@@ -93,26 +101,30 @@ const Register: React.FC = () => {
     setIsLoading(true);
     
     try {
-      const registerData = {
+      const userData = {
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
         phone: formData.phone,
+        birthDate: formData.birthDate,
+        gender: formData.gender,
+        city: formData.city,
+        state: formData.state,
         password: formData.password
       };
       
-      await authService.register(registerData);
+      await authService.register(userData);
       
-      showToast('Cadastro realizado com sucesso!', 'success');
+      showToast('Registration completed successfully!', 'success');
       
-      // Redirecionar após 2 segundos
+      // Redirect after 2 seconds
       setTimeout(() => {
         navigate('/');
       }, 2000);
       
     } catch (error) {
-      console.error('Erro ao registrar:', error);
-      showToast('Erro ao realizar cadastro. Tente novamente.', 'error');
+      console.error('Registration error:', error);
+      showToast('Registration failed. Please try again.', 'error');
     } finally {
       setIsLoading(false);
     }
@@ -126,31 +138,31 @@ const Register: React.FC = () => {
           {/* Lado esquerdo - Apresentação */}
           <div className={styles.presentationSide}>
             <div className={styles.presentationHeader}>
-              <Title className={styles.presentationTitle}>Bem-vindo ao FIPE Query</Title>
+              <Title className={styles.presentationTitle}>Welcome to FIPE Query</Title>
               <Text className={styles.presentationSubtitle}>
-                Crie sua conta e tenha acesso a todas as funcionalidades da nossa plataforma
+                Create your account and get access to all features of our platform
               </Text>
             </div>
             
             <div className={styles.cardsContainer}>
               <Card
                 icon="🔍"
-                title="Consulta Simplificada"
-                description="Acesse informações de preços de veículos de forma rápida e precisa"
+                title="Simplified Search"
+                description="Access vehicle price information quickly and accurately"
                 animated={true}
                 animationDelay={0.1}
               />
               <Card
                 icon="⭐"
-                title="Favoritos"
-                description="Salve suas consultas favoritas para acesso rápido no futuro"
+                title="Favorites"
+                description="Save your favorite searches for quick access in the future"
                 animated={true}
                 animationDelay={0.3}
               />
               <Card
                 icon="📊"
-                title="Histórico Completo"
-                description="Acompanhe todas as suas consultas anteriores em um só lugar"
+                title="Complete History"
+                description="Track all your previous searches in one place"
                 animated={true}
                 animationDelay={0.5}
               />
@@ -160,9 +172,9 @@ const Register: React.FC = () => {
           {/* Lado direito - Formulário */}
           <div className={styles.formSide}>
             <div className={styles.formHeader}>
-              <Heading level={2} className={styles.formTitle}>Criar Conta</Heading>
+              <Heading level={2} className={styles.formTitle}>Create Account</Heading>
               <Text className={styles.formSubtitle}>
-                Preencha os campos abaixo para se cadastrar
+                Fill in the fields below to register
               </Text>
             </div>
             
@@ -170,18 +182,18 @@ const Register: React.FC = () => {
               <div className={styles.formRow}>
                 <TextInput
                   id="firstName"
-                  label="Nome"
+                  label="First Name"
                   value={formData.firstName}
                   onChange={handleChange}
-                  placeholder="Seu nome"
+                  placeholder="Your first name"
                   required
                 />
                 <TextInput
                   id="lastName"
-                  label="Sobrenome"
+                  label="Last Name"
                   value={formData.lastName}
                   onChange={handleChange}
-                  placeholder="Seu sobrenome"
+                  placeholder="Your last name"
                   required
                 />
               </div>
@@ -192,13 +204,13 @@ const Register: React.FC = () => {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="seu.email@exemplo.com"
+                placeholder="your.email@example.com"
                 required
               />
               
               <TextInput
                 id="phone"
-                label="Telefone"
+                label="Phone"
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="(00) 00000-0000"
@@ -206,31 +218,65 @@ const Register: React.FC = () => {
               
               <div className={styles.formRow}>
                 <TextInput
+                  id="birthDate"
+                  label="Birth Date"
+                  type="date"
+                  value={formData.birthDate}
+                  onChange={handleChange}
+                  required
+                />
+                <TextInput
+                  id="gender"
+                  label="Gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  placeholder="Male/Female/Other"
+                />
+              </div>
+              
+              <div className={styles.formRow}>
+                <TextInput
+                  id="city"
+                  label="City"
+                  value={formData.city}
+                  onChange={handleChange}
+                  placeholder="Your city"
+                  required
+                />
+                <TextInput
+                  id="state"
+                  label="State"
+                  value={formData.state}
+                  onChange={handleChange}
+                  placeholder="Your state"
+                  required
+                />
+              </div>
+              
+              <div className={styles.formRow}>
+                <TextInput
                   id="password"
-                  label="Senha"
+                  label="Password"
                   type="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="Sua senha"
+                  placeholder="Your password"
                   required
                 />
                 <TextInput
                   id="confirmPassword"
-                  label="Confirmar Senha"
+                  label="Confirm Password"
                   type="password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  placeholder="Confirme sua senha"
+                  placeholder="Confirm your password"
                   required
                 />
               </div>
               
               <div className={styles.formActions}>
-                <Text>
-                  Já tem uma conta?
-                </Text>
                 <SubmitButton loading={isLoading}>
-                  Criar Conta
+                  Create Account
                 </SubmitButton>
               </div>
             </form>
@@ -249,27 +295,27 @@ const Register: React.FC = () => {
       <section className={styles.featuresSection}>
         <div className={styles.featuresContainer}>
           <div className={styles.featuresHeader}>
-            <Heading level={2} className={styles.featuresTitle}>Recursos Exclusivos</Heading>
+            <Heading level={2} className={styles.featuresTitle}>Exclusive Features</Heading>
             <Text className={styles.featuresSubtitle}>
-              Descubra todas as vantagens que você terá ao se cadastrar em nossa plataforma
+              Discover all the advantages you'll have when registering on our platform
             </Text>
           </div>
           
           <div className={styles.featuresGrid}>
             <Card
               icon="📱"
-              title="Acesso Mobile"
-              description="Consulte informações de veículos em qualquer lugar, a qualquer momento"
+              title="Mobile Access"
+              description="Check vehicle information anywhere, anytime"
             />
             <Card
               icon="🔔"
-              title="Alertas de Preço"
-              description="Receba notificações quando o preço de um veículo favorito mudar"
+              title="Price Alerts"
+              description="Receive notifications when the price of a favorite vehicle changes"
             />
             <Card
               icon="📊"
-              title="Análise de Mercado"
-              description="Visualize gráficos e tendências de preços ao longo do tempo"
+              title="Market Analysis"
+              description="View charts and price trends over time"
             />
           </div>
         </div>
@@ -279,9 +325,9 @@ const Register: React.FC = () => {
       <section className={styles.testimonialsSection}>
         <div className={styles.testimonialsContainer}>
           <div className={styles.testimonialsHeader}>
-            <Heading level={2} className={styles.testimonialsTitle}>O que nossos usuários dizem</Heading>
+            <Heading level={2} className={styles.testimonialsTitle}>What our users say</Heading>
             <Text className={styles.testimonialsSubtitle}>
-              Veja como nossa plataforma tem ajudado pessoas a tomar decisões melhores
+              See how our platform has helped people make better decisions
             </Text>
           </div>
           
@@ -289,14 +335,14 @@ const Register: React.FC = () => {
             <div className={styles.testimonialCard}>
               <div className={styles.testimonialContent}>
                 <Text className={styles.testimonialText}>
-                  "A plataforma FIPE Query me ajudou a economizar tempo e dinheiro na compra do meu novo carro. Recomendo a todos!"
+                  "The FIPE Query platform helped me save time and money when buying my new car. I recommend it to everyone!"
                 </Text>
               </div>
               <div className={styles.testimonialAuthor}>
                 <div className={styles.testimonialAvatar}>MR</div>
                 <div>
-                  <Text className={styles.testimonialName}>Marcos Ribeiro</Text>
-                  <Text className={styles.testimonialRole}>Cliente desde 2022</Text>
+                  <Text className={styles.testimonialName}>Marcus Rivera</Text>
+                  <Text className={styles.testimonialRole}>Customer since 2022</Text>
                 </div>
               </div>
             </div>
@@ -304,14 +350,14 @@ const Register: React.FC = () => {
             <div className={styles.testimonialCard}>
               <div className={styles.testimonialContent}>
                 <Text className={styles.testimonialText}>
-                  "Como revendedor de veículos, esta ferramenta se tornou essencial para o meu negócio. Dados precisos e atualizados."
+                  "As a vehicle dealer, this tool has become essential for my business. Accurate and up-to-date data."
                 </Text>
               </div>
               <div className={styles.testimonialAuthor}>
                 <div className={styles.testimonialAvatar}>CS</div>
                 <div>
-                  <Text className={styles.testimonialName}>Carolina Silva</Text>
-                  <Text className={styles.testimonialRole}>Revendedora</Text>
+                  <Text className={styles.testimonialName}>Caroline Smith</Text>
+                  <Text className={styles.testimonialRole}>Dealer</Text>
                 </div>
               </div>
             </div>
@@ -319,14 +365,14 @@ const Register: React.FC = () => {
             <div className={styles.testimonialCard}>
               <div className={styles.testimonialContent}>
                 <Text className={styles.testimonialText}>
-                  "Interface intuitiva e dados confiáveis. Consegui negociar melhor o valor do meu carro usado graças às informações."
+                  "Intuitive interface and reliable data. I was able to negotiate a better price for my used car thanks to the information."
                 </Text>
               </div>
               <div className={styles.testimonialAuthor}>
                 <div className={styles.testimonialAvatar}>JP</div>
                 <div>
-                  <Text className={styles.testimonialName}>João Paulo</Text>
-                  <Text className={styles.testimonialRole}>Usuário Premium</Text>
+                  <Text className={styles.testimonialName}>John Parker</Text>
+                  <Text className={styles.testimonialRole}>Premium User</Text>
                 </div>
               </div>
             </div>
@@ -338,38 +384,38 @@ const Register: React.FC = () => {
       <section className={styles.faqSection}>
         <div className={styles.faqContainer}>
           <div className={styles.faqHeader}>
-            <Heading level={2} className={styles.faqTitle}>Perguntas Frequentes</Heading>
+            <Heading level={2} className={styles.faqTitle}>Frequently Asked Questions</Heading>
             <Text className={styles.faqSubtitle}>
-              Encontre respostas para as dúvidas mais comuns sobre nossa plataforma
+              Find answers to the most common questions about our platform
             </Text>
           </div>
           
           <div className={styles.faqGrid}>
             <div className={styles.faqItem}>
-              <Heading level={3} className={styles.faqItemTitle}>Como os preços são calculados?</Heading>
+              <Heading level={3} className={styles.faqItemTitle}>How are prices calculated?</Heading>
               <Text className={styles.faqItemText}>
-                Nossos preços são baseados na <span className={styles.specialLink}>tabela FIPE oficial</span>, atualizada regularmente para garantir a precisão das informações.
+                Our prices are based on the <span>official FIPE table</span>, updated regularly to ensure information accuracy.
               </Text>
             </div>
             
             <div className={styles.faqItem}>
-              <Heading level={3} className={styles.faqItemTitle}>Posso acessar o histórico de preços?</Heading>
+              <Heading level={3} className={styles.faqItemTitle}>Can I access price history?</Heading>
               <Text className={styles.faqItemText}>
-                Sim, <span className={styles.specialLink}>usuários cadastrados</span> podem acessar o histórico de preços dos últimos 12 meses para qualquer veículo.
+                Yes, <span>registered users</span> can access price history for the last 12 months for any vehicle.
               </Text>
             </div>
             
             <div className={styles.faqItem}>
-              <Heading level={3} className={styles.faqItemTitle}>Como salvar veículos favoritos?</Heading>
+              <Heading level={3} className={styles.faqItemTitle}>How to save favorite vehicles?</Heading>
               <Text className={styles.faqItemText}>
-                Após realizar uma consulta, basta clicar no <span className={styles.highlightLink}>ícone de estrela</span> para adicionar o veículo aos seus favoritos.
+                After performing a search, just click on the <span>star icon</span> to add the vehicle to your favorites.
               </Text>
             </div>
             
             <div className={styles.faqItem}>
-              <Heading level={3} className={styles.faqItemTitle}>Os dados são atualizados com que frequência?</Heading>
+              <Heading level={3} className={styles.faqItemTitle}>How often is the data updated?</Heading>
               <Text className={styles.faqItemText}>
-                Nossa base de dados é atualizada mensalmente, seguindo o calendário oficial de atualizações da tabela FIPE.
+                Our database is updated monthly, following the official FIPE table update schedule.
               </Text>
             </div>
           </div>

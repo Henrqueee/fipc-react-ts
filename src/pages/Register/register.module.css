@@ -41,7 +41,8 @@
 
 .presentationSubtitle {
   font-size: 1.1rem;
-  opacity: 0.9;
+  opacity: 1;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .cardsContainer {
@@ -77,12 +78,14 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .formRow {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .formRow > * {
@@ -91,9 +94,9 @@
 
 .formActions {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .loginLink {
