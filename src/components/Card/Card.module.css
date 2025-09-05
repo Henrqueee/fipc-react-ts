@@ -10,6 +10,7 @@
   border: 1px solid var(--secondary-gray-dark);
   position: relative;
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .card::before {
@@ -79,5 +80,28 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Responsive centering */
+@media (max-width: 768px) {
+  .card {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: var(--spacing-xl);
+  }
+  
+  .icon {
+    font-size: 3rem;
+  }
+  
+  .title {
+    font-size: var(--font-size-lg) !important;
   }
 }

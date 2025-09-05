@@ -434,6 +434,41 @@
 }
 
 /* Responsividade */
+@media (max-width: 1200px) {
+  .container {
+    flex-direction: column;
+  }
+  
+  .presentationSide {
+    order: 2;
+    padding: 2rem;
+    min-height: auto;
+  }
+  
+  .formSide {
+    order: 1;
+    padding: 2rem;
+  }
+  
+  .cardsContainer {
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .cardsContainer > * {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 1064px) {
+  .cardsContainer {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
 @media (max-width: 992px) {
   .container {
     flex-direction: column;
