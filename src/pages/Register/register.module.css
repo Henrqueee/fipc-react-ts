@@ -1,0 +1,479 @@
+.registerPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--primary-blue-dark) 0%, var(--primary-blue) 100%);
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  min-height: 600px;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Lado esquerdo - Apresentação */
+.presentationSide {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+  color: white;
+}
+
+.presentationHeader {
+  margin-bottom: 2rem;
+}
+
+.presentationTitle {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.presentationSubtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: auto;
+}
+
+/* Lado direito - Formulário */
+.formSide {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  background-color: white;
+}
+
+.formHeader {
+  margin-bottom: 2rem;
+}
+
+.formTitle {
+  font-size: 2rem;
+  color: var(--primary-blue);
+  margin-bottom: 0.5rem;
+}
+
+.formSubtitle {
+  color: var(--text-secondary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formRow {
+  display: flex;
+  gap: 1rem;
+}
+
+.formRow > * {
+  flex: 1;
+}
+
+.formActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.loginLink {
+  color: var(--white);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  transition: all 0.2s ease;
+  border: 1px solid var(--white);
+  background: transparent;
+  display: inline-block;
+}
+
+.loginLink:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Toast de notificação */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out forwards;
+  z-index: 1000;
+}
+
+.successToast {
+  background-color: var(--success);
+}
+
+.errorToast {
+  background-color: var(--error);
+}
+
+/* Seção 1: Recursos */
+.featuresSection {
+  padding: 5rem 2rem;
+  background-color: #f8f9fa;
+}
+
+.featuresContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.featuresHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.featuresTitle {
+  font-size: 2.5rem;
+  color: var(--primary-blue);
+  margin-bottom: 1rem;
+}
+
+.featuresSubtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* Seção 2: Depoimentos */
+.testimonialsSection {
+  padding: 6rem 3rem;
+  background-color: #f0f4f8;
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonialsSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+}
+
+.testimonialsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.testimonialsHeader {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.testimonialsTitle {
+  font-size: 2.5rem;
+  color: var(--primary-blue-dark);
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.testimonialsTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background-color: var(--primary-blue);
+  border-radius: 2px;
+}
+
+.testimonialsSubtitle {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+}
+
+.testimonialCard {
+  background-color: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  border-top: 4px solid var(--primary-blue);
+}
+
+.testimonialCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.testimonialCard::before {
+  content: '"';
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+  font-size: 4rem;
+  line-height: 1;
+  font-family: Georgia, serif;
+  color: var(--primary-blue);
+  opacity: 0.15;
+}
+
+.testimonialContent {
+  flex: 1;
+  padding-left: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.testimonialText {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  font-style: italic;
+  color: var(--text-primary);
+}
+
+.testimonialAuthor {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 1.5rem;
+}
+
+.testimonialAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--primary-blue);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.testimonialName {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--primary-blue-dark);
+}
+
+.testimonialRole {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+/* Links especiais */
+.specialLink {
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 2px;
+  transition: all 0.3s ease;
+}
+
+.specialLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-blue);
+  transition: width 0.3s ease;
+}
+
+.specialLink:hover {
+  color: var(--primary-blue);
+}
+
+.specialLink:hover::after {
+  width: 100%;
+}
+
+/* Link destacado */
+.highlightLink {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  display: inline-block;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+}
+
+.highlightLink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.5);
+}
+
+/* Seção 3: FAQ */
+.faqSection {
+  padding: 5rem 2rem;
+  background-color: white;
+}
+
+.faqContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.faqHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.faqTitle {
+  font-size: 2.5rem;
+  color: var(--primary-blue);
+  margin-bottom: 1rem;
+}
+
+.faqSubtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.faqGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.faqItem {
+  padding: 1.5rem;
+  border-radius: 12px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faqItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.faqItemTitle {
+  font-size: 1.2rem;
+  color: var(--primary-blue);
+  margin-bottom: 1rem;
+}
+
+.faqItemText {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .container {
+    flex-direction: column;
+  }
+  
+  .presentationSide,
+  .formSide {
+    padding: 2rem;
+  }
+  
+  .presentationSide {
+    min-height: 300px;
+  }
+  
+  .featuresGrid,
+  .testimonialsGrid,
+  .faqGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .registerPage {
+    padding: 1rem;
+  }
+  
+  .formRow {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .formActions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .formActions > * {
+    width: 100%;
+  }
+  
+  .featuresSection,
+  .testimonialsSection,
+  .faqSection {
+    padding: 3rem 1rem;
+  }
+}

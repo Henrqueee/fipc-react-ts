@@ -8,6 +8,7 @@ import Home from './pages/Home/Home';
 import About from './pages/About/About';
 import Contact from './pages/Contact/Contact';
 import Favorites from './pages/Favorites/Favorites';
+import Register from './pages/Register/Register';
 import './App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/favorites" element={<Favorites />} />
+                <Route path="/register" element={<Register />} />
               </Routes>
             </main>
             <Footer />

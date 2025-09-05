@@ -46,6 +46,15 @@ export interface ILoginCredentials {
   password: string;
 }
 
+export interface IRegisterData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  password: string;
+  confirmPassword?: string;
+}
+
 export interface IUser {
   id: string;
   name: string;
@@ -66,29 +75,101 @@ export interface IApiError {
 }
 
 // Serviço de Autenticação
-class AuthService {
+class AuthService {  
+  // Registro de usuário
+  async register(data: IRegisterData): Promise<IAuthResponse> {
+    try {
+      // Verificar se o email já está cadastrado
+      const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+      const emailExists = existingUsers.some((user: any) => user.email === data.email);
+      
+      if (emailExists) {
+        throw new Error('Este email já está cadastrado');
+      }
+      
+      // Criar novo usuário
+      const newUser: IUser = {
+        id: Date.now().toString(),
+        name: `${data.firstName} ${data.lastName}`,
+        email: data.email,
+        createdAt: new Date().toISOString()
+      };
+      
+      // Adicionar novo usuário
+      const updatedUsers = [...existingUsers, newUser];
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      
+      // Salvar credenciais para login
+      const credentials = {
+        email: data.email,
+        password: data.password
+      };
+      
+      const existingCredentials = JSON.parse(localStorage.getItem('credentials') || '[]');
+      const updatedCredentials = [...existingCredentials, credentials];
+      localStorage.setItem('credentials', JSON.stringify(updatedCredentials));
+      
+      // Gerar token e retornar resposta
+      const token = 'register-token-' + Date.now();
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('userData', JSON.stringify(newUser));
+      
+      return {
+        user: newUser,
+        token,
+        message: 'Cadastro realizado com sucesso'
+      };
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
   // Login do usuário
   async login(credentials: ILoginCredentials): Promise<IAuthResponse> {
     try {
-      // Simulação temporária até a API estar pronta
-      if (credentials.email === 'demo@fipe.com' && credentials.password === '123456') {
-        const mockResponse: IAuthResponse = {
-          user: {
+      // Verificar credenciais no localStorage
+      const savedCredentials = JSON.parse(localStorage.getItem('credentials') || '[]');
+      const userCredential = savedCredentials.find(
+        (cred: ILoginCredentials) => cred.email === credentials.email && cred.password === credentials.password
+      );
+      
+      // Verificar usuário demo
+      const isDemoUser = credentials.email === 'demo@fipe.com' && credentials.password === '123456';
+      
+      if (userCredential || isDemoUser) {
+        let user: IUser;
+        
+        if (isDemoUser) {
+          // Usuário demo
+          user = {
             id: '1',
             name: 'Usuário Demo',
             email: credentials.email,
             avatar: '',
             createdAt: new Date().toISOString(),
-          },
-          token: 'mock-jwt-token-' + Date.now(),
+          };
+        } else {
+          // Usuário registrado
+          const users = JSON.parse(localStorage.getItem('users') || '[]');
+          const foundUser = users.find((u: IUser) => u.email === credentials.email);
+          
+          if (!foundUser) {
+            throw new Error('Usuário não encontrado');
+          }
+          
+          user = foundUser;
+        }
+        
+        const response: IAuthResponse = {
+          user,
+          token: 'auth-token-' + Date.now(),
           message: 'Login realizado com sucesso',
         };
         
         // Salvar dados no localStorage
-        localStorage.setItem('authToken', mockResponse.token);
-        localStorage.setItem('userData', JSON.stringify(mockResponse.user));
+        localStorage.setItem('authToken', response.token);
+        localStorage.setItem('userData', JSON.stringify(response.user));
         
-        return mockResponse;
+        return response;
       } else {
         throw new Error('Credenciais inválidas');
       }
