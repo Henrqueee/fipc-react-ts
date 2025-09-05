@@ -1,14 +1,10 @@
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './store/useAuthStore';
 import { VehicleProvider } from './store/useVehicleStore';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import Home from './pages/Home/Home';
-import About from './pages/About/About';
-import Contact from './pages/Contact/Contact';
-import Favorites from './pages/Favorites/Favorites';
-import Register from './pages/Register/Register';
+import Routes from './Routes/Routes';
 import './App.css';
 
 function App() {
@@ -19,13 +15,7 @@ function App() {
           <div className="App">
             <Header />
             <main>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/favorites" element={<Favorites />} />
-                <Route path="/register" element={<Register />} />
-              </Routes>
+              <Routes />
             </main>
             <Footer />
           </div>

@@ -78,6 +78,94 @@
   opacity: 0.6;
 }
 
+/* Submit Button */
+
+/* CTA Button Secondary */
+.ctaButtonSecondary {
+  background: transparent;
+  color: var(--primary-blue);
+  border: 2px solid var(--primary-blue);
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+}
+
+.ctaButtonSecondary:hover:not(:disabled) {
+  background: var(--primary-blue);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+}
+
+.ctaButtonSecondary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.ctaButtonSecondary:disabled {
+  background: transparent;
+  color: var(--secondary-gray-dark);
+  border-color: var(--secondary-gray-dark);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+/* CTA Button Danger */
+.ctaButtonDanger {
+  background: linear-gradient(45deg, #dc2626, #ef4444);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.5rem;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 2px solid transparent;
+  margin-bottom: 1.5rem;
+}
+
+.ctaButtonDanger:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+  background: linear-gradient(45deg, #ef4444, #dc2626);
+}
+
+.ctaButtonDanger:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+}
+
+.ctaButtonDanger:disabled {
+  background: var(--secondary-gray-dark);
+  color: var(--text-light);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
 /* CTA Button */
 .ctaButton {
   background: linear-gradient(45deg, var(--accent-orange), var(--accent-orange-light));
@@ -185,7 +273,8 @@
   .searchButton,
   .favoriteButton,
   .ctaButton,
-
+  .ctaButtonSecondary,
+  .ctaButtonDanger,
   .submitButton {
     padding: 0.875rem 1.5rem;
     font-size: 0.9rem;
@@ -197,7 +286,8 @@
   .searchButton,
   .favoriteButton,
   .ctaButton,
-
+  .ctaButtonSecondary,
+  .ctaButtonDanger,
   .submitButton {
     padding: 0.75rem 1rem;
     font-size: 0.875rem;
@@ -240,4 +330,17 @@
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+}
+
+/* Button Size Variants */
+.ctaButtonSmall {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  min-height: 2.25rem;
+}
+
+.ctaButtonLarge {
+  padding: 1.25rem 2rem;
+  font-size: 1.125rem;
+  min-height: 3.5rem;
 }

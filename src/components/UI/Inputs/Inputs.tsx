@@ -15,6 +15,7 @@ interface SelectInputProps {
 interface TextInputProps {
   id: string;
   label: string;
+  name?: string;
   type?: 'text' | 'email' | 'password' | 'date';
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -58,6 +59,7 @@ export const SelectInput: React.FC<SelectInputProps> = ({
 export const TextInput: React.FC<TextInputProps> = ({
   id,
   label,
+  name,
   type = 'text',
   value,
   onChange,
@@ -72,6 +74,7 @@ export const TextInput: React.FC<TextInputProps> = ({
       </Text>
       <input
         id={id}
+        name={name}
         type={type}
         value={value}
         onChange={onChange}

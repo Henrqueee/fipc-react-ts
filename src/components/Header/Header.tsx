@@ -35,7 +35,7 @@ const Header: React.FC = () => {
               <Link to="/about" className={styles.navLink}>About</Link>
               <Link to="/contact" className={styles.navLink}>Contact</Link>
               {isAuthenticated && (
-                <Link to="/favorites" className={styles.navLink}>⭐ Favoritos</Link>
+                <Link to="/favorites" className={styles.navLink}>⭐ Favorites</Link>
               )}
               
               <div className={styles.authSection}>
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
                   <UserMenu />
                 ) : (
                   <SubmitButton onClick={handleLoginClick}>
-                    Entrar
+                    Login
                   </SubmitButton>
                 )}
               </div>

@@ -13,6 +13,9 @@ interface FavoriteButtonProps {
 interface CTAButtonProps {
   onClick?: () => void;
   children: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'danger';
+  size?: 'small' | 'medium' | 'large';
+  className?: string;
 }
 
 interface SubmitButtonProps {
@@ -56,13 +59,36 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
 
 export const CTAButton: React.FC<CTAButtonProps> = ({
   onClick,
-  children
+  children,
+  variant = 'primary',
+  size = 'medium',
+  className = ''
 }) => {
+  const getButtonClass = () => {
+    let baseClass;
+    switch (variant) {
+      case 'secondary':
+        baseClass = styles.ctaButtonSecondary;
+        break;
+      case 'danger':
+        baseClass = styles.ctaButtonDanger;
+        break;
+      default:
+        baseClass = styles.ctaButton;
+        break;
+    }
+    
+    const sizeClass = size === 'small' ? styles.ctaButtonSmall : 
+                     size === 'large' ? styles.ctaButtonLarge : '';
+    
+    return `${baseClass} ${sizeClass}`.trim();
+  };
+
   return (
     <button
       type="button"
       onClick={onClick}
-      className={styles.ctaButton}
+      className={`${getButtonClass()} ${className}`}
     >
       {children}
     </button>

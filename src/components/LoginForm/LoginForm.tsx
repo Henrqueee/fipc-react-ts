@@ -56,13 +56,13 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
         />
         
         <Toast
-          message="Login realizado com sucesso!"
+          message="Login successful!"
           type="success"
           isVisible={showSuccessToast}
         />
         
         <div className={styles.header}>
-          <Title variant="section">Entrar</Title>
+          <Title variant="section">Login</Title>
           <button 
             className={styles.closeButton}
             onClick={handleClose}
@@ -74,27 +74,27 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.inputGroup}>
-            <Text as="label" htmlFor="email">E-mail</Text>
+            <Text as="label" htmlFor="email">Email</Text>
             <input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="seu@email.com"
+              placeholder="your@email.com"
               required
               disabled={isLoading}
             />
           </div>
 
           <div className={styles.inputGroup}>
-            <Text as="label" htmlFor="password">Senha</Text>
+            <Text as="label" htmlFor="password">Password</Text>
             <div className={styles.passwordWrapper}>
               <input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Sua senha"
+                placeholder="Your password"
                 required
                 disabled={isLoading}
               />
@@ -112,16 +112,15 @@ const LoginForm: React.FC<ILoginFormProps> = ({ onClose, onSuccess }) => {
           <SubmitButton
             loading={isLoading}
           >
-            Entrar
+            Login
           </SubmitButton>
         </form>
 
         <div className={styles.footer}>
-          <Text>Dados de teste: demo@fipe.com / 123456</Text>
           <div className={styles.registerSection}>
-            <Text>Não tem uma conta? </Text>
+            <Text>Don't have an account? </Text>
             <Link to="/register" className={styles.registerLink} onClick={onClose}>
-              Criar conta
+              Create account
             </Link>
           </div>
         </div>

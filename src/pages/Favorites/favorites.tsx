@@ -36,8 +36,8 @@ const Favorites: React.FC = () => {
     <div className={styles.favoritesContainer}>
       <div className="container">
         <div className={styles.header}>
-          <Heading variant="large" level={1}>Meus Favoritos</Heading>
-          <Text>Gerencie seus veículos favoritos</Text>
+          <Heading variant="large" level={1}>My Favorites</Heading>
+          <Text>Manage your favorite vehicles</Text>
         </div>
 
         {toastMessage && (
@@ -49,7 +49,7 @@ const Favorites: React.FC = () => {
         {favorites.length > 0 ? (
           <>
             <div className={styles.actions}>
-              <CTAButton onClick={handleClearAll}>Limpar Todos</CTAButton>
+              <CTAButton onClick={handleClearAll}>Clear All</CTAButton>
             </div>
             <div className={styles.favoritesList}>
               {favorites.map((favorite) => (
@@ -62,26 +62,26 @@ const Favorites: React.FC = () => {
                     
                     <div className={styles.details}>
                       <div className={styles.detailItem}>
-                        <Text as="span" className={styles.label}>Tipo:</Text>
+                        <Text as="span" className={styles.label}>Type:</Text>
                         <Text as="span" className={styles.value}>{favorite.vehicleType}</Text>
                       </div>
                       <div className={styles.detailItem}>
-                        <Text as="span" className={styles.label}>Combustível:</Text>
-                        <Text as="span" className={styles.value}>{favorite.fuel || 'Gasolina'}</Text>
+                        <Text as="span" className={styles.label}>Fuel:</Text>
+                        <Text as="span" className={styles.value}>{favorite.fuel || 'Gasoline'}</Text>
                       </div>
                     </div>
                     
                     <div className={styles.priceSection}>
-                      <Text className={styles.priceLabel}>Valor FIPE</Text>
+                      <Text className={styles.priceLabel}>FIPE Value</Text>
                       <Text className={styles.price}>{favorite.price}</Text>
-                      <Text className={styles.priceDate}>Referência: {favorite.month}</Text>
+                      <Text className={styles.priceDate}>Reference: {favorite.month}</Text>
                     </div>
                   </div>
                   
                   <button 
                     className={styles.removeButton}
                     onClick={() => handleRemoveFavorite(favorite.id || '')}
-                    aria-label="Remover dos favoritos"
+                    aria-label="Remove from favorites"
                   >
                     ✕
                   </button>
@@ -91,8 +91,8 @@ const Favorites: React.FC = () => {
           </>
         ) : (
           <div className={styles.emptyState}>
-            <Text>Você ainda não adicionou nenhum veículo aos favoritos.</Text>
-            <Text>Faça uma consulta e adicione veículos à sua lista de favoritos!</Text>
+            <Text>You haven't added any vehicles to favorites yet.</Text>
+            <Text>Make a search and add vehicles to your favorites list!</Text>
           </div>
         )}
       </div>

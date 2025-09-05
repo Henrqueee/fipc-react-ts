@@ -75,7 +75,40 @@ export interface IApiError {
 }
 
 // Serviço de Autenticação
-class AuthService {  
+class AuthService {
+  constructor() {
+    this.initializeDefaultUser();
+  }
+
+  // Initialize localStorage with default user
+  private initializeDefaultUser(): void {
+    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+    const existingCredentials = JSON.parse(localStorage.getItem('credentials') || '[]');
+    
+    // Check if default user already exists
+    const defaultUserExists = existingUsers.some((user: any) => user.email === 'henrique.henriques09@gmail.com');
+    
+    if (!defaultUserExists) {
+      const defaultUser = {
+        id: 'default-user-1',
+        name: 'Henrique Magalhaes',
+        email: 'henrique.henriques09@gmail.com',
+        createdAt: new Date().toISOString()
+      };
+      
+      const defaultCredentials = {
+        email: 'henrique.henriques09@gmail.com',
+        password: 'henriqueM00'
+      };
+      
+      // Add default user and credentials
+      const updatedUsers = [...existingUsers, defaultUser];
+      const updatedCredentials = [...existingCredentials, defaultCredentials];
+      
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      localStorage.setItem('credentials', JSON.stringify(updatedCredentials));
+    }
+  }  
   // Registro de usuário
   async register(data: IRegisterData): Promise<IAuthResponse> {
     try {
@@ -132,31 +165,13 @@ class AuthService {
         (cred: ILoginCredentials) => cred.email === credentials.email && cred.password === credentials.password
       );
       
-      // Verificar usuário demo
-      const isDemoUser = credentials.email === 'demo@fipe.com' && credentials.password === '123456';
-      
-      if (userCredential || isDemoUser) {
-        let user: IUser;
+      if (userCredential) {
+        // Buscar dados do usuário registrado
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const user = users.find((u: IUser) => u.email === credentials.email);
         
-        if (isDemoUser) {
-          // Usuário demo
-          user = {
-            id: '1',
-            name: 'Usuário Demo',
-            email: credentials.email,
-            avatar: '',
-            createdAt: new Date().toISOString(),
-          };
-        } else {
-          // Usuário registrado
-          const users = JSON.parse(localStorage.getItem('users') || '[]');
-          const foundUser = users.find((u: IUser) => u.email === credentials.email);
-          
-          if (!foundUser) {
-            throw new Error('Usuário não encontrado');
-          }
-          
-          user = foundUser;
+        if (!user) {
+          throw new Error('User not found');
         }
         
         const response: IAuthResponse = {
@@ -171,7 +186,7 @@ class AuthService {
         
         return response;
       } else {
-        throw new Error('Credenciais inválidas');
+        throw new Error('Invalid credentials');
       }
       
       // Código real para quando a API estiver pronta:
@@ -219,6 +234,35 @@ class AuthService {
   // Obter token de autenticação
   getToken(): string | null {
     return localStorage.getItem('authToken');
+  }
+
+  // Atualizar dados do usuário
+  async updateUser(userData: Partial<IUser>): Promise<IUser> {
+    try {
+      const currentUser = this.getCurrentUser();
+      if (!currentUser) {
+        throw new Error('User not authenticated');
+      }
+
+      // Update current user data
+      const updatedUser = { ...currentUser, ...userData };
+
+      // Update in users array
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const userIndex = users.findIndex((user: IUser) => user.id === currentUser.id);
+      
+      if (userIndex !== -1) {
+        users[userIndex] = updatedUser;
+        localStorage.setItem('users', JSON.stringify(users));
+      }
+
+      // Update current user data
+      localStorage.setItem('userData', JSON.stringify(updatedUser));
+
+      return updatedUser;
+    } catch (error) {
+      throw this.handleError(error);
+    }
   }
 
   // Tratamento de erros

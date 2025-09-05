@@ -9,6 +9,7 @@ interface IAuthContextType {
   login: (credentials: ILoginCredentials) => Promise<void>;
   logout: () => Promise<void>;
   clearError: () => void;
+  updateUser: (userData: Partial<IUser>) => void;
 }
 
 const AuthContext = createContext<IAuthContextType | undefined>(undefined);
@@ -19,16 +20,18 @@ interface IAuthProviderProps {
 
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Verificar se usuário está logado ao inicializar
   useEffect(() => {
     const checkAuth = () => {
+      setIsLoading(true);
       if (authService.isAuthenticated()) {
         const userData = authService.getCurrentUser();
         setUser(userData);
       }
+      setIsLoading(false);
     };
 
     checkAuth();
@@ -68,6 +71,16 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     setError(null);
   };
 
+  const updateUser = (userData: Partial<IUser>) => {
+    if (user) {
+      const updatedUser = { ...user, ...userData };
+      setUser(updatedUser);
+      
+      // Update localStorage
+      localStorage.setItem('userData', JSON.stringify(updatedUser));
+    }
+  };
+
   const value: IAuthContextType = {
     user,
     isAuthenticated: !!user,
@@ -76,6 +89,7 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     login,
     logout,
     clearError,
+    updateUser,
   };
 
   return (
