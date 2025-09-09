@@ -14,6 +14,7 @@ interface ProfileFormData {
   email: string;
   phone: string;
   location: string;
+  currentPassword: string;
   password: string;
   confirmPassword: string;
   firstName: string;
@@ -33,6 +34,7 @@ const Profile: React.FC = () => {
     email: user?.email || '',
     phone: '',
     location: '',
+    currentPassword: '',
     password: '',
     confirmPassword: '',
     firstName: user?.name?.split(' ')[0] || '',
@@ -60,6 +62,13 @@ const Profile: React.FC = () => {
 
   const validateForm = (): boolean => {
     if (formData.password || formData.confirmPassword) {
+      if (!formData.currentPassword) {
+        setToastMessage('Current password is required to change password');
+        setToastType('error');
+        setShowToast(true);
+        return false;
+      }
+
       if (formData.password !== formData.confirmPassword) {
         setToastMessage('Passwords do not match');
         setToastType('error');
@@ -111,10 +120,17 @@ const Profile: React.FC = () => {
       // Update auth store
       updateUser(updatedUserData);
       
-      setToastMessage('Profile updated successfully!');
+      // Handle password change if provided
+      if (formData.password && formData.password.trim() !== '') {
+        await authService.changePassword(formData.currentPassword, formData.password);
+        setToastMessage('Profile and password updated successfully!');
+      } else {
+        setToastMessage('Profile updated successfully!');
+      }
+      
       setToastType('success');
       setShowToast(true);
-      setFormData(prev => ({ ...prev, password: '', confirmPassword: '' }));
+      setFormData(prev => ({ ...prev, currentPassword: '', password: '', confirmPassword: '' }));
     } catch (error) {
       setToastMessage('Failed to update profile. Please try again.');
       setToastType('error');
@@ -125,11 +141,46 @@ const Profile: React.FC = () => {
   };
 
   const handleImageUpload = async (file: File) => {
+    console.log('File upload attempt:', {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      sizeInMB: (file.size / (1024 * 1024)).toFixed(2)
+    });
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setToastMessage('Please select a valid image file.');
+      setToastType('error');
+      setShowToast(true);
+      return;
+    }
+
+    // Increased size limit to 10MB to accommodate different browser behaviors
+    if (file.size > 10 * 1024 * 1024) {
+      setToastMessage('Image size must be less than 10MB.');
+      setToastType('error');
+      setShowToast(true);
+      return;
+    }
+
     const reader = new FileReader();
+    
+    reader.onerror = () => {
+      setToastMessage('Failed to read image file.');
+      setToastType('error');
+      setShowToast(true);
+    };
+    
     reader.onload = async (e) => {
-      const base64Image = e.target?.result as string;
-      
       try {
+        const result = e.target?.result;
+        if (!result || typeof result !== 'string') {
+          throw new Error('Invalid image data');
+        }
+        
+        const base64Image = result;
+        
         // Save to localStorage via authService
         await authService.updateUser({ avatar: base64Image });
         
@@ -140,11 +191,13 @@ const Profile: React.FC = () => {
         setToastType('success');
         setShowToast(true);
       } catch (error) {
+        console.error('Error updating profile picture:', error);
         setToastMessage('Failed to update profile picture.');
         setToastType('error');
         setShowToast(true);
       }
     };
+    
     reader.readAsDataURL(file);
   };
 
@@ -228,7 +281,7 @@ const Profile: React.FC = () => {
               <div className={styles.formRow}>
                 <TextInput
                   id="firstName"
-                  inputName="firstName"
+                  name="firstName"
                   label="First Name"
                   value={formData.firstName}
                   onChange={handleInputChange}
@@ -274,6 +327,16 @@ const Profile: React.FC = () => {
                 onChange={handleInputChange}
                 placeholder="Your city, country"
                 required
+              />
+              
+              <TextInput
+                id="currentPassword"
+                name="currentPassword"
+                label="Current Password"
+                type="password"
+                value={formData.currentPassword}
+                onChange={handleInputChange}
+                placeholder="Enter your current password"
               />
               
               <div className={styles.formRow}>

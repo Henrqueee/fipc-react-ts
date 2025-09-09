@@ -244,6 +244,12 @@ class AuthService {
         throw new Error('User not authenticated');
       }
 
+      console.log('Updating user with data:', {
+        hasAvatar: !!userData.avatar,
+        avatarLength: userData.avatar ? userData.avatar.length : 0,
+        otherFields: Object.keys(userData).filter(key => key !== 'avatar')
+      });
+
       // Update current user data
       const updatedUser = { ...currentUser, ...userData };
 
@@ -259,7 +265,39 @@ class AuthService {
       // Update current user data
       localStorage.setItem('userData', JSON.stringify(updatedUser));
 
+      console.log('User updated successfully in localStorage');
       return updatedUser;
+    } catch (error) {
+      console.error('Error updating user:', error);
+      throw this.handleError(error);
+    }
+  }
+
+  // Alterar senha do usuário
+  async changePassword(currentPassword: string, newPassword: string): Promise<void> {
+    try {
+      const currentUser = this.getCurrentUser();
+      if (!currentUser) {
+        throw new Error('User not authenticated');
+      }
+
+      // Verify current password
+      const credentials = JSON.parse(localStorage.getItem('credentials') || '[]');
+      const credentialIndex = credentials.findIndex(
+        (cred: ILoginCredentials) => cred.email === currentUser.email
+      );
+      
+      if (credentialIndex === -1) {
+        throw new Error('User credentials not found');
+      }
+
+      if (credentials[credentialIndex].password !== currentPassword) {
+        throw new Error('Current password is incorrect');
+      }
+
+      // Update password
+      credentials[credentialIndex].password = newPassword;
+      localStorage.setItem('credentials', JSON.stringify(credentials));
     } catch (error) {
       throw this.handleError(error);
     }

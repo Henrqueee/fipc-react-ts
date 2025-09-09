@@ -73,11 +73,19 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
   const updateUser = (userData: Partial<IUser>) => {
     if (user) {
+      console.log('AuthStore: Updating user with:', {
+        hasAvatar: !!userData.avatar,
+        avatarLength: userData.avatar ? userData.avatar.length : 0,
+        currentUserHasAvatar: !!user.avatar
+      });
+      
       const updatedUser = { ...user, ...userData };
       setUser(updatedUser);
       
       // Update localStorage
       localStorage.setItem('userData', JSON.stringify(updatedUser));
+      
+      console.log('AuthStore: User updated, new avatar status:', !!updatedUser.avatar);
     }
   };
 

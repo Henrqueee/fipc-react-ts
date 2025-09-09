@@ -43,13 +43,28 @@ const Avatar: React.FC<AvatarProps> = ({
   return (
     <div className={styles.avatarContainer}>
       <div className={avatarClasses}>
-        {avatar ? (
-          <img src={avatar} alt={name} className={styles.image} />
-        ) : (
-          <span className={styles.initials}>
-            {getInitials(name)}
-          </span>
-        )}
+        {avatar && avatar.trim() !== '' ? (
+          <img 
+            src={avatar} 
+            alt={name} 
+            className={styles.image}
+            onError={(e) => {
+              // If image fails to load, hide it and show initials
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              const initialsSpan = target.nextElementSibling as HTMLElement;
+              if (initialsSpan) {
+                initialsSpan.style.display = 'flex';
+              }
+            }}
+          />
+        ) : null}
+        <span 
+          className={styles.initials}
+          style={{ display: (avatar && avatar.trim() !== '') ? 'none' : 'flex' }}
+        >
+          {getInitials(name)}
+        </span>
       </div>
       
       {showUpload && (

@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useAuthStore } from '../../store/useAuthStore';
-import styles from './UserMenu.module.css';
+import React, { useState, useRef, useEffect } from "react";
+import { useAuthStore } from "../../store/useAuthStore";
+import styles from "./UserMenu.module.css";
 
 const UserMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,9 +15,9 @@ const UserMenu: React.FC = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -28,9 +28,9 @@ const UserMenu: React.FC = () => {
 
   const getInitials = (name: string) => {
     return name
-      .split(' ')
-      .map(word => word.charAt(0))
-      .join('')
+      .split(" ")
+      .map((word) => word.charAt(0))
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
@@ -49,20 +49,18 @@ const UserMenu: React.FC = () => {
           {user.avatar ? (
             <img src={user.avatar} alt={user.name} />
           ) : (
-            <span className={styles.initials}>
-              {getInitials(user.name)}
-            </span>
+            <span className={styles.initials}>{getInitials(user.name)}</span>
           )}
         </div>
         <span className={styles.userName}>{user.name}</span>
-        <svg 
-          className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`}
-          width="16" 
-          height="16" 
-          viewBox="0 0 16 16" 
+        <svg
+          className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ""}`}
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
           fill="currentColor"
         >
-          <path d="M4.427 9.573l3.396-3.396a.25.25 0 01.354 0l3.396 3.396a.25.25 0 01-.177.427H4.604a.25.25 0 01-.177-.427z"/>
+          <path d="M4.427 9.573l3.396-3.396a.25.25 0 01.354 0l3.396 3.396a.25.25 0 01-.177.427H4.604a.25.25 0 01-.177-.427z" />
         </svg>
       </button>
 
@@ -72,25 +70,21 @@ const UserMenu: React.FC = () => {
             <div className={styles.userName}>{user.name}</div>
             <div className={styles.userEmail}>{user.email}</div>
           </div>
-          
+
           <div className={styles.divider}></div>
-          
-          <button 
+
+          <button
             className={styles.menuItem}
             onClick={() => {
               setIsOpen(false);
-              // Implementar navegação para perfil futuramente
-              console.log('Navegar para perfil');
+              window.location.href = "/profile";
             }}
           >
             <span>👤</span>
             Meu Perfil
           </button>
-          
-          <button 
-            className={styles.menuItem}
-            onClick={handleLogout}
-          >
+
+          <button className={styles.menuItem} onClick={handleLogout}>
             <span>🚪</span>
             Sair
           </button>
