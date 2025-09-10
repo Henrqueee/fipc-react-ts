@@ -3,14 +3,12 @@ import { Text } from '../UI/Typography';
 import styles from './Loading.module.css';
 
 interface LoadingProps {
-  size?: 'small' | 'medium' | 'large';
   text?: string;
   overlay?: boolean;
 }
 
 const Loading: React.FC<LoadingProps> = ({ 
-  size = 'medium', 
-  text = 'Carregando...', 
+  text = 'Loading...', 
   overlay = false 
 }) => {
   const containerClass = overlay 
@@ -19,10 +17,11 @@ const Loading: React.FC<LoadingProps> = ({
 
   return (
     <div className={containerClass}>
-      <div className={`${styles.spinner} ${styles[size]}`}>
-        <div className={styles.bounce1}></div>
-        <div className={styles.bounce2}></div>
-        <div className={styles.bounce3}></div>
+      <div className={styles.fipcContainer}>
+        <div className={`${styles.fipcLetter} ${styles.letterF}`}>F</div>
+        <div className={`${styles.fipcLetter} ${styles.letterI}`}>I</div>
+        <div className={`${styles.fipcLetter} ${styles.letterP}`}>P</div>
+        <div className={`${styles.fipcLetter} ${styles.letterC}`}>C</div>
       </div>
       {text && <Text className={styles.text}>{text}</Text>}
     </div>

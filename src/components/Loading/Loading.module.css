@@ -17,42 +17,35 @@
   z-index: 9999;
 }
 
-.spinner {
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 0.25rem solid var(--secondary-gray-light);
-  border-top: 0.25rem solid var(--primary-blue);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.fipcContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
 }
 
-.spinner > div {
-  background-color: var(--primary-blue);
-  border-radius: 50%;
-  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+.fipcLetter {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  animation: letterPulse 1.6s infinite ease-in-out;
+  transform-origin: center;
 }
 
-.small > div {
-  width: 8px;
-  height: 8px;
+.letterF {
+  animation-delay: 0s;
 }
 
-.medium > div {
-  width: 12px;
-  height: 12px;
+.letterI {
+  animation-delay: 0.2s;
 }
 
-.large > div {
-  width: 16px;
-  height: 16px;
+.letterP {
+  animation-delay: 0.4s;
 }
 
-.bounce1 {
-  animation-delay: -0.32s;
-}
-
-.bounce2 {
-  animation-delay: -0.16s;
+.letterC {
+  animation-delay: 0.6s;
 }
 
 .text {
@@ -62,10 +55,17 @@
   text-align: center !important;
 }
 
-@keyframes sk-bouncedelay {
-  0%, 80%, 100% { 
-    transform: scale(0);
-  } 40% { 
-    transform: scale(1.0);
+@keyframes letterPulse {
+  0%, 20% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  80%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
   }
 }

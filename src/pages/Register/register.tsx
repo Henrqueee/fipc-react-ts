@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import authService from '../../services/authService';
 import { TextInput } from '../../components/UI/Inputs/Inputs';
 import { SubmitButton } from '../../components/UI/Buttons/Buttons';
 import { Title, Text, Heading } from '../../components/UI/Typography';
+import { ToastContainer } from '../../components/UI/Toast';
 import Card from '../../components/Card/Card';
+import { authService } from '../../services/authService';
+import { useForm } from '../../hooks/useForm';
+import useToast from '../../hooks/useToast';
+import { VALIDATION_RULE_SETS } from '../../services/validationService';
 import styles from './Register.module.css';
 
-interface IRegisterFormData {
+interface IRegisterFormData extends Record<string, string> {
   firstName: string;
   lastName: string;
   email: string;
@@ -20,115 +24,83 @@ interface IRegisterFormData {
   confirmPassword: string;
 }
 
-interface IToast {
-  message: string;
-  type: 'success' | 'error';
-  visible: boolean;
-}
-
 const Register: React.FC = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<IRegisterFormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    birthDate: '',
-    gender: '',
-    city: '',
-    state: '',
-    password: '',
-    confirmPassword: ''
-  });
+  const { toasts, showToast, hideToast } = useToast();
   
-  const [isLoading, setIsLoading] = useState(false);
-  const [toast, setToast] = useState<IToast>({
-    message: '',
-    type: 'success',
-    visible: false
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [id]: value
-    }));
-  };
-
-  const showToast = (message: string, type: 'success' | 'error') => {
-    setToast({
-      message,
-      type,
-      visible: true
-    });
-
-    setTimeout(() => {
-      setToast(prev => ({ ...prev, visible: false }));
-    }, 3000);
-  };
-
-  const validateForm = (): boolean => {
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.birthDate || !formData.city || !formData.state || !formData.password || !formData.confirmPassword) {
-      showToast('Please fill in all required fields', 'error');
-      return false;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      showToast('Passwords do not match', 'error');
-      return false;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      showToast('Please enter a valid email', 'error');
-      return false;
-    }
-
-    if (formData.password.length < 6) {
-      showToast('Password must be at least 6 characters', 'error');
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) return;
-    
-    setIsLoading(true);
-    
-    try {
+  const form = useForm<IRegisterFormData>({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      birthDate: '',
+      gender: '',
+      city: '',
+      state: '',
+      password: '',
+      confirmPassword: ''
+    },
+    validationRules: {
+      firstName: VALIDATION_RULE_SETS.NAME,
+      lastName: VALIDATION_RULE_SETS.NAME,
+      email: VALIDATION_RULE_SETS.EMAIL,
+      phone: VALIDATION_RULE_SETS.PHONE,
+      birthDate: {
+        required: true,
+        custom: (value: string) => {
+          if (!value) return 'Birth date is required';
+          const date = new Date(value);
+          const today = new Date();
+          const age = today.getFullYear() - date.getFullYear();
+          if (age < 18) return 'You must be at least 18 years old';
+          if (age > 120) return 'Please enter a valid birth date';
+          return null;
+        }
+      },
+      gender: VALIDATION_RULE_SETS.OPTIONAL_TEXT,
+      city: VALIDATION_RULE_SETS.CITY,
+      state: VALIDATION_RULE_SETS.STATE,
+      password: VALIDATION_RULE_SETS.PASSWORD,
+      confirmPassword: {
+        required: true,
+        custom: (value: string) => {
+          if (value !== form.values.password) {
+            return 'Passwords do not match';
+          }
+          return null;
+        }
+      }
+    },
+    onSubmit: async (values) => {
       const userData = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        phone: formData.phone,
-        birthDate: formData.birthDate,
-        gender: formData.gender,
-        city: formData.city,
-        state: formData.state,
-        password: formData.password
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phone: values.phone,
+        birthDate: values.birthDate,
+        gender: values.gender,
+        city: values.city,
+        state: values.state,
+        password: values.password
       };
       
       await authService.register(userData);
-      
       showToast('Registration completed successfully!', 'success');
       
-      // Redirect after 2 seconds
       setTimeout(() => {
         navigate('/');
       }, 2000);
-      
-    } catch (error) {
-      console.error('Registration error:', error);
-      showToast('Registration failed. Please try again.', 'error');
-    } finally {
-      setIsLoading(false);
-    }
+    },
+    enableToast: false
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    form.handleChange(id as keyof IRegisterFormData, value);
   };
+
+
 
 
   return (
@@ -178,104 +150,104 @@ const Register: React.FC = () => {
               </Text>
             </div>
             
-            <form className={styles.form} onSubmit={handleSubmit}>
+            <form className={styles.form} onSubmit={form.handleSubmit}>
               <div className={styles.formRow}>
                 <TextInput
-                  id="firstName"
-                  label="First Name"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  placeholder="Your first name"
-                  required
-                />
+                    id="firstName"
+                    label="First Name"
+                    value={form.values.firstName}
+                    onChange={handleInputChange}
+                    placeholder="Your first name"
+                    required
+                  />
                 <TextInput
-                  id="lastName"
-                  label="Last Name"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  placeholder="Your last name"
-                  required
-                />
+                    id="lastName"
+                    label="Last Name"
+                    value={form.values.lastName}
+                    onChange={handleInputChange}
+                    placeholder="Your last name"
+                    required
+                  />
               </div>
               
               <TextInput
-                id="email"
-                label="Email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="your.email@example.com"
-                required
-              />
+                  id="email"
+                  label="Email"
+                  type="email"
+                  value={form.values.email}
+                  onChange={handleInputChange}
+                  placeholder="your.email@example.com"
+                  required
+                />
               
               <TextInput
-                id="phone"
-                label="Phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="(00) 00000-0000"
-              />
+                  id="phone"
+                  label="Phone"
+                  value={form.values.phone}
+                  onChange={handleInputChange}
+                  placeholder="(00) 00000-0000"
+                />
               
               <div className={styles.formRow}>
                 <TextInput
-                  id="birthDate"
-                  label="Birth Date"
-                  type="date"
-                  value={formData.birthDate}
-                  onChange={handleChange}
-                  required
-                />
+                    id="birthDate"
+                    label="Birth Date"
+                    type="date"
+                    value={form.values.birthDate}
+                    onChange={handleInputChange}
+                    required
+                  />
                 <TextInput
-                  id="gender"
-                  label="Gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  placeholder="Male/Female/Other"
-                />
+                    id="gender"
+                    label="Gender"
+                    value={form.values.gender}
+                    onChange={handleInputChange}
+                    placeholder="Male/Female/Other"
+                  />
               </div>
               
               <div className={styles.formRow}>
                 <TextInput
-                  id="city"
-                  label="City"
-                  value={formData.city}
-                  onChange={handleChange}
-                  placeholder="Your city"
-                  required
-                />
+                    id="city"
+                    label="City"
+                    value={form.values.city}
+                    onChange={handleInputChange}
+                    placeholder="Your city"
+                    required
+                  />
                 <TextInput
-                  id="state"
-                  label="State"
-                  value={formData.state}
-                  onChange={handleChange}
-                  placeholder="Your state"
-                  required
-                />
+                    id="state"
+                    label="State"
+                    value={form.values.state}
+                    onChange={handleInputChange}
+                    placeholder="Your state"
+                    required
+                  />
               </div>
               
               <div className={styles.formRow}>
                 <TextInput
-                  id="password"
-                  label="Password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="Your password"
-                  required
-                />
+                    id="password"
+                    label="Password"
+                    type="password"
+                    value={form.values.password}
+                    onChange={handleInputChange}
+                    placeholder="Your password"
+                    required
+                  />
                 <TextInput
-                  id="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  placeholder="Confirm your password"
-                  required
-                />
+                    id="confirmPassword"
+                    label="Confirm Password"
+                    type="password"
+                    value={form.values.confirmPassword}
+                    onChange={handleInputChange}
+                    placeholder="Confirm your password"
+                    required
+                  />
               </div>
               
               <div className={styles.formActions}>
-                <SubmitButton loading={isLoading}>
+                <SubmitButton loading={form.isSubmitting}>
                   Create Account
                 </SubmitButton>
               </div>
@@ -283,12 +255,7 @@ const Register: React.FC = () => {
           </div>
         </div>
         
-        {/* Toast de notificação */}
-        {toast.visible && (
-          <div className={`${styles.toast} ${toast.type === 'success' ? styles.successToast : styles.errorToast}`}>
-            {toast.message}
-          </div>
-        )}
+        <ToastContainer toasts={toasts} onClose={hideToast} />
       </div>
       
       {/* Seção 1: Recursos */}

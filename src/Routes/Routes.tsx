@@ -4,7 +4,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import Home from '../pages/Home/Home';
 import About from '../pages/About/About';
 import Contact from '../pages/Contact/Contact';
-import Favorites from '../pages/Favorites/Favorites';
+import Favorites from '../pages/Favorites';
 import Register from '../pages/Register/Register';
 import Profile from '../pages/Profile/Profile';
 import Loading from '../components/Loading/Loading';

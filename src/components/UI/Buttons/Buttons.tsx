@@ -22,6 +22,7 @@ interface SubmitButtonProps {
   onClick?: () => void;
   children: React.ReactNode;
   loading?: boolean;
+  disabled?: boolean;
 }
 
 interface LoginButtonProps {
@@ -100,13 +101,14 @@ export const CTAButton: React.FC<CTAButtonProps> = ({
 export const SubmitButton: React.FC<SubmitButtonProps> = ({
   onClick,
   children,
-  loading = false
+  loading = false,
+  disabled = false
 }) => {
   return (
     <button
       type="submit"
       onClick={onClick}
-      disabled={loading}
+      disabled={loading || disabled}
       className={styles.submitButton}
     >
       {loading ? (

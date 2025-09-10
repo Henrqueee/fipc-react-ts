@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
 import type { VehicleResult } from '../../store/useVehicleStore';
 import { FavoriteButton } from '../UI/Buttons/Buttons';
 import { Text, Heading } from '../UI/Typography';
-import { Toast } from '../UI/Toast';
+import { ToastContainer } from '../UI/Toast';
 import Loading from '../Loading/Loading';
 import useFavorites from '../../hooks/useFavorites';
+import useToast from '../../hooks/useToast';
 import styles from './SearchResultModal.module.css';
 
 interface ISearchResultModalProps {
@@ -22,8 +23,8 @@ const SearchResultModal: React.FC<ISearchResultModalProps> = ({
   vehicleData,
   isLoading,
 }) => {
-  const [toastState, setToastState] = useState({ isVisible: false, message: '', type: 'info' as 'success' | 'error' | 'info' });
   const { addToFavorites } = useFavorites();
+  const { toasts, showToast, hideToast } = useToast();
   
   if (!isOpen) return null;
 
@@ -39,29 +40,13 @@ const SearchResultModal: React.FC<ISearchResultModalProps> = ({
         month: vehicleData.month
       });
       
-      setToastState({
-        isVisible: true,
-        message: result.message,
-        type: result.success ? 'success' : 'error'
-      });
-      
-      setTimeout(() => {
-        setToastState(prev => ({ ...prev, isVisible: false }));
-      }, 3000);
+      showToast(result.message, result.success ? 'success' : 'error');
     }
   };
 
   const modalContent = (
     <div className={styles.overlay} onClick={onClose}>
-      {toastState.isVisible && createPortal(
-        <Toast
-          isVisible={toastState.isVisible}
-          message={toastState.message}
-          type={toastState.type}
-          onClose={() => setToastState(prev => ({ ...prev, isVisible: false }))}
-        />,
-        document.body
-      )}
+      <ToastContainer toasts={toasts} onClose={hideToast} />
       
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>

@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Heading, Text } from '../../components/UI/Typography';
 import { TextInput } from '../../components/UI/Inputs/Inputs';
 import { SubmitButton } from '../../components/UI/Buttons/Buttons';
 import Avatar from '../../components/UI/Avatar/Avatar';
-import Toast from '../../components/UI/Toast/Toast';
+import { ToastContainer } from '../../components/UI/Toast';
 import Card from '../../components/Card/Card';
 import { useAuthStore } from '../../store/useAuthStore';
 import { authService } from '../../services/authService';
+import { useForm } from '../../hooks/useForm';
+import useToast from '../../hooks/useToast';
+import { VALIDATION_RULE_SETS } from '../../services/validationService';
 import styles from './Profile.module.css';
 
-interface ProfileFormData {
+interface ProfileFormData extends Record<string, string> {
   name: string;
   email: string;
   phone: string;
@@ -17,101 +20,67 @@ interface ProfileFormData {
   currentPassword: string;
   password: string;
   confirmPassword: string;
-  firstName: string;
-  lastName: string;
 }
 
 const Profile: React.FC = () => {
   const { user, updateUser } = useAuthStore();
-  // Removed unused isEditing state
-  const [isLoading, setIsLoading] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastType, setToastType] = useState<'success' | 'error'>('success');
+  const { toasts, showToast, hideToast } = useToast();
   
-  const [formData, setFormData] = useState<ProfileFormData>({
-    name: user?.name || '',
-    email: user?.email || '',
-    phone: '',
-    location: '',
-    currentPassword: '',
-    password: '',
-    confirmPassword: '',
-    firstName: user?.name?.split(' ')[0] || '',
-    lastName: user?.name?.split(' ').slice(1).join(' ') || ''
-  });
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData(prev => {
-      const updated = {
-        ...prev,
-        [name]: value
-      };
-      
-      // Update full name when firstName or lastName changes
-      if (name === 'firstName' || name === 'lastName') {
-        const firstName = name === 'firstName' ? value : prev.firstName;
-        const lastName = name === 'lastName' ? value : prev.lastName;
-        updated.name = `${firstName} ${lastName}`.trim();
+  const form = useForm<ProfileFormData>({
+    initialValues: {
+      name: user?.name || '',
+      email: user?.email || '',
+      phone: '',
+      location: '',
+      currentPassword: '',
+      password: '',
+      confirmPassword: ''
+    },
+    validationRules: {
+      name: VALIDATION_RULE_SETS.NAME,
+      email: VALIDATION_RULE_SETS.EMAIL,
+      phone: VALIDATION_RULE_SETS.PHONE,
+      location: {
+        required: false,
+        minLength: 2,
+        maxLength: 100
+      },
+      currentPassword: {
+        required: false,
+        custom: (value: string) => {
+          if ((form.values.password || form.values.confirmPassword) && !value) {
+            return 'Current password is required to change password';
+          }
+          return null;
+        }
+      },
+      password: {
+        required: false,
+        minLength: 6,
+        custom: (value: string) => {
+          if (value && form.values.confirmPassword && value !== form.values.confirmPassword) {
+            return 'Passwords do not match';
+          }
+          return null;
+        }
+      },
+      confirmPassword: {
+        required: false,
+        custom: (value: string) => {
+          if (form.values.password && value !== form.values.password) {
+            return 'Passwords do not match';
+          }
+          return null;
+        }
       }
-      
-      return updated;
-    });
-  };
-
-  const validateForm = (): boolean => {
-    if (formData.password || formData.confirmPassword) {
-      if (!formData.currentPassword) {
-        setToastMessage('Current password is required to change password');
-        setToastType('error');
-        setShowToast(true);
-        return false;
-      }
-
-      if (formData.password !== formData.confirmPassword) {
-        setToastMessage('Passwords do not match');
-        setToastType('error');
-        setShowToast(true);
-        return false;
-      }
-
-      if (formData.password.length < 6) {
-        setToastMessage('Password must be at least 6 characters');
-        setToastType('error');
-        setShowToast(true);
-        return false;
-      }
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setToastMessage('Please enter a valid email');
-      setToastType('error');
-      setShowToast(true);
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    
-    if (!validateForm()) return;
-    
-    setIsLoading(true);
-    
-    try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+    },
+    onSubmit: async (values) => {
       // Update user data in localStorage and auth store
       const updatedUserData = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        location: formData.location
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        location: values.location
       };
       
       // Save to localStorage via authService
@@ -121,24 +90,20 @@ const Profile: React.FC = () => {
       updateUser(updatedUserData);
       
       // Handle password change if provided
-      if (formData.password && formData.password.trim() !== '') {
-        await authService.changePassword(formData.currentPassword, formData.password);
-        setToastMessage('Profile and password updated successfully!');
+      if (values.password && values.password.trim() !== '') {
+        await authService.changePassword(values.currentPassword, values.password);
+        showToast('Profile and password updated successfully!', 'success');
+        form.setFieldValue('currentPassword', '');
+        form.setFieldValue('password', '');
+        form.setFieldValue('confirmPassword', '');
       } else {
-        setToastMessage('Profile updated successfully!');
+        showToast('Profile updated successfully!', 'success');
       }
-      
-      setToastType('success');
-      setShowToast(true);
-      setFormData(prev => ({ ...prev, currentPassword: '', password: '', confirmPassword: '' }));
-    } catch (error) {
-      setToastMessage('Failed to update profile. Please try again.');
-      setToastType('error');
-      setShowToast(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    enableToast: false
+  });
+
+  // All form handling is now managed by the useForm hook
 
   const handleImageUpload = async (file: File) => {
     console.log('File upload attempt:', {
@@ -150,26 +115,20 @@ const Profile: React.FC = () => {
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      setToastMessage('Please select a valid image file.');
-      setToastType('error');
-      setShowToast(true);
+      showToast('Please select a valid image file.', 'error');
       return;
     }
 
     // Increased size limit to 10MB to accommodate different browser behaviors
     if (file.size > 10 * 1024 * 1024) {
-      setToastMessage('Image size must be less than 10MB.');
-      setToastType('error');
-      setShowToast(true);
+      showToast('Image size must be less than 10MB.', 'error');
       return;
     }
 
     const reader = new FileReader();
     
     reader.onerror = () => {
-      setToastMessage('Failed to read image file.');
-      setToastType('error');
-      setShowToast(true);
+      showToast('Failed to read image file.', 'error');
     };
     
     reader.onload = async (e) => {
@@ -187,14 +146,10 @@ const Profile: React.FC = () => {
         // Update auth store
         updateUser({ avatar: base64Image });
         
-        setToastMessage('Profile picture updated!');
-        setToastType('success');
-        setShowToast(true);
+        showToast('Profile picture updated!', 'success');
       } catch (error) {
         console.error('Error updating profile picture:', error);
-        setToastMessage('Failed to update profile picture.');
-        setToastType('error');
-        setShowToast(true);
+        showToast('Failed to update profile picture.', 'error');
       }
     };
     
@@ -212,13 +167,7 @@ const Profile: React.FC = () => {
   return (
     <>
       <div className={styles.profilePage}>
-        {showToast && (
-          <Toast isVisible={showToast}
-            message={toastMessage}
-            type={toastType}
-            onClose={() => setShowToast(false)}
-          />
-        )}
+        <ToastContainer toasts={toasts} onClose={hideToast} />
         
         <div className={styles.container}>
           {/* Lado esquerdo - Apresentação do Perfil */}
@@ -226,7 +175,7 @@ const Profile: React.FC = () => {
             <div className={styles.presentationHeader}>
               <div className={styles.avatarSection}>
                 <Avatar
-                  name={formData.name}
+                  name={form.values.name}
                   avatar={user?.avatar}
                   size="xlarge"
                   showUpload={true}
@@ -236,10 +185,10 @@ const Profile: React.FC = () => {
               
               <div className={styles.userInfo}>
                 <Heading level={2} className={styles.userName}>
-                  {formData.name}
+                  {form.values.name}
                 </Heading>
                 <Text className={styles.userRole}>Member</Text>
-                <Text className={styles.userLocation}>{formData.location}</Text>
+                <Text className={styles.userLocation}>{form.values.location}</Text>
               </div>
             </div>
             
@@ -277,56 +226,48 @@ const Profile: React.FC = () => {
               </Text>
             </div>
             
-            <form className={styles.form} onSubmit={handleSubmit}>
-              <div className={styles.formRow}>
-                <TextInput
-                  id="firstName"
-                  name="firstName"
-                  label="First Name"
-                  value={formData.firstName}
-                  onChange={handleInputChange}
-                  placeholder="Your first name"
-                  required
-                />
-                <TextInput
-                  id="lastName"
-                  name="lastName"
-                  label="Last Name"
-                  value={formData.lastName}
-                  onChange={handleInputChange}
-                  placeholder="Your last name"
-                  required
-                />
-              </div>
+            <form className={styles.form} onSubmit={form.handleSubmit}>
+              <TextInput
+                id="name"
+                name="name"
+                label="Full Name"
+                value={form.values.name}
+                onChange={(e) => form.handleChange('name', e.target.value)}
+                placeholder="Your full name"
+                required
+
+              />
               
               <TextInput
                 id="email"
                 name="email"
                 label="Email"
                 type="email"
-                value={formData.email}
-                onChange={handleInputChange}
+                value={form.values.email}
+                onChange={(e) => form.handleChange('email', e.target.value)}
                 placeholder="your.email@example.com"
                 required
+
               />
               
               <TextInput
                 id="phone"
                 name="phone"
                 label="Phone"
-                value={formData.phone}
-                onChange={handleInputChange}
+                value={form.values.phone}
+                onChange={(e) => form.handleChange('phone', e.target.value)}
                 placeholder="(00) 00000-0000"
+
               />
               
               <TextInput
                 id="location"
                 name="location"
                 label="Location"
-                value={formData.location}
-                onChange={handleInputChange}
+                value={form.values.location}
+                onChange={(e) => form.handleChange('location', e.target.value)}
                 placeholder="Your city, country"
-                required
+
               />
               
               <TextInput
@@ -334,9 +275,10 @@ const Profile: React.FC = () => {
                 name="currentPassword"
                 label="Current Password"
                 type="password"
-                value={formData.currentPassword}
-                onChange={handleInputChange}
+                value={form.values.currentPassword}
+                onChange={(e) => form.handleChange('currentPassword', e.target.value)}
                 placeholder="Enter your current password"
+
               />
               
               <div className={styles.formRow}>
@@ -345,23 +287,25 @@ const Profile: React.FC = () => {
                   name="password"
                   label="New Password"
                   type="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
+                  value={form.values.password}
+                  onChange={(e) => form.handleChange('password', e.target.value)}
                   placeholder="Leave blank to keep current"
+  
                 />
                 <TextInput
                   id="confirmPassword"
                   name="confirmPassword"
                   label="Confirm New Password"
                   type="password"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
+                  value={form.values.confirmPassword}
+                  onChange={(e) => form.handleChange('confirmPassword', e.target.value)}
                   placeholder="Confirm your new password"
+  
                 />
               </div>
               
               <div className={styles.formActions}>
-                <SubmitButton loading={isLoading}>
+                <SubmitButton loading={form.isSubmitting} disabled={!form.isValid}>
                   Save Changes
                 </SubmitButton>
               </div>

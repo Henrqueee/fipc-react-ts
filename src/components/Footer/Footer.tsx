@@ -1,20 +1,15 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { LinkButton } from '../UI/Buttons/Buttons';
+import useNavigation from '../../hooks/useNavigation';
 import styles from './Footer.module.css';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-  const navigate = useNavigate();
+  const { navigateWithScroll } = useNavigation();
 
   const handleServiceClick = (vehicleType: string) => {
-    navigate('/', { state: { vehicleType } });
-    setTimeout(() => {
-      const searchSection = document.querySelector('[class*="searchSection"]');
-      if (searchSection) {
-        searchSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
+    navigateWithScroll('/', { vehicleType });
   };
 
   return (

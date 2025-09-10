@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import type { VehicleResult } from '../store/useVehicleStore';
+import { storage } from '../services';
 
-type FavoriteVehicle = Omit<VehicleResult, 'id' | 'date'> & {
-  id?: string;
+export type FavoriteVehicle = Omit<VehicleResult, 'id' | 'date'> & {
+  id: string;
 };
 
 type FavoriteResult = {
@@ -10,32 +11,18 @@ type FavoriteResult = {
   message: string;
 };
 
-const FAVORITES_STORAGE_KEY = 'fipc_favorites';
-
 const useFavorites = () => {
-  const [favorites, setFavorites] = useState<FavoriteVehicle[]>([]);
+  const [favorites, setFavorites] = useState<FavoriteVehicle[]>(() => 
+    storage.getFavorites<FavoriteVehicle>() || []
+  );
 
-  // Load favorites from localStorage on mount
+  // Save to storage whenever favorites change
   useEffect(() => {
-    const storedFavorites = localStorage.getItem(FAVORITES_STORAGE_KEY);
-    if (storedFavorites) {
-      try {
-        const parsedFavorites = JSON.parse(storedFavorites);
-        setFavorites(parsedFavorites);
-      } catch (error) {
-        console.error('Failed to parse favorites from localStorage:', error);
-      }
-    }
-  }, []);
-
-  // Save favorites to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites));
+    storage.setFavorites(favorites);
   }, [favorites]);
 
-  const addToFavorites = (vehicle: FavoriteVehicle): FavoriteResult => {
-    // Check if vehicle already exists in favorites
-    const existingVehicle = favorites.find(
+  const addToFavorites = (vehicle: Omit<FavoriteVehicle, 'id'>): FavoriteResult => {
+    const isDuplicate = favorites.some(
       (fav) =>
         fav.vehicleType === vehicle.vehicleType &&
         fav.brand === vehicle.brand &&
@@ -43,37 +30,41 @@ const useFavorites = () => {
         fav.year === vehicle.year
     );
 
-    if (existingVehicle) {
+    if (isDuplicate) {
       return {
         success: false,
-        message: 'Este veículo já está nos seus favoritos!',
+        message: 'Vehicle already in favorites!',
       };
     }
 
-    // Add new vehicle to favorites with a unique ID
-    const newFavorite = {
+    const newFavorite: FavoriteVehicle = {
       ...vehicle,
-      id: Date.now().toString(),
+      id: `fav-${Date.now()}`,
     };
 
     setFavorites((prev) => [...prev, newFavorite]);
 
     return {
       success: true,
-      message: 'Veículo adicionado aos favoritos com sucesso!',
+      message: 'Vehicle added to favorites successfully!',
     };
   };
 
   const removeFromFavorites = (id: string): FavoriteResult => {
-    const initialLength = favorites.length;
+    const vehicleExists = favorites.some((fav) => fav.id === id);
+    
+    if (!vehicleExists) {
+      return {
+        success: false,
+        message: 'Vehicle not found in favorites.',
+      };
+    }
+
     setFavorites((prev) => prev.filter((fav) => fav.id !== id));
 
     return {
-      success: initialLength > favorites.length,
-      message:
-        initialLength > favorites.length
-          ? 'Veículo removido dos favoritos!'
-          : 'Veículo não encontrado nos favoritos.',
+      success: true,
+      message: 'Vehicle removed from favorites!',
     };
   };
 
@@ -81,7 +72,7 @@ const useFavorites = () => {
     setFavorites([]);
     return {
       success: true,
-      message: 'Todos os favoritos foram removidos!',
+      message: 'All favorites cleared!',
     };
   };
 

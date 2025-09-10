@@ -1,0 +1,131 @@
+.favoriteCard {
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--secondary-gray-dark);
+  padding: var(--spacing-lg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.favoriteCard:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-orange-light);
+}
+
+.favoriteCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(251, 146, 60, 0.1), transparent);
+  transition: left 0.6s;
+}
+
+.favoriteCard:hover::before {
+  left: 100%;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+  gap: var(--spacing-sm);
+}
+
+.vehicleTitle {
+  color: var(--primary-blue) !important;
+  font-weight: 600 !important;
+  font-size: var(--font-size-lg) !important;
+  margin: 0 !important;
+  flex: 1;
+  line-height: 1.4 !important;
+}
+
+.removeButton {
+  flex-shrink: 0;
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.cardContent {
+  position: relative;
+  z-index: 1;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.infoLabel {
+  font-size: var(--font-size-xs) !important;
+  font-weight: 500 !important;
+  color: var(--text-secondary) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 !important;
+}
+
+.infoValue {
+  font-size: var(--font-size-sm) !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  margin: 0 !important;
+}
+
+.priceValue {
+  font-size: var(--font-size-base) !important;
+  font-weight: 700 !important;
+  color: var(--accent-green) !important;
+  margin: 0 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .favoriteCard {
+    padding: var(--spacing-md);
+  }
+  
+  .cardHeader {
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .vehicleTitle {
+    font-size: var(--font-size-base) !important;
+  }
+  
+  .infoGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .favoriteCard {
+    padding: var(--spacing-sm);
+  }
+  
+  .removeButton {
+    min-width: 1.75rem;
+    height: 1.75rem;
+  }
+}

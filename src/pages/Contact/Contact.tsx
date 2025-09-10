@@ -1,52 +1,52 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TextInput, SelectInput } from '../../components/UI/Inputs/Inputs';
 import { SubmitButton } from '../../components/UI/Buttons/Buttons';
 import { Title, Text, Heading, Subtitle } from '../../components/UI/Typography';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import Toast from '../../components/UI/Toast/Toast';
+import { ToastContainer } from '../../components/UI/Toast';
+import { useForm } from '../../hooks/useForm';
+import useToast from '../../hooks/useToast';
+import { VALIDATION_RULE_SETS } from '../../services/validationService';
 import styles from './Contact.module.css';
 
+interface ContactFormData extends Record<string, string> {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+  const { toasts, showToast, hideToast } = useToast();
+  
+  const form = useForm<ContactFormData>({
+    initialValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: ''
+    },
+    validationRules: {
+      name: VALIDATION_RULE_SETS.NAME,
+      email: VALIDATION_RULE_SETS.EMAIL,
+      subject: VALIDATION_RULE_SETS.REQUIRED_TEXT,
+      message: {
+        required: true,
+        minLength: 10,
+        maxLength: 1000
+      }
+    },
+    onSubmit: async () => {
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      showToast('Message sent successfully! We will contact you soon.', 'success');
+      form.reset();
+    },
+    enableToast: false
   });
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      setError('Please fill in all fields');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setSuccess(true);
-      setLoading(false);
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
-    }, 2000);
+    form.handleChange(name as keyof ContactFormData, value);
   };
 
   return (
@@ -107,45 +107,47 @@ const Contact: React.FC = () => {
 
             <div className={styles.formSection}>
               <div className={styles.formCard}>
-                <Heading variant="large" level={2}>Send Your Message</Heading>
+                <ToastContainer toasts={toasts} onClose={hideToast} />
                 
-                <Toast
-                  message="Mensagem enviada com sucesso! Entraremos em contato em breve."
-                  type="success"
-                  isVisible={success}
-                  onClose={() => setSuccess(false)}
-                  autoClose={true}
-                  duration={5000}
-                />
+                <Heading variant="large" level={2}>Send Your Message</Heading>
 
-                <form onSubmit={handleSubmit} className={styles.form}>
+                <form onSubmit={form.handleSubmit} className={styles.form}>
                   <div className={styles.formRow}>
                     <TextInput
                       id="name"
                       label="Full Name"
                       type="text"
-                      value={formData.name}
+                      value={form.values.name}
                       onChange={handleInputChange}
+                      onBlur={() => form.handleBlur('name')}
                       placeholder="Your full name"
                       required
                     />
+                    {form.errors.name && form.touched.name && (
+                      <Text className={styles.errorText}>{form.errors.name}</Text>
+                    )}
 
                     <TextInput
                       id="email"
                       label="Email"
                       type="email"
-                      value={formData.email}
+                      value={form.values.email}
                       onChange={handleInputChange}
+                      onBlur={() => form.handleBlur('email')}
                       placeholder="your@email.com"
                       required
                     />
+                    {form.errors.email && form.touched.email && (
+                      <Text className={styles.errorText}>{form.errors.email}</Text>
+                    )}
                   </div>
 
                   <SelectInput
                     id="subject"
                     label="Subject"
-                    value={formData.subject}
+                    value={form.values.subject}
                     onChange={handleInputChange}
+                    onBlur={() => form.handleBlur('subject')}
                     placeholder="Select subject"
                     required
                     options={[
@@ -156,32 +158,32 @@ const Contact: React.FC = () => {
                       { value: "other", label: "Other" }
                     ]}
                   />
+                  {form.errors.subject && form.touched.subject && (
+                    <Text className={styles.errorText}>{form.errors.subject}</Text>
+                  )}
 
                   <div className={styles.formGroup}>
                     <Text as="span">Message *</Text>
                     <textarea
                       id="message"
                       name="message"
-                      value={formData.message}
+                      value={form.values.message}
                       onChange={handleInputChange}
+                      onBlur={() => form.handleBlur('message')}
                       className={styles.textarea}
                       placeholder="Describe your question or suggestion..."
                       rows={6}
                     />
+                    {form.errors.message && form.touched.message && (
+                      <Text className={styles.errorText}>{form.errors.message}</Text>
+                    )}
                   </div>
 
-                  {error && (
-                    <ErrorMessage 
-                      message={error}
-                      type="error"
-                    />
-                  )}
-
                   <SubmitButton
-                    loading={loading}
-                    onClick={() => {}}
+                    loading={form.isSubmitting}
+                    disabled={!form.isValid}
                   >
-                    {loading ? 'Enviando...' : 'Enviar Mensagem'}
+                    {form.isSubmitting ? 'Sending...' : 'Send Message'}
                   </SubmitButton>
                 </form>
               </div>

@@ -7,6 +7,7 @@ interface SelectInputProps {
   label: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLSelectElement>) => void;
   options: Array<{ value: string; label: string }>;
   placeholder?: string;
   required?: boolean;
@@ -19,6 +20,7 @@ interface TextInputProps {
   type?: 'text' | 'email' | 'password' | 'date';
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   placeholder?: string;
   required?: boolean;
 }
@@ -28,8 +30,9 @@ export const SelectInput: React.FC<SelectInputProps> = ({
   label,
   value,
   onChange,
+  onBlur,
   options,
-  placeholder = "Selecione uma opção",
+  placeholder = "Select an option",
   required = false
 }) => {
   return (
@@ -42,6 +45,7 @@ export const SelectInput: React.FC<SelectInputProps> = ({
         id={id}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         required={required}
         className={styles.select}
       >
@@ -63,6 +67,7 @@ export const TextInput: React.FC<TextInputProps> = ({
   type = 'text',
   value,
   onChange,
+  onBlur,
   placeholder,
   required = false
 }) => {
@@ -87,6 +92,7 @@ export const TextInput: React.FC<TextInputProps> = ({
           type={inputType}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
           placeholder={placeholder}
           required={required}
           className={`${styles.input} ${isPasswordField ? styles.passwordInput : ''}`}
