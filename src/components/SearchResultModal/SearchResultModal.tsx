@@ -5,7 +5,7 @@ import { FavoriteButton } from '../UI/Buttons/Buttons';
 import { Text, Heading } from '../UI/Typography';
 import { ToastContainer } from '../UI/Toast';
 import Loading from '../Loading/Loading';
-import useFavorites from '../../hooks/useFavorites';
+import  useFavorites  from '../../hooks/usefavorites';
 import useToast from '../../hooks/useToast';
 import styles from './SearchResultModal.module.css';
 

@@ -6,3 +6,6 @@ export type { ValidationResult, ValidationRule, FieldValidationRules } from './v
 
 export { default as vehicleService } from './vehicleService';
 export * from './vehicleService';
+
+export { HomeDataService } from './homeDataService';
+export type { VehicleType, HeroStat } from './homeDataService';

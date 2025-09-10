@@ -1,5 +1,5 @@
 import React from 'react';
-import useFavorites, { type FavoriteVehicle } from '../../hooks/useFavorites';
+import useFavorites, { type FavoriteVehicle } from '../../hooks/usefavorites';
 import FavoriteCard from '../../components/Card/FavoriteCard';
 import { Title } from '../../components/UI/Typography';
 import { Text } from '../../components/UI/Typography';

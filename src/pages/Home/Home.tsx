@@ -4,26 +4,18 @@ import Carousel from '../../components/Carousel/Carousel';
 import Card from '../../components/Card/Card';
 import { CTAButton } from '../../components/UI/Buttons/Buttons';
 import { Title, Text, Heading, Subtitle } from '../../components/UI/Typography';
+import { HomeDataService } from '../../services';
+import { useScrollToSection } from '../../hooks';
 import styles from './Home.module.css';
 
 const Home: React.FC = () => {
-  const scrollToSearch = () => {
-    const searchSection = document.querySelector(`.${styles.searchSection}`);
-    
-    if (searchSection) {
-      searchSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const { scrollToSection } = useScrollToSection();
+  const vehicleTypes = HomeDataService.getVehicleTypes();
+  const heroStats = HomeDataService.getHeroStats();
 
-  // Vehicle data
-  const vehicleTypes = [
-    { icon: '🚗', title: 'Cars', description: 'National and imported', count: '+50,000 models' },
-    { icon: '🏍️', title: 'Motorcycles', description: 'All engine sizes', count: '+15,000 models' },
-    { icon: '🚚', title: 'Trucks', description: 'Light and heavy', count: '+8,000 models' },
-    { icon: '🚐', title: 'Minibuses', description: 'Public transport', count: '+2,000 models' },
-    { icon: '🚛', title: 'Utilities', description: 'Work and leisure', count: '+12,000 models' },
-    { icon: '🏎️', title: 'Sports Cars', description: 'High performance', count: '+3,000 models' }
-  ];
+  const scrollToSearch = () => {
+    scrollToSection(styles.searchSection);
+  };
 
   return (
     <div className={styles.home}>
@@ -39,18 +31,12 @@ const Home: React.FC = () => {
                 Check the average price of vehicles in the national market
               </Subtitle>
               <div className={styles.heroStats}>
-                <div className={styles.statItem}>
-                  <Text className={styles.statNumber}>100K+</Text>
-                  <Text variant="stat-label" className={styles.statLabel}>Queries completed</Text>
-                </div>
-                <div className={styles.statItem}>
-                  <Text className={styles.statNumber}>24/7</Text>
-                  <Text variant="stat-label" className={styles.statLabel}>Always available</Text>
-                </div>
-                <div className={styles.statItem}>
-                  <Text className={styles.statNumber}>100%</Text>
-                  <Text variant="stat-label" className={styles.statLabel}>Official data</Text>
-                </div>
+                {heroStats.map((stat, index) => (
+                  <div key={index} className={styles.statItem}>
+                    <Text className={styles.statNumber}>{stat.number}</Text>
+                    <Text variant="stat-label" className={styles.statLabel}>{stat.label}</Text>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

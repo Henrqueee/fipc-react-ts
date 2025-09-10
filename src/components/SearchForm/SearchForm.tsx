@@ -8,7 +8,7 @@ import { Text, Heading } from '../UI/Typography';
 import { ToastContainer } from '../UI/Toast';
 import SearchResultModal from '../SearchResultModal/SearchResultModal';
 import { useForm } from '../../hooks/useForm';
-import useFavorites from '../../hooks/useFavorites';
+import useFavorites from '../../hooks/usefavorites';
 import useToast from '../../hooks/useToast';
 import { VALIDATION_RULE_SETS } from '../../services/validationService';
 import styles from './SearchForm.module.css';

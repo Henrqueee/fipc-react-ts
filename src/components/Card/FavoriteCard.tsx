@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, Heading } from '../UI/Typography';
 import { CTAButton } from '../UI/Buttons/Buttons';
-import type { FavoriteVehicle } from '../../hooks/useFavorites';
+import type { FavoriteVehicle } from '../../hooks/usefavorites';
 import styles from './FavoriteCard.module.css';
 
 interface FavoriteCardProps {
