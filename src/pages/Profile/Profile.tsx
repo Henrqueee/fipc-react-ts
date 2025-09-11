@@ -6,155 +6,21 @@ import Avatar from '../../components/UI/Avatar/Avatar';
 import { ToastContainer } from '../../components/UI/Toast';
 import Card from '../../components/Card/Card';
 import { useAuthStore } from '../../store/useAuthStore';
-import { authService } from '../../services/authService';
-import { useForm } from '../../hooks/useForm';
+import { useProfileForm } from '../../hooks/useProfileForm';
+import { useAvatarUpload } from '../../hooks/useAvatarUpload';
+import { useProfileActions } from '../../hooks/useProfileActions';
 import useToast from '../../hooks/useToast';
-import { VALIDATION_RULE_SETS } from '../../services/validationService';
 import styles from './Profile.module.css';
 
-interface ProfileFormData extends Record<string, string> {
-  name: string;
-  email: string;
-  phone: string;
-  location: string;
-  currentPassword: string;
-  password: string;
-  confirmPassword: string;
-}
-
 const Profile: React.FC = () => {
-  const { user, updateUser } = useAuthStore();
-  const { toasts, showToast, hideToast } = useToast();
+  const { user } = useAuthStore();
+  const { toasts, hideToast } = useToast();
   
-  const form = useForm<ProfileFormData>({
-    initialValues: {
-      name: user?.name || '',
-      email: user?.email || '',
-      phone: '',
-      location: '',
-      currentPassword: '',
-      password: '',
-      confirmPassword: ''
-    },
-    validationRules: {
-      name: VALIDATION_RULE_SETS.NAME,
-      email: VALIDATION_RULE_SETS.EMAIL,
-      phone: VALIDATION_RULE_SETS.PHONE,
-      location: {
-        required: false,
-        minLength: 2,
-        maxLength: 100
-      },
-      currentPassword: {
-        required: false,
-        custom: (value: string) => {
-          if ((form.values.password || form.values.confirmPassword) && !value) {
-            return 'Current password is required to change password';
-          }
-          return null;
-        }
-      },
-      password: {
-        required: false,
-        minLength: 6,
-        custom: (value: string) => {
-          if (value && form.values.confirmPassword && value !== form.values.confirmPassword) {
-            return 'Passwords do not match';
-          }
-          return null;
-        }
-      },
-      confirmPassword: {
-        required: false,
-        custom: (value: string) => {
-          if (form.values.password && value !== form.values.password) {
-            return 'Passwords do not match';
-          }
-          return null;
-        }
-      }
-    },
-    onSubmit: async (values) => {
-      // Update user data in localStorage and auth store
-      const updatedUserData = {
-        name: values.name,
-        email: values.email,
-        phone: values.phone,
-        location: values.location
-      };
-      
-      // Save to localStorage via authService
-      await authService.updateUser(updatedUserData);
-      
-      // Update auth store
-      updateUser(updatedUserData);
-      
-      // Handle password change if provided
-      if (values.password && values.password.trim() !== '') {
-        await authService.changePassword(values.currentPassword, values.password);
-        showToast('Profile and password updated successfully!', 'success');
-        form.setFieldValue('currentPassword', '');
-        form.setFieldValue('password', '');
-        form.setFieldValue('confirmPassword', '');
-      } else {
-        showToast('Profile updated successfully!', 'success');
-      }
-    },
-    enableToast: false
-  });
+  const { handleProfileUpdate, isLoading } = useProfileActions();
+  const { handleImageUpload } = useAvatarUpload();
+  const form = useProfileForm(handleProfileUpdate);
 
-  // All form handling is now managed by the useForm hook
 
-  const handleImageUpload = async (file: File) => {
-    console.log('File upload attempt:', {
-      name: file.name,
-      size: file.size,
-      type: file.type,
-      sizeInMB: (file.size / (1024 * 1024)).toFixed(2)
-    });
-
-    // Validate file type
-    if (!file.type.startsWith('image/')) {
-      showToast('Please select a valid image file.', 'error');
-      return;
-    }
-
-    // Increased size limit to 10MB to accommodate different browser behaviors
-    if (file.size > 10 * 1024 * 1024) {
-      showToast('Image size must be less than 10MB.', 'error');
-      return;
-    }
-
-    const reader = new FileReader();
-    
-    reader.onerror = () => {
-      showToast('Failed to read image file.', 'error');
-    };
-    
-    reader.onload = async (e) => {
-      try {
-        const result = e.target?.result;
-        if (!result || typeof result !== 'string') {
-          throw new Error('Invalid image data');
-        }
-        
-        const base64Image = result;
-        
-        // Save to localStorage via authService
-        await authService.updateUser({ avatar: base64Image });
-        
-        // Update auth store
-        updateUser({ avatar: base64Image });
-        
-        showToast('Profile picture updated!', 'success');
-      } catch (error) {
-        console.error('Error updating profile picture:', error);
-        showToast('Failed to update profile picture.', 'error');
-      }
-    };
-    
-    reader.readAsDataURL(file);
-  };
 
   if (!user) {
     return (
@@ -305,7 +171,7 @@ const Profile: React.FC = () => {
               </div>
               
               <div className={styles.formActions}>
-                <SubmitButton loading={form.isSubmitting} disabled={!form.isValid}>
+                <SubmitButton loading={form.isSubmitting || isLoading} disabled={!form.isValid || form.isSubmitting || isLoading}>
                   Save Changes
                 </SubmitButton>
               </div>
