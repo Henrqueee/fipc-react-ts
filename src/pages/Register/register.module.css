@@ -19,7 +19,13 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-/* Lado esquerdo - Apresentação */
+/* Error text styling */
+.errorText {
+  color: var(--error-color, #e74c3c);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
 .presentationSide {
   flex: 1;
   display: flex;
