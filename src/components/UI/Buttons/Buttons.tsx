@@ -16,6 +16,7 @@ interface CTAButtonProps {
   variant?: 'primary' | 'secondary' | 'danger';
   size?: 'small' | 'medium' | 'large';
   className?: string;
+  disabled?: boolean;
 }
 
 interface SubmitButtonProps {
@@ -63,7 +64,8 @@ export const CTAButton: React.FC<CTAButtonProps> = ({
   children,
   variant = 'primary',
   size = 'medium',
-  className = ''
+  className = '',
+  disabled = false
 }) => {
   const getButtonClass = () => {
     let baseClass;
@@ -89,6 +91,7 @@ export const CTAButton: React.FC<CTAButtonProps> = ({
     <button
       type="button"
       onClick={onClick}
+      disabled={disabled}
       className={`${getButtonClass()} ${className}`}
     >
       {children}

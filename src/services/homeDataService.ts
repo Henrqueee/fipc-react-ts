@@ -1,14 +1,4 @@
-export interface VehicleType {
-  icon: string;
-  title: string;
-  description: string;
-  count: string;
-}
-
-export interface HeroStat {
-  number: string;
-  label: string;
-}
+import type { VehicleType, HeroStat } from '../types/homeTypes';
 
 export class HomeDataService {
   static getVehicleTypes(): VehicleType[] {
