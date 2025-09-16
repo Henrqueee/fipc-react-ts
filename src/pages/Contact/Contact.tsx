@@ -3,50 +3,39 @@ import { TextInput, SelectInput } from '../../components/UI/Inputs/Inputs';
 import { SubmitButton } from '../../components/UI/Buttons/Buttons';
 import { Title, Text, Heading, Subtitle } from '../../components/UI/Typography';
 import { ToastContainer } from '../../components/UI/Toast';
-import { useForm } from '../../hooks/useForm';
-import useToast from '../../hooks/useToast';
-import { VALIDATION_RULE_SETS } from '../../services/validationService';
+import { useContactForm } from '../../hooks/useContactForm';
+import { useContactActions } from '../../hooks/useContactActions';
 import styles from './Contact.module.css';
 
-interface ContactFormData extends Record<string, string> {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
-
 const Contact: React.FC = () => {
-  const { toasts, showToast, hideToast } = useToast();
-  
-  const form = useForm<ContactFormData>({
-    initialValues: {
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    },
-    validationRules: {
-      name: VALIDATION_RULE_SETS.NAME,
-      email: VALIDATION_RULE_SETS.EMAIL,
-      subject: VALIDATION_RULE_SETS.REQUIRED_TEXT,
-      message: {
-        required: true,
-        minLength: 10,
-        maxLength: 1000
-      }
-    },
-    onSubmit: async () => {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      showToast('Message sent successfully! We will contact you soon.', 'success');
-      form.reset();
-    },
-    enableToast: false
-  });
+  const {
+    values: formData,
+    errors,
+    touched,
+    isValid,
+    handleChange,
+    handleBlur,
+    reset
+  } = useContactForm();
+
+  const {
+    isSubmitting,
+    submitContact,
+    toasts,
+    hideToast
+  } = useContactActions();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const success = await submitContact(formData);
+    if (success) {
+      reset();
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    form.handleChange(name as keyof ContactFormData, value);
+    handleChange(name, value);
   };
 
   return (
@@ -111,43 +100,43 @@ const Contact: React.FC = () => {
                 
                 <Heading variant="large" level={2}>Send Your Message</Heading>
 
-                <form onSubmit={form.handleSubmit} className={styles.form}>
+                <form onSubmit={handleSubmit} className={styles.form}>
                   <div className={styles.formRow}>
                     <TextInput
                       id="name"
                       label="Full Name"
                       type="text"
-                      value={form.values.name}
+                      value={formData.name}
                       onChange={handleInputChange}
-                      onBlur={() => form.handleBlur('name')}
+                      onBlur={() => handleBlur('name')}
                       placeholder="Your full name"
                       required
                     />
-                    {form.errors.name && form.touched.name && (
-                      <Text className={styles.errorText}>{form.errors.name}</Text>
+                    {errors.name && touched.name && (
+                      <Text className={styles.errorText}>{errors.name}</Text>
                     )}
 
                     <TextInput
                       id="email"
                       label="Email"
                       type="email"
-                      value={form.values.email}
+                      value={formData.email}
                       onChange={handleInputChange}
-                      onBlur={() => form.handleBlur('email')}
+                      onBlur={() => handleBlur('email')}
                       placeholder="your@email.com"
                       required
                     />
-                    {form.errors.email && form.touched.email && (
-                      <Text className={styles.errorText}>{form.errors.email}</Text>
+                    {errors.email && touched.email && (
+                      <Text className={styles.errorText}>{errors.email}</Text>
                     )}
                   </div>
 
                   <SelectInput
                     id="subject"
                     label="Subject"
-                    value={form.values.subject}
+                    value={formData.subject}
                     onChange={handleInputChange}
-                    onBlur={() => form.handleBlur('subject')}
+                    onBlur={() => handleBlur('subject')}
                     placeholder="Select subject"
                     required
                     options={[
@@ -158,8 +147,8 @@ const Contact: React.FC = () => {
                       { value: "other", label: "Other" }
                     ]}
                   />
-                  {form.errors.subject && form.touched.subject && (
-                    <Text className={styles.errorText}>{form.errors.subject}</Text>
+                  {errors.subject && touched.subject && (
+                    <Text className={styles.errorText}>{errors.subject}</Text>
                   )}
 
                   <div className={styles.formGroup}>
@@ -167,23 +156,23 @@ const Contact: React.FC = () => {
                     <textarea
                       id="message"
                       name="message"
-                      value={form.values.message}
+                      value={formData.message}
                       onChange={handleInputChange}
-                      onBlur={() => form.handleBlur('message')}
+                      onBlur={() => handleBlur('message')}
                       className={styles.textarea}
                       placeholder="Describe your question or suggestion..."
                       rows={6}
                     />
-                    {form.errors.message && form.touched.message && (
-                      <Text className={styles.errorText}>{form.errors.message}</Text>
+                    {errors.message && touched.message && (
+                      <Text className={styles.errorText}>{errors.message}</Text>
                     )}
                   </div>
 
                   <SubmitButton
-                    loading={form.isSubmitting}
-                    disabled={!form.isValid}
+                    loading={isSubmitting}
+                    disabled={!isValid}
                   >
-                    {form.isSubmitting ? 'Sending...' : 'Send Message'}
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
                   </SubmitButton>
                 </form>
               </div>
