@@ -1,156 +1,141 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './About.module.css';
 import Card from '../../components/Card/Card';
 import { CTAButton } from '../../components/UI/Buttons/Buttons';
-import { Title, Text, Heading } from '../../components/UI/Typography';
+import { Title, Text } from '../../components/UI/Typography';
+import { useAboutContent } from '../../hooks/useAboutContent';
+import { useAboutActions } from '../../hooks/useAboutActions';
+import { AboutDataService } from '../../services/aboutDataService';
+import styles from './About.module.css';
 
-const About: React.FC = () => {
-  const navigate = useNavigate();
+export const About: React.FC = () => {
+  const { storyContent, missionContent, features, ctaContent, isLoading } = useAboutContent();
+  const { handleGoToQuery } = useAboutActions();
 
-  const handleGoToQuery = () => {
-    navigate('/');
-    setTimeout(() => {
-      const searchSection = document.querySelector('[class*="searchSection"]');
-      if (searchSection) {
-        searchSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-  };
+  const timelineData = AboutDataService.getTimelineData();
+  const companyStats = AboutDataService.getCompanyStats();
+
+  if (isLoading) {
+    return (
+      <div className={styles.aboutContainer}>
+        <div className={styles.heroSection}>
+          <div className={styles.heroContent}>
+            <Title className={styles.heroTitle}>Loading...</Title>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className={styles.about}>
-      {/* Hero Section - Storytelling Approach */}
-      <section className={styles.heroStory}>
-        <div className="container">
-          <div className={styles.storyIntro}>
-            <div className={styles.storyBadge}>
-              <Text className={styles.badgeText}>Since 1973</Text>
-            </div>
-            <Title variant="hero" className={styles.storyTitle}>
-               50 Years of Trust
-             </Title>
-            <Text variant="body" onHeroStory={true} className={styles.storyLead}>
-                From a small research foundation to Brazil's most authoritative voice in vehicle pricing
-              </Text>
-            <div className={styles.storyTimeline}>
-              <div className={styles.timelineItem}>
-                 <div className={styles.timelineYear}>1973</div>
-                 <div className={styles.timelineContent}>
-                   <Text variant="body" onHeroStory={true} className={styles.timelineText1}>
-                     FIPE Foundation established
-                   </Text>
-                 </div>
-               </div>
-               <div className={styles.timelineItem}>
-                 <div className={styles.timelineYear}>1980s</div>
-                 <div className={styles.timelineContent}>
-                   <Text variant="body" onHeroStory={true} className={styles.timelineText2}>
-                     First vehicle price tables
-                   </Text>
-                 </div>
-               </div>
-               <div className={styles.timelineItem}>
-                 <div className={styles.timelineYear}>2024</div>
-                 <div className={styles.timelineContent}>
-                   <Text variant="body" onHeroStory={true} className={styles.timelineText3}>
-                     Digital transformation with FIPE Query
-                   </Text>
-                 </div>
-               </div>
-            </div>
-          </div>
+    <div className={styles.aboutContainer}>
+      {/* Hero Section */}
+      <section className={styles.heroSection}>
+        <div className={styles.heroContent}>
+          <Title className={styles.heroTitle}>
+            About FIPC
+          </Title>
+          <Text className={styles.heroSubtitle}>
+            Driving innovation and technological development for over 35 years
+          </Text>
         </div>
       </section>
 
-      <main className={styles.main}>
-        <div className="container">
+      {/* Main Content */}
+      <main className={styles.mainContent}>
+        {/* Story Section */}
+        <section className={styles.storySection}>
+          <div className={styles.storyContent}>
+            <Title className={styles.sectionTitle}>
+              {storyContent?.title || 'Our Story'}
+            </Title>
+            <Text className={styles.storyText}>
+              {storyContent?.firstParagraph}
+            </Text>
+            <Text className={styles.storyText}>
+              {storyContent?.secondParagraph}
+            </Text>
+          </div>
+        </section>
 
-          {/* Story Section */}
-          <section className={styles.storySection}>
-            <div className={styles.storyContent}>
-              <div className={styles.storyText}>
-                <Heading variant="large" level={2}>The FIPE Story</Heading>
-                <Text>
-                  Since 1973, the FIPE Foundation has been the cornerstone of vehicle 
-                  valuation in Brazil. What started as a research initiative became 
-                  the most trusted reference for millions of transactions.
+        {/* Timeline Section */}
+        <section className={styles.timelineSection}>
+          <Title className={styles.sectionTitle}>
+            Our Journey
+          </Title>
+          <div className={styles.timeline}>
+            {timelineData.map((item, index) => (
+              <div key={index} className={styles.timelineItem}>
+                <div className={styles.timelineYear}>{item.year}</div>
+                <div className={styles.timelineContent}>
+                  <Title className={styles.timelineTitle}>
+                    {item.title}
+                  </Title>
+                  <Text className={styles.timelineDescription}>
+                    {item.description}
+                  </Text>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Mission Section */}
+        <section className={styles.missionSection}>
+          <div className={styles.missionContent}>
+            <Title className={styles.sectionTitle}>
+              {missionContent?.title || 'Our Mission'}
+            </Title>
+            <Text className={styles.missionText}>
+              {missionContent?.description}
+            </Text>
+            <div className={styles.statsGrid}>
+              {companyStats.map((stat, index) => (
+                <div key={index} className={styles.statItem}>
+                  <div className={styles.statNumber}>{stat.number}</div>
+                  <div className={styles.statLabel}>{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Features Grid */}
+        <section className={styles.featuresSection}>
+          <Title className={styles.sectionTitle}>
+            What We Offer
+          </Title>
+          <div className={styles.featuresGrid}>
+            {features.map((feature, index) => (
+              <Card key={index} className={styles.featureCard}>
+                <Title className={styles.featureTitle}>
+                  {feature.title}
+                </Title>
+                <Text className={styles.featureDescription}>
+                  {feature.description}
                 </Text>
-              </div>
-              <div className={styles.storyStats}>
-                <div className={styles.statCard}>
-                  <Text className={styles.statNumber}>1973</Text>
-                  <Text className={styles.statLabel}>Founded</Text>
-                </div>
-                <div className={styles.statCard}>
-                  <Text className={styles.statNumber}>50+</Text>
-                  <Text className={styles.statLabel}>Years</Text>
-                </div>
-                <div className={styles.statCard}>
-                  <Text className={styles.statNumber}>1M+</Text>
-                  <Text className={styles.statLabel}>Monthly Queries</Text>
-                </div>
-              </div>
-            </div>
-          </section>
+              </Card>
+            ))}
+          </div>
+        </section>
 
-          {/* Mission Section */}
-          <section className={styles.missionSection}>
-            <div className={styles.missionContent}>
-              <Heading variant="large" level={2}>Our Mission</Heading>
-              <Text>
-                We're building the most reliable platform to check vehicle prices, 
-                making FIPE data accessible to everyone, anywhere, anytime.
-              </Text>
-            </div>
-          </section>
-
-          {/* Features Grid */}
-          <section className={styles.featuresSection}>
-            <Heading variant="large" level={2}>Why Choose FIPE Query?</Heading>
-            <div className={styles.featuresGrid}>
-              <Card
-                icon="🏛️"
-                title="Official Data"
-                description="Direct access to FIPE Foundation's official database"
-                animated={true}
-                animationDelay={0}
-              />
-              <Card
-                icon="⚡"
-                title="Instant Results"
-                description="Get vehicle prices in seconds, not minutes"
-                animated={true}
-                animationDelay={0.2}
-              />
-              <Card
-                icon="🆓"
-                title="Always Free"
-                description="Unlimited queries at no cost, forever"
-                animated={true}
-                animationDelay={0.4}
-              />
-            </div>
-          </section>
-
-          {/* CTA Section */}
-          <section className={styles.ctaSection}>
-            <div className={styles.ctaContent}>
-              <Heading variant="large" level={2} onDark={true}>Ready to Check Vehicle Prices?</Heading>
-              <Text onDark={true}>
-                Get instant access to official FIPE prices for any vehicle in Brazil.
-              </Text>
-              <CTAButton 
-                onClick={handleGoToQuery}
-              >
-                Start Your Search
-              </CTAButton>
-            </div>
-          </section>
-        </div>
+        {/* CTA Section */}
+        <section className={styles.ctaSection}>
+          <div className={styles.ctaContent}>
+            <Title className={styles.ctaTitle}>
+              {ctaContent.title}
+            </Title>
+            <Text className={styles.ctaDescription}>
+              {ctaContent.description}
+            </Text>
+            <CTAButton 
+              onClick={handleGoToQuery}
+              className={styles.ctaButton}
+            >
+              {ctaContent.buttonText}
+            </CTAButton>
+          </div>
+        </section>
       </main>
     </div>
   );
 };
-
-export default About;

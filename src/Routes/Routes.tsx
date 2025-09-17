@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes as RouterRoutes, Route, Navigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import Home from '../pages/Home/Home';
-import About from '../pages/About/About';
+import { About } from '../pages/About/About';
 import Contact from '../pages/Contact/Contact';
 import Favorites from '../pages/Favorites/Favorites';
 import Register from '../pages/Register/Register';
